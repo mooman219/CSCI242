@@ -15,7 +15,7 @@ public class Snowflake {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         turtle = new Turtle(0.5, 0.5, 0);
-        turtle.setCanvasSize(1000, 1000);
+        turtle.setCanvasSize(500, 500);
 
         drawSnowflake(100, 3);
         // TODO code application logic here
@@ -23,7 +23,7 @@ public class Snowflake {
 
     public static void snowflakePart(int S, int N) {
         if (N > 0) {
-            turtle.goForward(S);
+            turtle.goForward(S / 1000d);
             if (N > 1) {
                 // generate the 5 sub-branches of this snowflake part
                 turtle.turnLeft(120);
@@ -33,7 +33,7 @@ public class Snowflake {
                 }
                 turtle.turnRight(180);
             }
-            turtle.goForward(-(S));
+            turtle.goForward(-(S / 1000d));
         }
     }
 
