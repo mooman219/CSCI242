@@ -13,8 +13,6 @@ public class PizzaRun {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int v;
-        int j = v;
         if (args.length > 0) {
             double price = 0;
             try {
