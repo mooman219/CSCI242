@@ -17,8 +17,18 @@ public class Snowflake {
         turtle = new Turtle(0.5, 0.5, 0);
         turtle.setCanvasSize(500, 500);
 
-        drawSnowflake(100, 3);
-        // TODO code application logic here
+        int N, S;
+        try {
+            System.out.print("Enter S: ");
+            S = in.nextInt();
+            System.out.print("Enter N: ");
+            N = in.nextInt();
+        } catch (Exception e) {
+            System.out.println("Invalid input, please enter an interger.");
+            return;
+        }
+
+        drawSnowflake(S, N);
     }
 
     public static void snowflakePart(int S, int N) {
