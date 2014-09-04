@@ -14,8 +14,6 @@ public class Snowflake {
      */
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        turtle = new Turtle(0.5, 0.5, 0);
-        turtle.setCanvasSize(500, 500);
 
         int N, S;
         try {
@@ -28,6 +26,8 @@ public class Snowflake {
             return;
         }
 
+        turtle = new Turtle(0.5, 0.5, 0);
+        turtle.setCanvasSize(500, 500);
         drawSnowflake(S, N);
     }
 
