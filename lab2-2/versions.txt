@@ -1,0 +1,7 @@
+66682b1 Add required method for closing the program
+243d9cf Create the negative
+e0e6e2e Add correct output
+8edce74 Add test output
+8b41809 Add some sample images
+2012a79 Add initial check for user input
+a2f6482 Start negative class
