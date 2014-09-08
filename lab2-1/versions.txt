@@ -1,0 +1,7 @@
+8f35f4c Fix weekend detection
+24390e4 Fix for loop from going out of bounds
+0280ada Make arrayLike static
+065471a Fix arrayLike if statement
+0d40e01 Add colon to end of myArray statement
+0ffd10f Fix parseInt by changing it to Integer.parseInt
+407df44 Start lab 2-1
