@@ -24,7 +24,7 @@ public class Problems {
         if (day == 1) // Something extra for Mon
         {
             System.out.println("It's not the weekend any more!");
-        } else // 6..7, it's the weekend
+        } else if (day >= 6) // 6..7, it's the weekend
         {
             System.out.println("Hit the snooze button now!");
         }
