@@ -1,6 +1,4 @@
 
-import javax.swing.JFrame;
-
 /**
  * @author Joseph Cumbo
  */
@@ -9,7 +7,9 @@ public class Negative {
     public static void main(String[] args) {
         Picture picture = new Picture();
 
-        if (args.length < 2 || !args[0].equalsIgnoreCase("negative") || !picture.load(args[1])) {
+        if (args.length < 2
+                || !args[0].equalsIgnoreCase("negative")
+                || !picture.load(args[1])) {
             System.out.println("usage: java Negative JPGfile");
             return;
         }
@@ -29,6 +29,15 @@ public class Negative {
         }
 
         picture.show();
-        picture.getPictureFrame().frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Ideal method for closing the program:
+        //picture.getPictureFrame().frame
+        //        .setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // Required method for closing the program:
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException exc) {
+        }
+        System.exit(0);
     }
 }
