@@ -1,7 +1,7 @@
 
 public class Problems {
 
-    public boolean arrayLike(int[] nums, int value) {
+    public static boolean arrayLike(int[] nums, int value) {
         /* An array "likes" a particular value if at least half of
          the elements in the array differ from the value by 2 or
          less.
