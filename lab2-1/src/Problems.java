@@ -34,12 +34,12 @@ public class Problems {
     public static void main(String[] args) {
         int day = 0;
 
-        day = parseInt(args[0]);
+        day = Integer.parseInt(args[0]);
         snooze(day);
 
         int[] myArray = {1, 6, 8, 7, 0, 0}
         if (arrayLike(myArray, args[0])
-             {
+              {
             System.out.println("I like " + args[0]);
         } else {
             System.out.println("I don't like " + args[0]);
