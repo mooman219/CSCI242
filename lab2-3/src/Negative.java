@@ -26,6 +26,13 @@ public class Negative {
         int height = (int) (picture.getHeight() * 0.025);
         for (int x = 0; x < picture.getWidth(); x++) {
             for (int y = 0; y < picture.getHeight(); y++) {
+                if (x < width || x > (picture.getWidth() - width)
+                        || y < height || x > (picture.getHeight() - height)) {
+                    Pixel pixel = picture.getPixel(x, y);
+                    pixel.setRed(255 - pixel.getRed());
+                    pixel.setGreen(255 - pixel.getGreen());
+                    pixel.setBlue(255 - pixel.getBlue());
+                }
             }
         }
 
