@@ -20,12 +20,21 @@ public class PictureBorder {
                 + " height " + picture.getHeight()
                 + " width " + picture.getWidth());
 
+        // For my frame, I'm using a % based system.
+        // I will multiply the width and height of the image and multiply both
+        // by 2.5%, then storing the resulting values in the width and height
+        // objects. This will be used to check wether a pixel falls in the outer
+        // 2.5% of pixels.
         int width = (int) (picture.getWidth() * 0.025);
         int height = (int) (picture.getHeight() * 0.025);
+        // Now I am going to loop through every pixel in the image
         for (int x = 0; x < picture.getWidth(); x++) {
             for (int y = 0; y < picture.getHeight(); y++) {
+                // This statement will check if the pixel falls in the outer
+                // 2.5% of pixels in the image.
                 if (x < width || x > (picture.getWidth() - width)
                         || y < height || y > (picture.getHeight() - height)) {
+                    // Finally, we invert the pixel
                     Pixel pixel = picture.getPixel(x, y);
                     pixel.setRed(255 - pixel.getRed());
                     pixel.setGreen(255 - pixel.getGreen());
