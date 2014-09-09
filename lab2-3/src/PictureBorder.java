@@ -7,7 +7,7 @@ public class PictureBorder {
     public static void main(String[] args) {
         Picture picture = new Picture();
 
-        if (args.length < 1 || !picture.load(args[1])) {
+        if (args.length < 1 || !picture.load(args[0])) {
             System.out.println("usage: java JPGfile");
             return;
         }
@@ -25,7 +25,7 @@ public class PictureBorder {
         for (int x = 0; x < picture.getWidth(); x++) {
             for (int y = 0; y < picture.getHeight(); y++) {
                 if (x < width || x > (picture.getWidth() - width)
-                        || y < height || x > (picture.getHeight() - height)) {
+                        || y < height || y > (picture.getHeight() - height)) {
                     Pixel pixel = picture.getPixel(x, y);
                     pixel.setRed(255 - pixel.getRed());
                     pixel.setGreen(255 - pixel.getGreen());
