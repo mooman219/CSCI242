@@ -7,10 +7,8 @@ public class PictureBorder {
     public static void main(String[] args) {
         Picture picture = new Picture();
 
-        if (args.length < 2
-                || !args[0].equalsIgnoreCase("negative")
-                || !picture.load(args[1])) {
-            System.out.println("usage: java Negative JPGfile");
+        if (args.length < 1 || !picture.load(args[1])) {
+            System.out.println("usage: java JPGfile");
             return;
         }
 
