@@ -1,4 +1,6 @@
 
+import java.awt.Color;
+
 /**
  * @author Joseph Cumbo
  */
@@ -20,7 +22,7 @@ public class PictureBorder {
                 + " height " + picture.getHeight()
                 + " width " + picture.getWidth());
 
-        PictureBorder.addBorder(picture);
+        PictureBorder.addBorder(picture, Color.red, 20);
         picture.show();
 
         // Ideal method for closing the program:
@@ -34,26 +36,24 @@ public class PictureBorder {
         System.exit(0);
     }
 
-    public static void addBorder(Picture picture) {
-        // For my frame, I'm using a % based system.
-        // I will multiply the width and height of the image and multiply both
-        // by 2.5%, then storing the resulting values in the width and height
-        // objects. This will be used to check wether a pixel falls in the outer
-        // 2.5% of pixels.
-        int width = (int) (picture.getWidth() * 0.025);
-        int height = (int) (picture.getHeight() * 0.025);
-        // Now I am going to loop through every pixel in the image
+    /**
+     * Adds a border around the image with given color and width.
+     *
+     * @param picture The underlying image.
+     * @param color The color of the border around the image.
+     * @param width The width of the border around the image.
+     */
+    public static void addBorder(Picture picture, Color color, int width) {
+        // Loop through every pixel in the image.
         for (int x = 0; x < picture.getWidth(); x++) {
             for (int y = 0; y < picture.getHeight(); y++) {
-                // This statement will check if the pixel falls in the outer
-                // 2.5% of pixels in the image.
+                // This statement will check if the pixel falls in the border
+                // width.
                 if (x < width || x > (picture.getWidth() - width)
-                        || y < height || y > (picture.getHeight() - height)) {
-                    // Finally, we invert the pixel
+                        || y < width || y > (picture.getHeight() - width)) {
+                    // Set the pixel to the given color.
                     Pixel pixel = picture.getPixel(x, y);
-                    pixel.setRed(255 - pixel.getRed());
-                    pixel.setGreen(255 - pixel.getGreen());
-                    pixel.setBlue(255 - pixel.getBlue());
+                    pixel.setColor(color);
                 }
             }
         }
