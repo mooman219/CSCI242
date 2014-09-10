@@ -1,0 +1,8 @@
+2e55a6f Add documentation
+cfc5c81 Fix typing mistakes
+2c41591 Add sample files to lab2-3
+2533422 Remove requirement for 'negative' argument
+6d24904 Rename Negative to PictureBorder
+d69e0bd Change all pixels on the outer 2.5% of pixels to negative
+ed6104a Change pixel loop to iterate through each row/col
+ba6ae81 Start lab 2-3

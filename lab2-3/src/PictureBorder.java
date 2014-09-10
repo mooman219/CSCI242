@@ -20,6 +20,21 @@ public class PictureBorder {
                 + " height " + picture.getHeight()
                 + " width " + picture.getWidth());
 
+        PictureBorder.addBorder(picture);
+        picture.show();
+
+        // Ideal method for closing the program:
+        //picture.getPictureFrame().frame
+        //        .setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // Required method for closing the program:
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException exc) {
+        }
+        System.exit(0);
+    }
+
+    public static void addBorder(Picture picture) {
         // For my frame, I'm using a % based system.
         // I will multiply the width and height of the image and multiply both
         // by 2.5%, then storing the resulting values in the width and height
@@ -42,17 +57,5 @@ public class PictureBorder {
                 }
             }
         }
-
-        picture.show();
-
-        // Ideal method for closing the program:
-        //picture.getPictureFrame().frame
-        //        .setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // Required method for closing the program:
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException exc) {
-        }
-        System.exit(0);
     }
 }
