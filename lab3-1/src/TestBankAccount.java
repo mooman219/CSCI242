@@ -17,6 +17,8 @@ public class TestBankAccount {
         accounts.add(new CheckingAccount(64665.75, "Sharon Smith", false));
         accounts.add(new CDAccount(10000, "Phil Phillips"));
         accounts.add(new SavingsAccount(5000, "Bill Jones"));
+        accounts.add(new CheckingAccount(9000, "Joe Cumbo", true));
+        accounts.add(new SavingsAccount(50000, "Bill Clinton"));
 
         calculateInterest(accounts);
         generateReport(accounts);
