@@ -15,7 +15,7 @@ public class CheckingAccount extends BankAccount {
     @Override
     public void calcInterest() {
         if (bonus) {
-            this.addInterest(this.getCurrentBalance() * BONUS_MONTHLY_RATE);
+            addInterest(getCurrentBalance() * BONUS_MONTHLY_RATE);
         }
     }
 

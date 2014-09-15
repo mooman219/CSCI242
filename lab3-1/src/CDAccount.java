@@ -13,9 +13,9 @@ public class CDAccount extends BankAccount {
 
     @Override
     public void calcInterest() {
-        double growableBalance = this.getCurrentBalance() - MINIMUM_BALANCE;
+        double growableBalance = getCurrentBalance() - MINIMUM_BALANCE;
         if (growableBalance > 0) {
-            this.addInterest(growableBalance * MONTHLY_INTEREST_RATE);
+            addInterest(growableBalance * MONTHLY_INTEREST_RATE);
         }
     }
 
