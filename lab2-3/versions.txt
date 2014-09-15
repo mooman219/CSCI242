@@ -1,3 +1,5 @@
+b1ec97b Change border method to take color and width
+2be9628 Add separate method for creating the border
 2e55a6f Add documentation
 cfc5c81 Fix typing mistakes
 2c41591 Add sample files to lab2-3
