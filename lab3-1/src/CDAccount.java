@@ -19,13 +19,8 @@ public class CDAccount extends BankAccount {
         }
     }
 
-    public static void main(String[] args) {
-
-    }
-
     @Override
     public String toString() {
         return "Account Type: CD " + super.toString();
     }
-
 }
