@@ -42,5 +42,4 @@ public class CheckingAccount extends BankAccount {
     public String toString() {
         return "Account Type: Checking " + super.toString();
     }
-
 }
