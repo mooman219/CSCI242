@@ -13,7 +13,10 @@ public class CDAccount extends BankAccount {
 
     @Override
     public void calcInterest() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        double growableBalance = this.getCurrentBalance() - MINIMUM_BALANCE;
+        if (growableBalance > 0) {
+            this.addInterest(growableBalance * MONTHLY_INTEREST_RATE);
+        }
     }
 
     public static void main(String[] args) {
