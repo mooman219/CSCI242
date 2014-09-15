@@ -10,8 +10,8 @@ public class SavingsAccount extends BankAccount {
     public static double SAVINGS_MONTHLY_INTEREST_RATE = 0.03;
 
     /**
-     * A constructor for a CheckingAccount object. It accepts the amount of
-     * money deposited (the balance) when the account is created.
+     * A constructor for a Savings object. It accepts the amount of money
+     * deposited (the balance) when the account is created.
      *
      * @param newMoney The amount of money deposited when the account is opened
      * @param ownerName The owner of this account
