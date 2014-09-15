@@ -37,6 +37,11 @@ public class CDAccount extends BankAccount {
         }
     }
 
+    /**
+     * A printable version of this account.
+     *
+     * @return The account type, owner name, and the current balance.
+     */
     @Override
     public String toString() {
         return "Account Type: CD " + super.toString();
