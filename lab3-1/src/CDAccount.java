@@ -12,7 +12,7 @@ public class CDAccount extends BankAccount {
     /**
      * The interest rate for balances greater than the minimum - currently 6%.
      */
-    public static double MONTHLY_INTEREST_RATE = 0.06;
+    public static double MONTHLY_INTEREST_RATE = 0.06 / 12;
 
     /**
      * A constructor for a CDAccount object. It accepts the amount of money
@@ -26,8 +26,10 @@ public class CDAccount extends BankAccount {
     }
 
     /**
-     * Calculate interest for this account. The rules for earning interest are
-     * different for every kind of account.
+     * Calculate interest on this account. With C of D accounts no interest is
+     * earned on the minimum that must always be kept in the account. Interest
+     * is only earned on everything over that amount. Interest earned should be
+     * added to the current balance.
      */
     @Override
     public void calcInterest() {

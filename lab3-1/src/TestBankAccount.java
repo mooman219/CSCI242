@@ -18,7 +18,6 @@ public class TestBankAccount {
         accounts.add(new CDAccount(10000, "Phil Phillips"));
         accounts.add(new SavingsAccount(5000, "Bill Jones"));
 
-        generateReport(accounts);
         calculateInterest(accounts);
         generateReport(accounts);
     }

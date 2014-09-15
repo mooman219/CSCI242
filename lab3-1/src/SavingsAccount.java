@@ -7,7 +7,7 @@ public class SavingsAccount extends BankAccount {
     /**
      * The annual interest rate for a standard savings account is currently 3%.
      */
-    public static double SAVINGS_MONTHLY_INTEREST_RATE = 0.03;
+    public static double SAVINGS_MONTHLY_INTEREST_RATE = 0.03 / 12;
 
     /**
      * A constructor for a Savings object. It accepts the amount of money
@@ -21,8 +21,9 @@ public class SavingsAccount extends BankAccount {
     }
 
     /**
-     * Calculate interest for this account. The rules for earning interest are
-     * different for every kind of account.
+     * Calculate the interest for this account. Savings accounts earn interest
+     * on the entire current balance. Interest earned is calculated monthly, and
+     * added to the current balance.
      */
     @Override
     public void calcInterest() {

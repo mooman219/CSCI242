@@ -7,7 +7,7 @@ public class CheckingAccount extends BankAccount {
     /**
      * The interest rate for a bonus account - currently 1.5% per year.
      */
-    public static double BONUS_MONTHLY_RATE = 0.015;
+    public static double BONUS_MONTHLY_RATE = 0.015 / 12;
     private boolean bonus;
 
     /**
@@ -23,8 +23,8 @@ public class CheckingAccount extends BankAccount {
     }
 
     /**
-     * Calculate interest for this account. The rules for earning interest are
-     * different for every kind of account.
+     * Calculate interest for this account. Checking accounts earn interest only
+     * if a "bonus" account.
      */
     @Override
     public void calcInterest() {
