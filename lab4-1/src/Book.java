@@ -6,10 +6,11 @@
  */
 public abstract class Book {
 
-    private String title;
-    private String author;
-    private double cost;
-    private Media media;
+    // Everything is initalized because Duncan said to.
+    private String title = "";
+    private String author = "";
+    private double cost = 0d;
+    private Media media = Media.Paperback;
 
     /**
      * The Book constructor instantiates the instance with the specified values.
@@ -66,4 +67,19 @@ public abstract class Book {
      * @return true if this instance is for a final sale.
      */
     public abstract boolean isForSale();
+
+    /**
+     * The standard string represention prints the title on the first line,
+     * followed by the author on the second line, and the book media on the
+     * third line. The second and subsequent lines are indented by a single TAB
+     * character. Each line should be terminated with a period(.).
+     *
+     * @return standard string representation of Book.
+     */
+    @Override
+    public String toString() {
+        return getTitle() + "."
+                + "\n\t" + getAuthor() + "."
+                + "\n\t" + getMedia() + ".";
+    }
 }
