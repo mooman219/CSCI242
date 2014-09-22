@@ -80,6 +80,6 @@ public abstract class Book {
     public String toString() {
         return getTitle() + "."
                 + "\n\t" + getAuthor() + "."
-                + "\n\t" + getMedia() + ".";
+                + "\n\t" + media.name();
     }
 }

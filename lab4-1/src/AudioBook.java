@@ -8,7 +8,7 @@ public class AudioBook extends Book {
     private int numDiscs = 0;
 
     /**
-     * The Book constructor instantiates the instance with the specified values.
+     * The constructor instantiates this particular kind of Book instance.
      *
      * @param title The title of the book.
      * @param author The author of the book.
@@ -41,4 +41,15 @@ public class AudioBook extends Book {
         return false;
     }
 
+    /**
+     * The toString represents an AudioBook by adding ": {n} disks." to the
+     * standard string representation of a Book. The {n} in this case is the
+     * number of discs.
+     *
+     * @return string representation including the number of discs for the book.
+     */
+    @Override
+    public String toString() {
+        return super.toString() + ": " + numDiscs + " discs.";
+    }
 }
