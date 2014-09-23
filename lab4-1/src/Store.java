@@ -143,10 +143,43 @@ public class Store {
      * </pre>
      */
     public Book produceBook(String line) {
-
-                     // STUDENT:
-        // STUDENT: REPLACE THESE LINES WITH YOUR IMPLEMENTATION
-        return null; // STUDENT:
+        if (line != null && line.length() > 0) {
+            String[] params = line.split("~");
+            if (params.length > 2) {
+                String title = params[0];
+                String author = params[1];
+                int cost;
+                try {
+                    cost = Integer.parseInt(params[2]);
+                } catch (NumberFormatException ex) {
+                    System.out.println("Invalid cost.");
+                    return null;
+                }
+                if (params.length == 3) {
+                    return new PaperbackBook(title, author, cost);
+                } else {
+                    if (params[3].equalsIgnoreCase("leather")
+                            || params[3].equalsIgnoreCase("cloth")) {
+                        return new HardcoverBook(
+                                title, author, cost, params[3]);
+                    } else if (params[3].contains("://")) {
+                        return new ElectronicBook(
+                                title, author, cost, params[3]);
+                    } else {
+                        int disks;
+                        try {
+                            disks = Integer.parseInt(params[3]);
+                        } catch (NumberFormatException ex) {
+                            System.out.println("Invalid disk count.");
+                            return null;
+                        }
+                        return new AudioBook(title, author, cost, disks);
+                    }
+                }
+            }
+        }
+        System.out.println("Invalid line.");
+        return null;
     }
 
     /**
