@@ -1,0 +1,10 @@
+Ulysses~James Joyce~895
+Ulysses~James Joyce~3195~leather
+Ulysses~James Joyce~2395~cloth
+Ulysses~James Joyce~0~http://www.amazon.com
+Ulysses~James Joyce~1995~3
+Sometimes a Great Notion~Ken Kesey~895~4
+Designing Object-Oriented Software~Rebecca Wirfs-Brock, Brian Wilkerson, Lauren Wiener~0~http://booksRnotDead.com
+Design Patterns~Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides~5995~cloth
+The Elements of Style~William Strunk and E.B. White~325
+How to Solve It~George Polya~975~2
