@@ -28,7 +28,7 @@ public class AudioBook extends Book {
      */
     @Override
     public String getMedia() {
-        return super.getMedia() + ": " + numDiscs + " discs";
+        return super.getMedia() + ": " + numDiscs + " discs.";
     }
 
     /**
