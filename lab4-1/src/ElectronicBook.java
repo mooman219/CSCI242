@@ -29,7 +29,7 @@ public class ElectronicBook extends Book {
      */
     @Override
     public String getMedia() {
-        return super.getMedia() + " from " + theURL + ".";
+        return super.getMedia() + " : from " + theURL;
     }
 
     /**
