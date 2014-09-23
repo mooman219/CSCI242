@@ -1,0 +1,10 @@
+0d2a34b Format ElectronicBook's getMedia to meet requirements
+f94a7db Add test book lists
+9216b02 Implement produceBook
+bc22d5b Implement PaperbackBook class with documentation
+c6c0d42 Implement HardcoverBook class with documentation
+18c26ef Implement ElectronicBook class with documentation
+c450b42 Implement AudioBook class with documentation
+afc420b Implement book class with documentation
+425855f Add Media and Store classes from template
+806973c Start lab4
