@@ -74,7 +74,7 @@ public class ListObject implements DocObject {
      */
     @Override
     public List<DocObject> children() {
-
+        return Collections.unmodifiableList(children);
     }
 
     /**
@@ -85,8 +85,13 @@ public class ListObject implements DocObject {
      * this document node
      */
     @Override
-    public List<DocObject> children() {
-        return Collections.unmodifiableList(children);
+    public boolean contains(String s) {
+        for (DocObject child : children) {
+            if (child.contains(s)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -97,7 +102,14 @@ public class ListObject implements DocObject {
      */
     @Override
     public String generateHTML() {
-
+        StringBuilder ret = new StringBuilder();
+        String listType = ordered ? "ol" : "ul";
+        ret.append("<").append(listType).append(">\n");
+        for (DocObject child : children) {
+            ret.append("<li>").append(child.generateHTML()).append("</li>");
+        }
+        ret.append("</").append(listType).append(">\n");
+        return ret.toString();
     }
 
     /**
