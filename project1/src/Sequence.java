@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -67,7 +68,7 @@ public class Sequence implements DocObject {
      */
     @Override
     public List<DocObject> children() {
-        return children;
+        return Collections.unmodifiableList(children);
     }
 
     /**

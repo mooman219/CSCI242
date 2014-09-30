@@ -1,3 +1,4 @@
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,7 +33,8 @@ public class TextObject implements DocObject {
      */
     @Override
     public void addChild(int before, DocObject dObj) {
-
+        System.out.println("Unable to add children to TextObject.");
+        throw new BadChildException();
     }
 
     /**
@@ -43,7 +45,7 @@ public class TextObject implements DocObject {
      */
     @Override
     public long characterCount() {
-
+        return text.length();
     }
 
     /**
@@ -58,7 +60,7 @@ public class TextObject implements DocObject {
      */
     @Override
     public List<DocObject> children() {
-
+        return Collections.unmodifiableList(Collections.emptyList());
     }
 
     /**
@@ -70,7 +72,7 @@ public class TextObject implements DocObject {
      */
     @Override
     public boolean contains(String s) {
-
+        return text.contains(s);
     }
 
     /**
@@ -81,7 +83,7 @@ public class TextObject implements DocObject {
      */
     @Override
     public String generateHTML() {
-
+        return getText();
     }
 
     /**
@@ -100,7 +102,7 @@ public class TextObject implements DocObject {
      */
     @Override
     public boolean isRoot() {
-
+        return false;
     }
 
     /**
@@ -116,7 +118,7 @@ public class TextObject implements DocObject {
      */
     @Override
     public void replace(DocObject oldObj, DocObject newObj) {
-
+        return;
     }
 
     /**
@@ -130,7 +132,6 @@ public class TextObject implements DocObject {
      */
     @Override
     public void replace(String oldS, String newS) {
-
+        text = text.replace(oldS, newS);
     }
-
 }
