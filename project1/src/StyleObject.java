@@ -51,7 +51,7 @@ public class StyleObject implements DocObject {
      */
     @Override
     public long characterCount() {
-        return dObj.characterCount() + 7; // <?></?> == 7 Characters
+        return dObj.characterCount();
     }
 
     /**
@@ -94,7 +94,7 @@ public class StyleObject implements DocObject {
         String character = (style == TextStyle.bold) ? "b" : "i";
         return "<" + character + ">"
                 + dObj.generateHTML()
-                + "</" + character + ">";
+                + "</" + character + ">\n";
     }
 
     /**

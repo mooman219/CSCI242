@@ -51,7 +51,7 @@ public class HeaderObject implements DocObject {
      */
     @Override
     public long characterCount() {
-        return dObj.characterCount() + 9; // <h#></h#>
+        return dObj.characterCount();
     }
 
     /**
@@ -93,7 +93,7 @@ public class HeaderObject implements DocObject {
     public String generateHTML() {
         return "<h" + level + ">"
                 + dObj.generateHTML()
-                + "</h" + level + ">";
+                + "</h" + level + ">\n";
     }
 
     /**

@@ -45,7 +45,7 @@ public class TextObject implements DocObject {
      */
     @Override
     public long characterCount() {
-        return text.length();
+        return text.replace(" ", "").length();
     }
 
     /**
@@ -83,7 +83,7 @@ public class TextObject implements DocObject {
      */
     @Override
     public String generateHTML() {
-        return getText();
+        return text;
     }
 
     /**
