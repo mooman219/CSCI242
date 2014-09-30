@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class Sequence implements DocObject {
 
+    // The children of this Sequence
     private List<DocObject> children = new ArrayList<DocObject>();
 
     /**
@@ -66,7 +67,7 @@ public class Sequence implements DocObject {
      */
     @Override
     public List<DocObject> children() {
-
+        return children;
     }
 
     /**
@@ -78,7 +79,12 @@ public class Sequence implements DocObject {
      */
     @Override
     public boolean contains(String s) {
-
+        for (DocObject child : children) {
+            if (child.contains(s)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -89,7 +95,14 @@ public class Sequence implements DocObject {
      */
     @Override
     public String generateHTML() {
-
+        StringBuilder ret = new StringBuilder();
+        for (DocObject child : children) {
+            ret.append(child.generateHTML()).append("\n");
+        }
+        if (children.size() > 0) {
+            ret.delete(ret.length() - 2, ret.length());
+        }
+        return ret.toString();
     }
 
     /**
@@ -99,7 +112,7 @@ public class Sequence implements DocObject {
      */
     @Override
     public boolean isRoot() {
-
+        return false;
     }
 
     /**
@@ -129,7 +142,8 @@ public class Sequence implements DocObject {
      */
     @Override
     public void replace(String oldS, String newS) {
-
+        for (DocObject child : children) {
+            child.replace(oldS, newS);
+        }
     }
-
 }
