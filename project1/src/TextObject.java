@@ -7,12 +7,16 @@ import java.util.List;
  */
 public class TextObject implements DocObject {
 
+    // The string to be contained in this node
+    private String text;
+
     /**
-     * Create an empty ParagraphObject.
+     * Create a text object.
      *
-     * @param dObj
+     * @param text The string to be contained in this node
      */
-    public TextObject(DocObject dObj) {
+    public TextObject(String text) {
+        this.text = text;
     }
 
     /**
@@ -70,7 +74,7 @@ public class TextObject implements DocObject {
     }
 
     /**
-     * Convert this subtree of the document to plain-text HTML.
+     * A string of plain text
      *
      * @return a string containing legal XHTML that represents the doc tree
      * rooted at this node
@@ -78,6 +82,15 @@ public class TextObject implements DocObject {
     @Override
     public String generateHTML() {
 
+    }
+
+    /**
+     * A string of plain text.
+     *
+     * @return the TextObject's internal string from the constructor.
+     */
+    public String getText() {
+        return text;
     }
 
     /**

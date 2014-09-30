@@ -1,4 +1,3 @@
-import java.time.format.TextStyle;
 import java.util.List;
 
 /**
@@ -9,12 +8,16 @@ import java.util.List;
  */
 public class StyleObject implements DocObject {
 
+    private TextStyle style;
+
     /**
-     * Create an empty ParagraphObject.
+     * Create an empty StyleObject.
      *
+     * @param style
      * @param dObj
      */
     public StyleObject(TextStyle style, DocObject dObj) {
+        this.style = style;
     }
 
     /**

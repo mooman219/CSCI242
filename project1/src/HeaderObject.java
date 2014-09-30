@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class HeaderObject implements DocObject {
 
+    // The header level (Bounds not checked; should be 1-5.)
     private int level;
 
     /**

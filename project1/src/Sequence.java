@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,6 +8,8 @@ import java.util.List;
  * @author James Heliotis, Joseph Cumbo
  */
 public class Sequence implements DocObject {
+
+    private List<DocObject> children = new ArrayList<DocObject>();
 
     /**
      * Create an empty Sequence.
@@ -27,7 +30,13 @@ public class Sequence implements DocObject {
      */
     @Override
     public void addChild(int before, DocObject dObj) {
-
+        if (before < children.size()) {
+            children.add(0, dObj);
+        } else if (before > children.size()) {
+            children.add(dObj);
+        } else {
+            children.add(before, dObj);
+        }
     }
 
     /**
@@ -38,7 +47,11 @@ public class Sequence implements DocObject {
      */
     @Override
     public long characterCount() {
-
+        long count = 0;
+        for (DocObject child : children) {
+            count += child.characterCount();
+        }
+        return count;
     }
 
     /**
