@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -10,6 +12,8 @@ public class HeaderObject implements DocObject {
 
     // The header level (Bounds not checked; should be 1-5.)
     private int level;
+    // The DocObject being wrapped.
+    private DocObject dObj;
 
     /**
      * Create a HeaderObject of the given level
@@ -19,6 +23,7 @@ public class HeaderObject implements DocObject {
      */
     public HeaderObject(int level, DocObject dObj) {
         this.level = level;
+        this.dObj = dObj;
     }
 
     /**
@@ -34,7 +39,8 @@ public class HeaderObject implements DocObject {
      */
     @Override
     public void addChild(int before, DocObject dObj) {
-
+        System.out.println("Unable to add children to HeaderObject.");
+        throw new BadChildException();
     }
 
     /**
@@ -45,7 +51,7 @@ public class HeaderObject implements DocObject {
      */
     @Override
     public long characterCount() {
-
+        return dObj.characterCount() + 9; // <h#></h#>
     }
 
     /**
@@ -60,7 +66,9 @@ public class HeaderObject implements DocObject {
      */
     @Override
     public List<DocObject> children() {
-
+        List<DocObject> ret = new ArrayList<DocObject>();
+        ret.add(dObj);
+        return Collections.unmodifiableList(ret);
     }
 
     /**
@@ -72,7 +80,7 @@ public class HeaderObject implements DocObject {
      */
     @Override
     public boolean contains(String s) {
-
+        return dObj.contains(s);
     }
 
     /**
@@ -83,7 +91,9 @@ public class HeaderObject implements DocObject {
      */
     @Override
     public String generateHTML() {
-
+        return "<h" + level + ">"
+                + dObj.generateHTML()
+                + "</h" + level + ">";
     }
 
     /**
@@ -93,7 +103,7 @@ public class HeaderObject implements DocObject {
      */
     @Override
     public boolean isRoot() {
-
+        return false;
     }
 
     /**
@@ -123,7 +133,6 @@ public class HeaderObject implements DocObject {
      */
     @Override
     public void replace(String oldS, String newS) {
-
+        dObj.replace(oldS, newS);
     }
-
 }

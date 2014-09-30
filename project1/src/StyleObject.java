@@ -39,7 +39,7 @@ public class StyleObject implements DocObject {
      */
     @Override
     public void addChild(int before, DocObject dObj) {
-        System.out.println("Unable to add children to TextObject.");
+        System.out.println("Unable to add children to StyleObject.");
         throw new BadChildException();
     }
 
@@ -51,7 +51,7 @@ public class StyleObject implements DocObject {
      */
     @Override
     public long characterCount() {
-        return dObj.characterCount();
+        return dObj.characterCount() + 7; // <?></?> == 7 Characters
     }
 
     /**
