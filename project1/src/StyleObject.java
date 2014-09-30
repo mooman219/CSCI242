@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -8,16 +10,20 @@ import java.util.List;
  */
 public class StyleObject implements DocObject {
 
+    // Style that will wrap the given DocObject.
     private TextStyle style;
+    // The DocObject being wrapped.
+    private DocObject dObj;
 
     /**
      * Create an empty StyleObject.
      *
-     * @param style
-     * @param dObj
+     * @param style Style that will wrap the given DocObject.
+     * @param dObj The DocObject being wrapped.
      */
     public StyleObject(TextStyle style, DocObject dObj) {
         this.style = style;
+        this.dObj = dObj;
     }
 
     /**
@@ -33,7 +39,8 @@ public class StyleObject implements DocObject {
      */
     @Override
     public void addChild(int before, DocObject dObj) {
-
+        System.out.println("Unable to add children to TextObject.");
+        throw new BadChildException();
     }
 
     /**
@@ -44,7 +51,7 @@ public class StyleObject implements DocObject {
      */
     @Override
     public long characterCount() {
-
+        return dObj.characterCount();
     }
 
     /**
@@ -59,7 +66,9 @@ public class StyleObject implements DocObject {
      */
     @Override
     public List<DocObject> children() {
-
+        List<DocObject> ret = new ArrayList<DocObject>();
+        ret.add(dObj);
+        return Collections.unmodifiableList(ret);
     }
 
     /**
@@ -71,7 +80,7 @@ public class StyleObject implements DocObject {
      */
     @Override
     public boolean contains(String s) {
-
+        return dObj.contains(s);
     }
 
     /**
@@ -82,7 +91,10 @@ public class StyleObject implements DocObject {
      */
     @Override
     public String generateHTML() {
-
+        String character = (style == TextStyle.bold) ? "b" : "i";
+        return "<" + character + ">"
+                + dObj.generateHTML()
+                + "</" + character + ">";
     }
 
     /**
@@ -92,7 +104,7 @@ public class StyleObject implements DocObject {
      */
     @Override
     public boolean isRoot() {
-
+        return false;
     }
 
     /**
@@ -122,7 +134,6 @@ public class StyleObject implements DocObject {
      */
     @Override
     public void replace(String oldS, String newS) {
-
+        dObj.replace(oldS, newS);
     }
-
 }
