@@ -93,7 +93,7 @@ public class HeaderObject implements DocObject {
     public String generateHTML() {
         return "<h" + level + ">"
                 + dObj.generateHTML()
-                + "</h" + level + ">\n";
+                + "</h" + level + ">";
     }
 
     /**

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -7,7 +9,11 @@ import java.util.List;
  */
 public class ListObject implements DocObject {
 
+    // If true, the list children are numbered; if false, they
+    // are simply bulleted when HTML is generated.
     private boolean ordered;
+    // The children of this Sequence
+    private List<DocObject> children = new ArrayList<DocObject>();
 
     /**
      * Create an empty ListObject.
@@ -32,7 +38,13 @@ public class ListObject implements DocObject {
      */
     @Override
     public void addChild(int before, DocObject dObj) {
-
+        if (before < 0) {
+            children.add(0, dObj);
+        } else if (before > children.size()) {
+            children.add(dObj);
+        } else {
+            children.add(before, dObj);
+        }
     }
 
     /**
@@ -43,7 +55,11 @@ public class ListObject implements DocObject {
      */
     @Override
     public long characterCount() {
-
+        long count = 0;
+        for (DocObject child : children) {
+            count += child.characterCount();
+        }
+        return count;
     }
 
     /**
@@ -69,8 +85,8 @@ public class ListObject implements DocObject {
      * this document node
      */
     @Override
-    public boolean contains(String s) {
-
+    public List<DocObject> children() {
+        return Collections.unmodifiableList(children);
     }
 
     /**
@@ -91,7 +107,7 @@ public class ListObject implements DocObject {
      */
     @Override
     public boolean isRoot() {
-
+        return false;
     }
 
     /**
@@ -121,7 +137,8 @@ public class ListObject implements DocObject {
      */
     @Override
     public void replace(String oldS, String newS) {
-
+        for (DocObject child : children) {
+            child.replace(oldS, newS);
+        }
     }
-
 }

@@ -32,7 +32,7 @@ public class Sequence implements DocObject {
      */
     @Override
     public void addChild(int before, DocObject dObj) {
-        if (before < children.size()) {
+        if (before < 0) {
             children.add(0, dObj);
         } else if (before > children.size()) {
             children.add(dObj);
@@ -98,10 +98,7 @@ public class Sequence implements DocObject {
     public String generateHTML() {
         StringBuilder ret = new StringBuilder();
         for (DocObject child : children) {
-            ret.append(child.generateHTML()).append("\n");
-        }
-        if (children.size() > 0) {
-            ret.delete(ret.length() - 2, ret.length());
+            ret.append(child.generateHTML());
         }
         return ret.toString();
     }

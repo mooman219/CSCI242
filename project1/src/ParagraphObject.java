@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -7,12 +9,16 @@ import java.util.List;
  */
 public class ParagraphObject implements DocObject {
 
+    // The DocObject being wrapped.
+    private DocObject dObj;
+
     /**
-     * Create an empty ParagraphObject.
+     * Create an ParagraphObject.
      *
      * @param dObj
      */
     public ParagraphObject(DocObject dObj) {
+        this.dObj = dObj;
     }
 
     /**
@@ -28,7 +34,8 @@ public class ParagraphObject implements DocObject {
      */
     @Override
     public void addChild(int before, DocObject dObj) {
-
+        System.out.println("Unable to add children to RootObject.");
+        throw new BadChildException();
     }
 
     /**
@@ -39,7 +46,7 @@ public class ParagraphObject implements DocObject {
      */
     @Override
     public long characterCount() {
-
+        return dObj.characterCount();
     }
 
     /**
@@ -54,7 +61,9 @@ public class ParagraphObject implements DocObject {
      */
     @Override
     public List<DocObject> children() {
-
+        List<DocObject> ret = new ArrayList<DocObject>();
+        ret.add(dObj);
+        return Collections.unmodifiableList(ret);
     }
 
     /**
@@ -66,7 +75,7 @@ public class ParagraphObject implements DocObject {
      */
     @Override
     public boolean contains(String s) {
-
+        return dObj.contains(s);
     }
 
     /**
@@ -77,7 +86,7 @@ public class ParagraphObject implements DocObject {
      */
     @Override
     public String generateHTML() {
-
+        return "<p>\n" + dObj.generateHTML() + "\n</p>\n";
     }
 
     /**
@@ -87,7 +96,7 @@ public class ParagraphObject implements DocObject {
      */
     @Override
     public boolean isRoot() {
-
+        return false;
     }
 
     /**
@@ -117,7 +126,6 @@ public class ParagraphObject implements DocObject {
      */
     @Override
     public void replace(String oldS, String newS) {
-
+        dObj.replace(oldS, newS);
     }
-
 }
