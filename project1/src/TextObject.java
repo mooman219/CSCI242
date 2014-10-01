@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -61,7 +62,7 @@ public class TextObject implements DocObject {
      */
     @Override
     public List<DocObject> children() {
-        return Collections.unmodifiableList(Collections.emptyList());
+        return Collections.unmodifiableList(new ArrayList<DocObject>());
     }
 
     /**

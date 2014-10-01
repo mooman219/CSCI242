@@ -1,0 +1,11 @@
+920551e Correct CharacterCount
+c970305 Implement ListObject
+460c12b Implement ParagraphObject
+d3f618c Implement RootObject
+1b21cae Implement HeaderObject
+9c6ab94 Implement StyleObject
+f1b4d6a Implement TextObject
+210a4bc Implement Sequence
+cf0fa1f Add java classes from proj1_stuff.jar
+61fdd62 Add base outline for HeaderObject, ListObject, ParagraphObject, RootObject, Sequence, StyleObject, and TextObject
+474a710 Add DocObject
