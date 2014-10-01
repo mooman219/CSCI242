@@ -45,7 +45,8 @@ public class TextObject implements DocObject {
      */
     @Override
     public long characterCount() {
-        return text.replace(" ", "").length();
+        System.out.println("TEST: " + text.replaceAll("\\s+", "") + ", " + text.replaceAll("\\s+", "").length());
+        return text.replaceAll("\\s+", "").length();
     }
 
     /**

@@ -120,7 +120,11 @@ public class StyleObject implements DocObject {
      */
     @Override
     public void replace(DocObject oldObj, DocObject newObj) {
-
+        if (dObj == oldObj) {
+            dObj = newObj;
+        } else {
+            dObj.replace(oldObj, newObj);
+        }
     }
 
     /**

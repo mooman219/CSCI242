@@ -135,7 +135,15 @@ public class ListObject implements DocObject {
      */
     @Override
     public void replace(DocObject oldObj, DocObject newObj) {
-
+        int size = children.size();
+        for (int i = 0; i < size; i++) {
+            DocObject child = children.get(i);
+            if (child == oldObj) {
+                children.set(i, newObj);
+            } else {
+                child.replace(oldObj, newObj);
+            }
+        }
     }
 
     /**
