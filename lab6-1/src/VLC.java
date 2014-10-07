@@ -1,4 +1,8 @@
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -6,6 +10,7 @@ import java.util.Scanner;
  */
 public class VLC {
 
+    // Scanner used for getting the user's input.
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -28,16 +33,35 @@ public class VLC {
 
     }
 
+    public static ArrayHeap<Symbol> calculateFrequencies(File file) throws IOException {
+        ArrayHeap<Symbol> heap = new ArrayHeap<Symbol>();
+        FileReader fileReader = new FileReader(file);
+        BufferedReader reader = new BufferedReader(fileReader);
+        String line = "";
+        HashMap<Character, Integer> symbols = new HashMap<Character, Integer>();
+        while ((line = reader.readLine()) != null) {
+            for (int i = 0; i < line.length(); i++) {
+                Integer frequency = symbols.get(line.charAt(i));
+                if () {
+
+                }
+            }
+        }
+    }
+
     public VLC() {
 
     }
 
+    /**
+     * The Symbol class represents a character with a frequency.
+     */
     public static class Symbol implements Comparable<Symbol> {
 
         // The caracter this class represents
         private final char character;
         // The frequency of the 'character'
-        private final int frequency;
+        private int frequency;
 
         /**
          * Creates a symbol class.
@@ -66,6 +90,13 @@ public class VLC {
          */
         public int getFrequency() {
             return frequency;
+        }
+
+        /**
+         * Increments the frequency of this symbol by 1.
+         */
+        public void incrementFrequency() {
+            frequency++;
         }
 
         /**
