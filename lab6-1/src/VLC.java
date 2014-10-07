@@ -27,4 +27,34 @@ public class VLC {
         }
 
     }
+
+    public VLC() {
+
+    }
+
+    public static class Symbol implements Comparable<Symbol> {
+
+        private final char character;
+        private final int frequency;
+
+        public Symbol(char character, int frequency) {
+            this.character = character;
+            this.frequency = frequency;
+        }
+
+        public char getCharacter() {
+            return character;
+        }
+
+        public int getFrequency() {
+            return frequency;
+        }
+
+        @Override
+        public int compareTo(Symbol o) {
+            return o.getFrequency() < frequency
+                    ? -1 : o.getFrequency() > frequency
+                            ? 1 : 0;
+        }
+    }
 }
