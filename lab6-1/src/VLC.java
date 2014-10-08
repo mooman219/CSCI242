@@ -13,6 +13,11 @@ public class VLC {
     // Scanner used for getting the user's input.
     private static Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Standard main method.
+     *
+     * @param args argument not used.
+     */
     public static void main(String[] args) {
         String input = "";
         while (true) {
@@ -31,25 +36,52 @@ public class VLC {
             return;
         }
 
-    }
-
-    public static ArrayHeap<Symbol> calculateFrequencies(File file) throws IOException {
-        ArrayHeap<Symbol> heap = new ArrayHeap<Symbol>();
-        FileReader fileReader = new FileReader(file);
-        BufferedReader reader = new BufferedReader(fileReader);
-        String line = "";
-        HashMap<Character, Integer> symbols = new HashMap<Character, Integer>();
-        while ((line = reader.readLine()) != null) {
-            for (int i = 0; i < line.length(); i++) {
-                Integer frequency = symbols.get(line.charAt(i));
-                if () {
-
-                }
-            }
+        try {
+            ArrayHeap<Symbol> heap = calculateFrequencies(file);
+        } catch (IOException ex) {
+            System.out.println("Error reading file.");
+            return;
         }
     }
 
-    public VLC() {
+    /**
+     * Parses all the characters in a file and gets the frequency of each one,
+     * returning the results in an ArrayHeap.
+     *
+     * @param file the file being read.
+     * @return an ArrayHeap of Symbols.
+     * @throws IOException if there is an error while reading the file.
+     */
+    public static ArrayHeap<Symbol> calculateFrequencies(File file) throws IOException {
+        //
+        // Build a map of the characters
+        //
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        HashMap<Character, Symbol> symbols = new HashMap<Character, Symbol>();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            for (int i = 0; i < line.length(); i++) {
+                char character = line.charAt(i);
+                Symbol symbol = symbols.get(character);
+                if (symbol == null) {
+                    symbol = new Symbol(character, 0);
+                    symbols.put(character, symbol);
+                }
+                symbol.incrementFrequency();
+            }
+        }
+        reader.close();
+        //
+        // Use the map to build an ArrayHeap which is required in the lab.
+        //
+        ArrayHeap<Symbol> heap = new ArrayHeap<Symbol>();
+        for (Symbol entry : symbols.values()) {
+            heap.add(entry);
+        }
+        return heap;
+    }
+
+    public VLC(ArrayHeap<Symbol> heap) {
 
     }
 
