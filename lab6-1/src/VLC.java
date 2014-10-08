@@ -131,6 +131,17 @@ public class VLC {
         }
 
         /**
+         * Takes the contents of the given 'node' and adds them to this Node.
+         * This is faster then adding each symbol from given 'node' one by one.
+         *
+         * @param node the node being merged.
+         */
+        public void addNode(Node node) {
+            this.symbols.addAll(node.symbols);
+            this.totalFrequency += node.totalFrequency;
+        }
+
+        /**
          * Prepends the given 'prefix' to all symbols under this Node.
          *
          * @param prefix the prefix to prepend.
