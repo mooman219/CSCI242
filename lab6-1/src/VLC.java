@@ -75,8 +75,8 @@ public class VLC {
         // Use the map to build an ArrayHeap which is required in the lab.
         //
         ArrayHeap<Symbol> heap = new ArrayHeap<Symbol>();
-        for (Symbol entry : symbols.values()) {
-            heap.add(entry);
+        for (Symbol sym : symbols.values()) {
+            heap.add(sym);
         }
         return heap;
     }
@@ -94,6 +94,7 @@ public class VLC {
         private final char character;
         // The frequency of the 'character'
         private int frequency;
+        private String code = "";
 
         /**
          * Creates a symbol class.
@@ -125,6 +126,15 @@ public class VLC {
         }
 
         /**
+         * Returns the current code for this symbol.
+         *
+         * @return the code.
+         */
+        public String getCode() {
+            return code;
+        }
+
+        /**
          * Increments the frequency of this symbol by 1.
          */
         public void incrementFrequency() {
@@ -132,18 +142,27 @@ public class VLC {
         }
 
         /**
+         * Prepends the current code with the given 'prefix'.
+         *
+         * @param prefix the prefix to prepend.
+         */
+        public void prependCode(String prefix) {
+            this.code = prefix + code;
+        }
+
+        /**
          * Compares this symbol to a given symbol.
          *
          * @param sym the symbol that will be compared against.
-         * @return -1 if the frequency of 'sym' is less than the frequency of
-         * this class. 0 if the frequencies are equal. 1 if the frequency of
+         * @return 1 if the frequency of 'sym' is less than the frequency of
+         * this class. 0 if the frequencies are equal. -1 if the frequency of
          * 'sym' is greater than this class.
          */
         @Override
         public int compareTo(Symbol sym) {
             return sym.getFrequency() < frequency
-                    ? -1 : sym.getFrequency() > frequency
-                            ? 1 : 0;
+                    ? 1 : sym.getFrequency() > frequency
+                            ? -1 : 0;
         }
     }
 }
