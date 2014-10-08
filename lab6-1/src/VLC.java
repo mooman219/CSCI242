@@ -43,6 +43,15 @@ public class VLC {
         VLC vlc = new VLC(file);
         try {
             Node result = vlc.calculateEncoding();
+            for (Symbol symbol : result.getSymbols()) {
+                System.out.println("Symbol: " + symbol.getCharacter()
+                        + " Code: " + symbol.getCode()
+                        + "\tFrequency: " + symbol.getFrequency());
+            }
+            System.out.println("Average VLC codeword length: "
+                    + result.getAvgVariableCodeLength() + " bits per symbol");
+            System.out.println("Average Fixed codeword length: "
+                    + result.getAvgFixedCodeLength() + " bits per symbol");
         } catch (IOException ex) {
             System.out.println("Unable to read file.");
         }
@@ -139,7 +148,7 @@ public class VLC {
         // List of symbols under this Node.
         private ArrayList<Symbol> symbols = new ArrayList<Symbol>();
         // Current total frequency of all symbols under this Node.
-        private int totalFrequency;
+        private int totalFrequency = 0;
 
         /**
          * Initializes an empty Node.
@@ -162,12 +171,12 @@ public class VLC {
          *
          * @return the average variable code length.
          */
-        public double calculateAverageVariableCodeLength() {
+        public double getAvgVariableCodeLength() {
             double averageLength = 0;
             for (Symbol symbol : symbols) {
-                averageLength += symbol.getCode().length();
+                averageLength += symbol.getCode().length() * symbol.getFrequency();
             }
-            return averageLength / (symbols.isEmpty() ? 1 : symbols.size());
+            return averageLength / (totalFrequency == 0 ? 1 : totalFrequency);
         }
 
         /**
@@ -176,8 +185,8 @@ public class VLC {
          *
          * @return the average fixed code length.
          */
-        public double calculateAverageFixedCodeLength() {
-            return Math.ceil(Math.log10(symbols.size()));
+        public double getAvgFixedCodeLength() {
+            return symbols.isEmpty() ? 0 : Math.ceil(Math.log10(symbols.size()) + 1);
         }
 
         /**
