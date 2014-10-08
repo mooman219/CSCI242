@@ -10,6 +10,9 @@ import java.util.Scanner;
  * The VLC class will calculate the optimal variable length encoding for a given
  * file.
  *
+ * I apologize for everything being in one class, but TRY (lab submitting
+ * program) only accepted the VLC.java file.
+ *
  * @author Joseph Cumbo
  */
 public class VLC {
@@ -43,12 +46,12 @@ public class VLC {
         VLC vlc = new VLC(file);
         try {
             Node result = vlc.calculateEncoding();
+            System.out.println("Variable Length Code output");
+            System.out.println("--------------------------------------------");
             for (Symbol symbol : result.getSymbols()) {
-                System.out.println("Symbol: " + symbol.getCharacter()
-                        + " Code: " + symbol.getCode()
-                        + "\tFrequency: " + symbol.getFrequency());
+                System.out.printf("Symbol: %1s Code: %6s Frequency: %5d\n", symbol.getCharacter(), symbol.getCode(), symbol.getFrequency());
             }
-            System.out.println("Average VLC codeword length: "
+            System.out.println("\nAverage VLC codeword length: "
                     + result.getAvgVariableCodeLength() + " bits per symbol");
             System.out.println("Average Fixed codeword length: "
                     + result.getAvgFixedCodeLength() + " bits per symbol");
@@ -70,10 +73,11 @@ public class VLC {
     }
 
     /**
-     * Calculates the
+     * Calculates the variable length encoding for the file. The result is
+     * returned in the form of a node.
      *
-     * @return
-     * @throws IOException
+     * @return the final node leftover.
+     * @throws IOException if there is an exception while parsing the file.
      */
     public Node calculateEncoding() throws IOException {
         ArrayHeap<Node> nodes = calculateFrequencies();
