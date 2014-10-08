@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 /**
+ * The VLC class will calculate the optimal variable length encoding for a given
+ * file.
+ *
  * @author Joseph Cumbo
  */
 public class VLC {
@@ -88,6 +91,12 @@ public class VLC {
 
     }
 
+    /**
+     * The Node class represents a list of symbols and their cumulative
+     * frequency.
+     *
+     * @author Joseph Cumbo
+     */
     public static class Node implements Comparable<Node> {
 
         // List of symbols under this Node.
@@ -170,6 +179,8 @@ public class VLC {
 
     /**
      * The Symbol class represents a character with a frequency.
+     *
+     * @author Joseph Cumbo
      */
     public static class Symbol {
 
