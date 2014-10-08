@@ -85,21 +85,46 @@ public class VLC {
 
     }
 
+    public static class Node implements Comparable<Node> {
+
+        private int frequency;
+
+        public int getFrequency() {
+            return frequency;
+        }
+
+        /**
+         * Compares this node to a given node.
+         *
+         * @param sym the symbol that will be compared against.
+         * @return 1 if the frequency this Node is greater than the given. 0 if
+         * the frequencies are equal. -1 if the frequency of this Node is less
+         * than the given.
+         */
+        @Override
+        public int compareTo(Node node) {
+            return node.getFrequency() < frequency
+                    ? 1 : node.getFrequency() > frequency
+                            ? -1 : 0;
+        }
+    }
+
     /**
      * The Symbol class represents a character with a frequency.
      */
-    public static class Symbol implements Comparable<Symbol> {
+    public static class Symbol {
 
-        // The caracter this class represents
+        // The caracter this Symbol represents
         private final char character;
         // The frequency of the 'character'
         private int frequency;
+        // The code for the Symbol
         private String code = "";
 
         /**
          * Creates a symbol class.
          *
-         * @param character the 'character' this class is representing.
+         * @param character the 'character' this Symbol is representing.
          * @param frequency the frequency of the given 'character'.
          */
         public Symbol(char character, int frequency) {
@@ -110,16 +135,16 @@ public class VLC {
         /**
          * Gets the character this symbol is representing.
          *
-         * @return the character representing this class.
+         * @return the character representing this Symbol.
          */
         public char getCharacter() {
             return character;
         }
 
         /**
-         * Gets the frequency of the character this class represents.
+         * Gets the frequency of the character this Symbol represents.
          *
-         * @return the frequency of the character this class represents.
+         * @return the frequency of the character this Symbol represents.
          */
         public int getFrequency() {
             return frequency;
@@ -148,21 +173,6 @@ public class VLC {
          */
         public void prependCode(String prefix) {
             this.code = prefix + code;
-        }
-
-        /**
-         * Compares this symbol to a given symbol.
-         *
-         * @param sym the symbol that will be compared against.
-         * @return 1 if the frequency of 'sym' is less than the frequency of
-         * this class. 0 if the frequencies are equal. -1 if the frequency of
-         * 'sym' is greater than this class.
-         */
-        @Override
-        public int compareTo(Symbol sym) {
-            return sym.getFrequency() < frequency
-                    ? 1 : sym.getFrequency() > frequency
-                            ? -1 : 0;
         }
     }
 }
