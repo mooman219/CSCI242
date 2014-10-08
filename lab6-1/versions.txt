@@ -1,0 +1,17 @@
+98be1de Break Node and Symbol out of VLC
+49b8063 Actually document everything
+3effb20 Fix edge cases and generate output
+b374981 Add method to calculate encoding
+7a655f9 Add method code calculating the average fixed and average code lengths in Node
+150a7f3 Remove static from calculateFrequencies
+0082269 Document the classes
+fdf38e3 Implement addNode function
+89e0d3f Document Node implementation, update VLC to use Node
+5aa491d Reword JavaDocs and start Node implementation
+9a0f206 Add code variable to Symbol
+f9a050a Create a method to calculate the frequencies of the characters in a file
+c6c59e5 Add a increment function to Symbol
+0d93319 Document the Symbol class
+0b4cb1d Implement nested class Symbol
+14abc62 Parse user input in VLC
+0834aee Start lab6-1
