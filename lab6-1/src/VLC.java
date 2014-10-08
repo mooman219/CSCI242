@@ -39,13 +39,6 @@ public class VLC {
             System.out.println("File '" + input + "' does not exist.");
             return;
         }
-
-        try {
-            ArrayHeap<Node> heap = calculateFrequencies(file);
-        } catch (IOException ex) {
-            System.out.println("Error reading file.");
-            return;
-        }
     }
 
     // The file that will be read.
@@ -125,6 +118,30 @@ public class VLC {
          */
         public ArrayList<Symbol> getSymbols() {
             return symbols;
+        }
+
+        /**
+         * Calculates the average variable code length based off the symbol's
+         * currently under this Node.
+         *
+         * @return the average variable code length.
+         */
+        public double calculateAverageVariableCodeLength() {
+            double averageLength = 0;
+            for (Symbol symbol : symbols) {
+                averageLength += symbol.getCode().length();
+            }
+            return averageLength / 4;
+        }
+
+        /**
+         * Calculates the average fixed code length required for representing
+         * the symbols currently under this Node.
+         *
+         * @return the average fixed code length.
+         */
+        public double calculateAverageFixedCodeLength() {
+            return Math.ceil(Math.log10(symbols.size()));
         }
 
         /**
