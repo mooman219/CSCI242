@@ -39,6 +39,13 @@ public class VLC {
             System.out.println("File '" + input + "' does not exist.");
             return;
         }
+
+        VLC vlc = new VLC(file);
+        try {
+            Node result = vlc.calculateEncoding();
+        } catch (IOException ex) {
+            System.out.println("Unable to read file.");
+        }
     }
 
     // The file that will be read.
@@ -51,6 +58,35 @@ public class VLC {
      */
     public VLC(File file) {
         this.file = file;
+    }
+
+    /**
+     * Calculates the
+     *
+     * @return
+     * @throws IOException
+     */
+    public Node calculateEncoding() throws IOException {
+        ArrayHeap<Node> nodes = calculateFrequencies();
+        boolean firstRun = true;
+        while (!nodes.isEmpty()) {
+            Node right = nodes.removeMin();
+            if (nodes.isEmpty()) {
+                if (firstRun) { // Edge case
+                    right.prependCode("1");
+                }
+                return right;
+            } else {
+                Node left = nodes.removeMin();
+                right.prependCode("0");
+                left.prependCode("1");
+                left.addNode(right);
+                nodes.add(left);
+            }
+            firstRun = false;
+        }
+        System.out.println("Not enough nodes to calculate encoding.");
+        return new Node();
     }
 
     /**
@@ -131,7 +167,7 @@ public class VLC {
             for (Symbol symbol : symbols) {
                 averageLength += symbol.getCode().length();
             }
-            return averageLength / 4;
+            return averageLength / (symbols.isEmpty() ? 1 : symbols.size());
         }
 
         /**
