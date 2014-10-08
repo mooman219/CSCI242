@@ -48,6 +48,18 @@ public class VLC {
         }
     }
 
+    // The file that will be read.
+    private final File file;
+
+    /**
+     * Initializes a VLC with a given 'file'.
+     *
+     * @param file the file that will be read from.
+     */
+    public VLC(File file) {
+        this.file = file;
+    }
+
     /**
      * Parses all the characters in a file and gets the frequency of each one,
      * returning the results in an ArrayHeap.
@@ -56,7 +68,7 @@ public class VLC {
      * @return an ArrayHeap of Symbols.
      * @throws IOException if there is an error while reading the file.
      */
-    public static ArrayHeap<Node> calculateFrequencies(File file) throws IOException {
+    public ArrayHeap<Node> calculateFrequencies() throws IOException {
         //
         // Build a map of the characters
         //
@@ -85,10 +97,6 @@ public class VLC {
             heap.add(node);
         }
         return heap;
-    }
-
-    public VLC(ArrayHeap<Node> heap) {
-
     }
 
     /**
