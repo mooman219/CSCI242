@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -37,7 +38,7 @@ public class VLC {
         }
 
         try {
-            ArrayHeap<Symbol> heap = calculateFrequencies(file);
+            ArrayHeap<Node> heap = calculateFrequencies(file);
         } catch (IOException ex) {
             System.out.println("Error reading file.");
             return;
@@ -52,7 +53,7 @@ public class VLC {
      * @return an ArrayHeap of Symbols.
      * @throws IOException if there is an error while reading the file.
      */
-    public static ArrayHeap<Symbol> calculateFrequencies(File file) throws IOException {
+    public static ArrayHeap<Node> calculateFrequencies(File file) throws IOException {
         //
         // Build a map of the characters
         //
@@ -74,37 +75,84 @@ public class VLC {
         //
         // Use the map to build an ArrayHeap which is required in the lab.
         //
-        ArrayHeap<Symbol> heap = new ArrayHeap<Symbol>();
+        ArrayHeap<Node> heap = new ArrayHeap<Node>();
         for (Symbol sym : symbols.values()) {
-            heap.add(sym);
+            Node node = new Node();
+            node.addSymbol(sym);
+            heap.add(node);
         }
         return heap;
     }
 
-    public VLC(ArrayHeap<Symbol> heap) {
+    public VLC(ArrayHeap<Node> heap) {
 
     }
 
     public static class Node implements Comparable<Node> {
 
-        private int frequency;
+        // List of symbols under this Node.
+        private ArrayList<Symbol> symbols = new ArrayList<Symbol>();
+        // Current total frequency of all symbols under this Node.
+        private int totalFrequency;
 
-        public int getFrequency() {
-            return frequency;
+        /**
+         * Initializes an empty Node.
+         */
+        public Node() {
+        }
+
+        /**
+         * Get the symbols under this Node.
+         *
+         * @return the symbols under this node.
+         */
+        public ArrayList<Symbol> getSymbols() {
+            return symbols;
+        }
+
+        /**
+         * Gets the total frequency of all symbols under this Node.
+         *
+         * @return the total frequency.
+         */
+        public int getTotalFrequency() {
+            return totalFrequency;
+        }
+
+        /**
+         * Adds a symbol to this Node. This will update the totalFrequency,
+         * adding to it the frequency of the given 'symbol'.
+         *
+         * @param symbol the symbol to be added.
+         */
+        public void addSymbol(Symbol symbol) {
+            symbols.add(symbol);
+            totalFrequency += symbol.getFrequency();
+        }
+
+        /**
+         * Prepends the given 'prefix' to all symbols under this Node.
+         *
+         * @param prefix the prefix to prepend.
+         */
+        public void prependCode(String prefix) {
+            for (Symbol symbol : symbols) {
+                symbol.prependCode(prefix);
+            }
         }
 
         /**
          * Compares this node to a given node.
          *
-         * @param sym the symbol that will be compared against.
+         * @param node the node that will be compared against.
          * @return 1 if the frequency this Node is greater than the given. 0 if
          * the frequencies are equal. -1 if the frequency of this Node is less
          * than the given.
          */
         @Override
         public int compareTo(Node node) {
-            return node.getFrequency() < frequency
-                    ? 1 : node.getFrequency() > frequency
+            return node.getTotalFrequency() < totalFrequency
+                    ? 1 : node.getTotalFrequency() > totalFrequency
                             ? -1 : 0;
         }
     }
