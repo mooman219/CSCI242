@@ -22,9 +22,12 @@ public class VLC {
      * @param args argument not used.
      */
     public static void main(String[] args) {
+        //
+        // Process the user's input
+        //
         String input = "";
         while (true) {
-            System.out.print("Please enter symbol filename: ");
+            System.out.print("Please enter a filename: ");
             input = scanner.nextLine();
             if (input.length() == 0) {
                 System.out.println("Invalid file name.");
@@ -32,28 +35,32 @@ public class VLC {
                 break;
             }
         }
-
+        System.out.println("");
+        //
+        // Check if the file exists
+        //
         File file = new File(input);
         if (!file.exists()) {
             System.out.println("File '" + input + "' does not exist.");
             return;
         }
-
+        //
+        // Generate the output
+        //
         VLC vlc = new VLC(file);
-        try {
-            Node result = vlc.calculateEncoding();
-            System.out.println("Variable Length Code output");
-            System.out.println("--------------------------------------------");
-            for (Symbol symbol : result.getSymbols()) {
-                System.out.printf("Symbol: %1s Code: %6s Frequency: %5d\n", symbol.getCharacter(), symbol.getCode(), symbol.getFrequency());
-            }
-            System.out.println("\nAverage VLC codeword length: "
-                    + result.getAvgVariableCodeLength() + " bits per symbol");
-            System.out.println("Average Fixed codeword length: "
-                    + result.getAvgFixedCodeLength() + " bits per symbol");
-        } catch (IOException ex) {
-            System.out.println("Unable to read file.");
+        Node result = vlc.calculateEncoding();
+        System.out.println("VARIABLE LENGTH CODE OUTPUT");
+        System.out.println("---------------------------");
+        for (Symbol symbol : result.getSymbols()) {
+            System.out.printf("Symbol: %2s  Codeword: %8s  Frequency: %5d\n",
+                    symbol.getCharacter(),
+                    symbol.getCode(),
+                    symbol.getFrequency());
         }
+        System.out.println("\nAverage Huffman codeword length: "
+                + result.getAvgVariableCodeLength());
+        System.out.println("Average Fixed length codeword length: "
+                + result.getAvgFixedCodeLength());
     }
 
     // The file that will be read.
@@ -75,8 +82,14 @@ public class VLC {
      * @return the final node leftover.
      * @throws IOException if there is an exception while parsing the file.
      */
-    public Node calculateEncoding() throws IOException {
-        ArrayHeap<Node> nodes = calculateFrequencies();
+    public Node calculateEncoding() {
+        ArrayHeap<Node> nodes;
+        try {
+            nodes = calculateFrequencies();
+        } catch (IOException ex) {
+            System.out.println("Error reading file.");
+            return new Node();
+        }
         boolean firstRun = true;
         while (!nodes.isEmpty()) {
             Node right = nodes.removeMin();
