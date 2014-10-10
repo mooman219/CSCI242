@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -37,15 +39,29 @@ public class FindSlow {
         //
         // Read the file
         //
+        ArrayList<Business> places = new ArrayList<Business>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line;
             while ((line = reader.readLine()) != null) {
-                // Store business
+                String[] info = line.split(" ");
+                if (info.length < 2) { // Omit invalid lines
+                    continue;
+                }
+                try {
+                    places.add(new Business(info[0], Integer.parseInt(info[1])));
+                } catch (NumberFormatException ex) { // Omit lines with invalid distances.
+                    continue;
+                }
             }
         } catch (IOException ex) {
             System.out.println("Unable to read file.");
         }
+    }
+
+    public static List<Comparable> mergeSort(List<Comparable> list) {
+
+        return null;
     }
 
     /**

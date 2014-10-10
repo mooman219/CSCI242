@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -46,6 +47,11 @@ public class FindFast {
         } catch (IOException ex) {
             System.out.println("Unable to read file.");
         }
+    }
+
+    public static List<Comparable> fastSort(List<Comparable> list) {
+
+        return null;
     }
 
     /**
