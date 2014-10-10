@@ -1,4 +1,7 @@
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -30,6 +33,18 @@ public class FindFast {
         if (!file.exists()) {
             System.out.println("File '" + input + "' does not exist.");
             return;
+        }
+        //
+        // Read the file
+        //
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Store business
+            }
+        } catch (IOException ex) {
+            System.out.println("Unable to read file.");
         }
     }
 }
