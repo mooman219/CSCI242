@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -56,12 +58,53 @@ public class FindSlow {
             }
         } catch (IOException ex) {
             System.out.println("Unable to read file.");
+            return;
+        }
+
+        FindSlow find = new FindSlow();
+        Collections.shuffle(places);
+        for (Business business : find.sort(places)) {
+            System.out.println("Business: " + business.getName() + " Distance: " + business.getDistance());
         }
     }
 
-    public static List<Comparable> mergeSort(List<Comparable> list) {
+    public <T extends Comparable<T>> List<T> sort(List<T> list) {
+        Comparable[] array = list.toArray(new Comparable[list.size()]);
+        mergeSort(array, new Comparable[array.length], 0, array.length - 1);
+        return Arrays.asList((T[]) array);
+    }
 
-        return null;
+    private void mergeSort(Comparable[] array, Comparable[] t, int s, int e) {
+        if (s < e) {
+            int m = s + (e - s) / 2;
+            mergeSort(array, t, s, m);
+            mergeSort(array, t, m + 1, e);
+            merge(array, t, s, m, e);
+        }
+    }
+
+    private void merge(Comparable[] array, Comparable[] t, int s, int m, int e) {
+        int index = s;
+        int lp = s;
+        int rp = m + 1;
+        for (int i = s; i <= e; i++) {
+            t[i] = array[i];
+        }
+        while (lp <= m && rp <= e) {
+            if (t[lp].compareTo(t[rp]) <= 0) {
+                array[index] = t[lp];
+                lp++;
+            } else {
+                array[index] = t[rp];
+                rp++;
+            }
+            index++;
+        }
+        while (lp <= m) {
+            array[index] = t[lp];
+            lp++;
+            index++;
+        }
     }
 
     /**
@@ -77,7 +120,7 @@ public class FindSlow {
             this.distance = distance;
         }
 
-        public String getBusinessName() {
+        public String getName() {
             return businessName;
         }
 
@@ -88,8 +131,8 @@ public class FindSlow {
         @Override
         public int compareTo(Business o) {
             return distance < o.distance
-                    ? 1 : distance == o.distance
-                            ? 0 : -1;
+                    ? -1 : distance == o.distance
+                            ? 0 : 1;
         }
     }
 }

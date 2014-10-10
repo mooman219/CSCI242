@@ -1,0 +1,5 @@
+Offices 70
+Mall 200
+MedicalOffice 120
+PostOffice 170
+RandomBusiness 30
