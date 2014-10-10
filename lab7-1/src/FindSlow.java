@@ -47,4 +47,33 @@ public class FindSlow {
             System.out.println("Unable to read file.");
         }
     }
+
+    /**
+     * @author Joseph Cumbo
+     */
+    public static class Business implements Comparable<Business> {
+
+        private final String businessName;
+        private final int distance;
+
+        public Business(String businessName, int distance) {
+            this.businessName = businessName;
+            this.distance = distance;
+        }
+
+        public String getBusinessName() {
+            return businessName;
+        }
+
+        public int getDistance() {
+            return distance;
+        }
+
+        @Override
+        public int compareTo(Business o) {
+            return distance < o.distance
+                    ? 1 : distance == o.distance
+                            ? 0 : -1;
+        }
+    }
 }
