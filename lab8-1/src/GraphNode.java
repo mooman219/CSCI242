@@ -31,6 +31,15 @@ public class GraphNode {
         neighbors.add(neighbor);
     }
 
+    public boolean contains(GraphNode neighbor) {
+        for (GraphNode node : neighbors) {
+            if (node.equals(neighbor)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Method to generate a string representation of a GraphNode object.
      *

@@ -37,8 +37,12 @@ public class Graph {
                     nodeMap.put(info[1], target);
                 }
                 // Link the nodes
-                source.addNeighbor(target);
-                target.addNeighbor(source);
+                if (!source.contains(target)) {
+                    source.addNeighbor(target);
+                }
+                if (!target.contains(source)) {
+                    target.addNeighbor(source);
+                }
             }
             nodes.addAll(nodeMap.values());
         } catch (IOException ex) {
@@ -54,6 +58,11 @@ public class Graph {
         }
     }
 
+    /**
+     * Method to generate a string representation of a Graph object.
+     *
+     * @return result: string representing the graph.
+     */
     @Override
     public String toString() {
         StringBuilder ret = new StringBuilder();
