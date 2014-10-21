@@ -9,10 +9,13 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
+ * Finds the best location slowly.
+ *
  * @author Joseph Cumbo
  */
 public class FindSlow {
 
+    // Scanner used for taking user input.
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -41,7 +44,7 @@ public class FindSlow {
         //
         // Read the file
         //
-        ArrayList<Business> places = new ArrayList<Business>();
+        List<Business> places = new ArrayList<Business>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line;
@@ -60,12 +63,33 @@ public class FindSlow {
             System.out.println("Unable to read file.");
             return;
         }
-
+        //
+        // Sort the data.
+        //
         FindSlow find = new FindSlow();
         Collections.shuffle(places);
-        for (Business business : find.sort(places)) {
-            System.out.println("Business: " + business.getName() + " Distance: " + business.getDistance());
+        long time = 0;
+        time = System.currentTimeMillis();
+        places = find.sort(places);
+        time = System.currentTimeMillis() - time;
+        System.out.println("The sort took " + time + "ms.");
+        //
+        // Analyze Strategies
+        //
+        System.out.println("Midpoint: " + places.get(places.size() / 2).getDistance());
+        if (places.size() % 2 == 1) { // If odd use the middle element.
+            System.out.println("Median: "
+                    + places.get(places.size() / 2).getDistance());
+        } else { // If even then average the middle elements
+            double median = (places.get(places.size() / 2).getDistance()
+                    + places.get((places.size() / 2) - 1).getDistance()) / 2d;
+            System.out.println("Median: " + median);
         }
+        double totalSize = 0;
+        for (Business business : places) {
+            totalSize += business.getDistance();
+        }
+        System.out.println("Average: " + totalSize / places.size());
     }
 
     public <T extends Comparable<T>> List<T> sort(List<T> list) {
@@ -108,31 +132,58 @@ public class FindSlow {
     }
 
     /**
+     * Stores the information for a business.
+     *
      * @author Joseph Cumbo
      */
     public static class Business implements Comparable<Business> {
 
+        // Name of the business
         private final String businessName;
+        // Distance of the business
         private final int distance;
 
+        /**
+         * Creates a business instance with given name and distance.
+         *
+         * @param businessName the name of the business.
+         * @param distance the distance of the business.
+         */
         public Business(String businessName, int distance) {
             this.businessName = businessName;
             this.distance = distance;
         }
 
+        /**
+         * Gets the businesses name.
+         *
+         * @return the name of the business.
+         */
         public String getName() {
             return businessName;
         }
 
+        /**
+         * Gets the distance of the business.
+         *
+         * @return the distance.
+         */
         public int getDistance() {
             return distance;
         }
 
+        /**
+         * Compares this business to another business based on the distance.
+         *
+         * @param o the other business to compare to.
+         * @return 1 if this business's distance if larger than the given, 0 if
+         * the distances are equal, and -1 otherwise.
+         */
         @Override
         public int compareTo(Business o) {
             return distance < o.distance
-                    ? -1 : distance == o.distance
-                            ? 0 : 1;
+                    ? 1 : distance == o.distance
+                            ? 0 : -1;
         }
     }
 }
