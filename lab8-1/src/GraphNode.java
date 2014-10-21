@@ -6,8 +6,8 @@ import java.util.List;
  */
 public class GraphNode {
 
-    private String name;
-    private List<GraphNode> neighbors;
+    private final String name;
+    private final List<GraphNode> neighbors;
 
     /**
      * Constructor. Initialized with an empty list of neighbors.

@@ -24,19 +24,25 @@ public class Graph {
                 if (info.length < 2) { // Omit invalid lines
                     continue;
                 }
+                // Get source & target nodes
                 GraphNode source = nodeMap.get(info[0]);
+                GraphNode target = nodeMap.get(info[1]);
+                // Create the nodes if they don't exist
                 if (source == null) {
                     source = new GraphNode(info[0]);
+                    nodeMap.put(info[0], source);
                 }
-                GraphNode target = nodeMap.get(info[1]);
                 if (target == null) {
                     target = new GraphNode(info[1]);
+                    nodeMap.put(info[1], target);
                 }
+                // Link the nodes
                 source.addNeighbor(target);
+                target.addNeighbor(source);
             }
+            nodes.addAll(nodeMap.values());
         } catch (IOException ex) {
             System.out.println("Unable to read file.");
-            return;
         } finally {
             if (reader != null) {
                 try {
@@ -46,5 +52,15 @@ public class Graph {
                 }
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder ret = new StringBuilder();
+        ret.append("Graph:  \n");
+        for (GraphNode node : nodes) {
+            ret.append("\t").append(node.toString()).append("\n");
+        }
+        return ret.toString();
     }
 }

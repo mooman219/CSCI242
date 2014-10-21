@@ -1,5 +1,4 @@
 import java.io.File;
-import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -35,13 +34,7 @@ public class Routing {
         //
         // Create the Graph
         //
-        Graph graph = null;
-        try {
-            graph = new Graph(input);
-        } catch (IOException ex) {
-            System.out.println("Unable to read file.");
-            return;
-        }
+        Graph graph = new Graph(input);
     }
 
 }
