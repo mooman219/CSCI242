@@ -5,16 +5,26 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
- * This class represents a Graph of interconnected GraphNodes
+ * This class represents a Graph of interconnected GraphNodes.
  *
  * @author Joseph Cumbo
  */
 public class Graph {
 
-    private ArrayList<GraphNode> nodes = new ArrayList<GraphNode>();
+    // The list of GraphNodes contained within this Graph.
+    private List<GraphNode> nodes = new ArrayList<GraphNode>();
 
+    /**
+     * Constructs a new Graph instance with a node structure based on the data
+     * in the file with the name 'filename.
+     *
+     * @param filename the name of the file that the graph data will be
+     * retrieved from.
+     */
     public Graph(String filename) {
         File file = new File(filename);
         HashMap<String, GraphNode> nodeMap = new HashMap<String, GraphNode>();
@@ -61,7 +71,28 @@ public class Graph {
         }
     }
 
-    public void visitDFS(GraphNode start, HashSet<GraphNode> visited) {
+    /**
+     * Checks if a node of given 'name' is contained in this Graph.
+     *
+     * @param name the 'name' who's presence is being tested.
+     * @return true if a node by the given 'name' is contained in this Graph.
+     */
+    public boolean isInGraph(String name) {
+        for (GraphNode node : nodes) {
+            if (node.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Visits every node that can be reached from 'start'.
+     *
+     * @param start the root node.
+     * @param visited all visited nodes are added to this the 'visited' set.
+     */
+    private void visitDFS(GraphNode start, Set<GraphNode> visited) {
         for (GraphNode node : start.getNeighbors()) {
             if (!visited.contains(node)) {
                 visited.add(node);
@@ -70,6 +101,14 @@ public class Graph {
         }
     }
 
+    /**
+     * Checks if there's a valid path from 'start' to 'finish'.
+     *
+     * @param start the starting node.
+     * @param finish the ending node.
+     * @return true if there's a valid path from 'start' to 'finish', false
+     * otherwise.
+     */
     public boolean canReachDFS(GraphNode start, GraphNode finish) {
         HashSet<GraphNode> visited = new HashSet<GraphNode>();
         visited.add(start);
