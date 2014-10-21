@@ -42,6 +42,12 @@ public class GraphNode {
         return neighbors;
     }
 
+    /**
+     * Adds the given 'neighbor' to the list of neighbors contained in this
+     * GraphNode.
+     *
+     * @param neighbor the GraphNode to be added.
+     */
     public void addNeighbor(GraphNode neighbor) {
         neighbors.add(neighbor);
     }

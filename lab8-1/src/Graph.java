@@ -78,12 +78,23 @@ public class Graph {
      * @return true if a node by the given 'name' is contained in this Graph.
      */
     public boolean isInGraph(String name) {
+        return get(name) != null;
+    }
+
+    /**
+     * Gets a GraphNode with the given 'name'.
+     *
+     * @param name the name of the desired node.
+     * @return the GraphNode with the given 'name', null if there is no such
+     * node.
+     */
+    public GraphNode get(String name) {
         for (GraphNode node : nodes) {
             if (node.getName().equals(name)) {
-                return true;
+                return node;
             }
         }
-        return false;
+        return null;
     }
 
     /**
@@ -114,6 +125,49 @@ public class Graph {
         visited.add(start);
         visitDFS(start, visited);
         return visited.contains(finish);
+    }
+
+    /**
+     * Attempts to reach the 'finish' node from the 'start' node. If it reaches
+     * the finish node, this method will print out in reverse order the path
+     * taken.
+     *
+     * @param start the root node.
+     * @param visited a set of the previously visited nodes.
+     * @param finish the final destination node.
+     * @return true if the 'finish' node can be reached, false otherwise.
+     */
+    private boolean buildPathDFS(GraphNode start, Set<GraphNode> visited, GraphNode finish) {
+        for (GraphNode node : start.getNeighbors()) {
+            if (!visited.contains(node)) {
+                visited.add(node);
+                if (node.equals(finish)) {
+                    System.out.print("Path from finish to start: (Finish) " + finish.getName());
+                    return true;
+                } else if (buildPathDFS(node, visited, finish)) {
+                    System.out.print(" < " + node.getName());
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Prints the path from 'start' to 'finish'.
+     *
+     * @param start the starting node.
+     * @param finish the final destination node.
+     */
+    public void printPathDFS(GraphNode start, GraphNode finish) {
+        HashSet<GraphNode> visited = new HashSet<GraphNode>();
+        visited.add(start);
+        if (!buildPathDFS(start, visited, finish)) {
+            System.out.println("Unable to find a path from "
+                    + start.getName() + " to " + finish.getName());
+        } else {
+            System.out.print(" < " + start.getName() + " (Start)\n");
+        }
     }
 
     /**
