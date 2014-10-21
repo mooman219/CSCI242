@@ -4,8 +4,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
+ * This class represents a Graph of interconnected GraphNodes
+ *
  * @author Joseph Cumbo
  */
 public class Graph {
@@ -56,6 +59,22 @@ public class Graph {
                 }
             }
         }
+    }
+
+    public void visitDFS(GraphNode start, HashSet<GraphNode> visited) {
+        for (GraphNode node : start.getNeighbors()) {
+            if (!visited.contains(node)) {
+                visited.add(node);
+                visitDFS(node, visited);
+            }
+        }
+    }
+
+    public boolean canReachDFS(GraphNode start, GraphNode finish) {
+        HashSet<GraphNode> visited = new HashSet<GraphNode>();
+        visited.add(start);
+        visitDFS(start, visited);
+        return visited.contains(finish);
     }
 
     /**

@@ -35,6 +35,6 @@ public class Routing {
         // Create the Graph
         //
         Graph graph = new Graph(input);
+        System.out.println(graph.toString());
     }
-
 }
