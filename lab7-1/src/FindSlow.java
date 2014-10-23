@@ -45,8 +45,9 @@ public class FindSlow {
         // Read the file
         //
         List<Business> places = new ArrayList<Business>();
+        BufferedReader reader = null;
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
+            reader = new BufferedReader(new FileReader(file));
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] info = line.split(" ");
@@ -62,6 +63,14 @@ public class FindSlow {
         } catch (IOException ex) {
             System.out.println("Unable to read file.");
             return;
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException ex) {
+                    System.out.println("Unable to close file reader.");
+                }
+            }
         }
         //
         // Sort the data.
