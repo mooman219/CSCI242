@@ -53,9 +53,6 @@ public class Graph {
                 if (!source.contains(target)) {
                     source.addNeighbor(target);
                 }
-                if (!target.contains(source)) {
-                    target.addNeighbor(source);
-                }
             }
             nodes.addAll(nodeMap.values());
         } catch (IOException ex) {
