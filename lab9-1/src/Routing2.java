@@ -45,19 +45,15 @@ public class Routing2 {
         String startName = null;
         String finishName = null;
         while (true) {
-            System.out.print("Please enter a start and end node "
-                    + "seperated by a space (Example: \"start end\"): ");
-            input = scanner.nextLine();
-            String[] info = input.split(" ");
-            if (input.length() == 0 || info.length < 2) {
-                System.out.println("Invalid entry.");
-            } else if (!graph.isInGraph(info[0])) {
-                System.out.println(info[0] + " is not in the Graph.");
-            } else if (!graph.isInGraph(info[1])) {
-                System.out.println(info[1] + " is not in the Graph.");
+            System.out.println("Please enter a start node: ");
+            startName = scanner.nextLine();
+            System.out.println("Please enter a end node: ");
+            finishName = scanner.nextLine();
+            if (!graph.isInGraph(startName)) {
+                System.out.println(startName + " is not in the Graph.");
+            } else if (!graph.isInGraph(finishName)) {
+                System.out.println(finishName + " is not in the Graph.");
             } else {
-                startName = info[0];
-                finishName = info[1];
                 break;
             }
         }
