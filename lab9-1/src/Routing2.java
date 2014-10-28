@@ -66,7 +66,7 @@ public class Routing2 {
         //
         while (true) {
             System.out.print("What type of search of search do you want? 'B'"
-                    + "for BFS, 'D' for DFS: ");
+                    + " for BFS, 'D' for DFS: ");
             input = scanner.nextLine();
             if (input.equalsIgnoreCase("b")) {
                 graph.printPathBFS(startName, finishName);
