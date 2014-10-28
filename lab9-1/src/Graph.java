@@ -160,6 +160,9 @@ public class Graph {
      * @param finish the final destination node.
      */
     public void printPathDFS(String startName, String finishName) {
+        //
+        // Sanity check
+        //
         GraphNode start = this.get(startName);
         if (start == null) {
             System.out.println("Unable to find node for name " + startName + ".");
@@ -170,6 +173,9 @@ public class Graph {
             System.out.println("Unable to find node for name " + finishName + ".");
             return;
         }
+        //
+        // Actual DFS
+        //
         HashSet<GraphNode> visited = new HashSet<GraphNode>();
         visited.add(start);
         if (!buildPathDFS(start, visited, finish)) {
@@ -190,6 +196,9 @@ public class Graph {
      * otherwise.
      */
     public boolean canReachBFS(String startName, String finishName) {
+        //
+        // Sanity check
+        //
         GraphNode start = this.get(startName);
         if (start == null) {
             System.out.println("Unable to find node for name '" + startName + "'.");
@@ -200,6 +209,9 @@ public class Graph {
             System.out.println("Unable to find node for name '" + finishName + "'.");
             return false;
         }
+        //
+        // Actual BFS
+        //
         HashSet<GraphNode> visited = new HashSet<GraphNode>();
         LinkedList<GraphNode> queue = new LinkedList<GraphNode>();
         queue.add(start);
@@ -226,6 +238,9 @@ public class Graph {
      * @param finish the final destination node.
      */
     public void printPathBFS(String startName, String finishName) {
+        //
+        // Sanity check
+        //
         GraphNode start = this.get(startName);
         if (start == null) {
             System.out.println("Unable to find node for name '" + startName + "'.");
@@ -236,6 +251,9 @@ public class Graph {
             System.out.println("Unable to find node for name '" + finishName + "'.");
             return;
         }
+        //
+        // Actual BFS
+        //
         HashMap<GraphNode, GraphNode> visited = new HashMap<GraphNode, GraphNode>();
         LinkedList<GraphNode> queue = new LinkedList<GraphNode>();
         queue.add(start);
@@ -253,6 +271,9 @@ public class Graph {
                 }
             }
         }
+        //
+        // Print the path
+        //
         if (!visited.containsKey(finish)) {
             System.out.println("Unable to find a path from "
                     + startName + " to " + finishName);
