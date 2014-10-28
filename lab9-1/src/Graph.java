@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -66,6 +67,7 @@ public class Graph {
                 }
             }
         }
+
     }
 
     /**
@@ -156,7 +158,17 @@ public class Graph {
      * @param start the starting node.
      * @param finish the final destination node.
      */
-    public void printPathDFS(GraphNode start, GraphNode finish) {
+    public void printPathDFS(String startName, String finishName) {
+        GraphNode start = this.get(startName);
+        if (start == null) {
+            System.out.println("Unable to find node for name " + startName + ".");
+            return;
+        }
+        GraphNode finish = this.get(finishName);
+        if (finish == null) {
+            System.out.println("Unable to find node for name " + finishName + ".");
+            return;
+        }
         HashSet<GraphNode> visited = new HashSet<GraphNode>();
         visited.add(start);
         if (!buildPathDFS(start, visited, finish)) {
@@ -165,6 +177,36 @@ public class Graph {
         } else {
             System.out.print(" < " + start.getName() + " (Start)\n");
         }
+    }
+
+    public boolean canReachBFS(String startName, String finishName) {
+        GraphNode start = this.get(startName);
+        if (start == null) {
+            System.out.println("Unable to find node for name '" + startName + "'.");
+            return false;
+        }
+        GraphNode finish = this.get(finishName);
+        if (finish == null) {
+            System.out.println("Unable to find node for name '" + finishName + "'.");
+            return false;
+        }
+        HashSet<GraphNode> visited = new HashSet<GraphNode>();
+        LinkedList<GraphNode> queue = new LinkedList<GraphNode>();
+        queue.add(start);
+        visited.add(start);
+        while (!queue.isEmpty()) {
+            GraphNode current = queue.getFirst();
+            if (current.equals(finish)) {
+                return true;
+            }
+            for (GraphNode neighbor : current.getNeighbors()) {
+                if (!visited.contains(neighbor)) {
+                    visited.add(neighbor);
+                    queue.add(neighbor);
+                }
+            }
+        }
+        return false;
     }
 
     /**
