@@ -195,7 +195,7 @@ public class Graph {
         queue.add(start);
         visited.add(start);
         while (!queue.isEmpty()) {
-            GraphNode current = queue.getFirst();
+            GraphNode current = queue.remove(0);
             if (current.equals(finish)) {
                 return true;
             }
@@ -207,6 +207,48 @@ public class Graph {
             }
         }
         return false;
+    }
+
+    public void printPathBFS(String startName, String finishName) {
+        GraphNode start = this.get(startName);
+        if (start == null) {
+            System.out.println("Unable to find node for name '" + startName + "'.");
+            return;
+        }
+        GraphNode finish = this.get(finishName);
+        if (finish == null) {
+            System.out.println("Unable to find node for name '" + finishName + "'.");
+            return;
+        }
+        HashMap<GraphNode, GraphNode> visited = new HashMap<GraphNode, GraphNode>();
+        LinkedList<GraphNode> queue = new LinkedList<GraphNode>();
+        queue.add(start);
+        visited.put(start, start);
+
+        while (!queue.isEmpty()) {
+            GraphNode current = queue.remove(0);
+            if (current.equals(finish)) {
+                break;
+            }
+            for (GraphNode neighbor : current.getNeighbors()) {
+                if (!visited.containsKey(neighbor)) {
+                    visited.put(neighbor, current);
+                    queue.add(neighbor);
+                }
+            }
+        }
+        if (!visited.containsKey(finish)) {
+            System.out.println("Unable to find a path from "
+                    + startName + " to " + finishName);
+        } else {
+            GraphNode current = visited.get(finish);
+            System.out.print("Path from finish to start: (Finish) " + finish.getName());
+            while (!current.equals(start)) {
+                System.out.print(" < " + current.getName());
+                current = visited.get(current);
+            }
+            System.out.print(" < " + start.getName() + " (Start)\n");
+        }
     }
 
     /**

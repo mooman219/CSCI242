@@ -54,7 +54,7 @@ public class Routing2 {
             } else if (!graph.isInGraph(info[1])) {
                 System.out.println(info[1] + " is not in the Graph.");
             } else {
-                graph.printPathDFS(info[0], info[1]);
+                graph.printPathBFS(info[0], info[1]);
                 break;
             }
         }
