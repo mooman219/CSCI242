@@ -1,5 +1,6 @@
 Vancouver SanFrancisco
 SanFrancisco LosAngeles
+SanFrancisco Schaumburg
 SanFrancisco Chicago
 LosAngeles Schaumburg
 LosAngeles Phoenix

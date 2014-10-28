@@ -42,6 +42,8 @@ public class Routing2 {
         //
         // Process the user's input for a start and end node.
         //
+        String startName = null;
+        String finishName = null;
         while (true) {
             System.out.print("Please enter a start and end node "
                     + "seperated by a space (Example: \"start end\"): ");
@@ -54,9 +56,14 @@ public class Routing2 {
             } else if (!graph.isInGraph(info[1])) {
                 System.out.println(info[1] + " is not in the Graph.");
             } else {
-                graph.printPathBFS(info[0], info[1]);
+                startName = info[0];
+                finishName = info[1];
                 break;
             }
         }
+        //
+        // Ask the user for the type of search
+        //
+
     }
 }

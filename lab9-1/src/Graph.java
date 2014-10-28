@@ -112,7 +112,8 @@ public class Graph {
     }
 
     /**
-     * Checks if there's a valid path from 'start' to 'finish'.
+     * Checks if there's a valid path from 'start' to 'finish' using a depth
+     * first search.
      *
      * @param start the starting node.
      * @param finish the ending node.
@@ -153,7 +154,7 @@ public class Graph {
     }
 
     /**
-     * Prints the path from 'start' to 'finish'.
+     * Prints the path from 'start' to 'finish' using a depth first search.
      *
      * @param start the starting node.
      * @param finish the final destination node.
@@ -179,6 +180,15 @@ public class Graph {
         }
     }
 
+    /**
+     * Checks if there's a valid path from 'start' to 'finish' using a depth
+     * first search.
+     *
+     * @param start the starting node.
+     * @param finish the ending node.
+     * @return true if there's a valid path from 'start' to 'finish', false
+     * otherwise.
+     */
     public boolean canReachBFS(String startName, String finishName) {
         GraphNode start = this.get(startName);
         if (start == null) {
@@ -209,6 +219,12 @@ public class Graph {
         return false;
     }
 
+    /**
+     * Prints the path from 'start' to 'finish' using a breath first search.
+     *
+     * @param start the starting node.
+     * @param finish the final destination node.
+     */
     public void printPathBFS(String startName, String finishName) {
         GraphNode start = this.get(startName);
         if (start == null) {
