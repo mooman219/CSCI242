@@ -120,7 +120,23 @@ public class Graph {
      * @return true if there's a valid path from 'start' to 'finish', false
      * otherwise.
      */
-    public boolean canReachDFS(GraphNode start, GraphNode finish) {
+    public boolean canReachDFS(String startName, String finishName) {
+        //
+        // Sanity check
+        //
+        GraphNode start = this.get(startName);
+        if (start == null) {
+            System.out.println("Unable to find node for name '" + startName + "'.");
+            return false;
+        }
+        GraphNode finish = this.get(finishName);
+        if (finish == null) {
+            System.out.println("Unable to find node for name '" + finishName + "'.");
+            return false;
+        }
+        //
+        // Actual DFS
+        //
         HashSet<GraphNode> visited = new HashSet<GraphNode>();
         visited.add(start);
         visitDFS(start, visited);

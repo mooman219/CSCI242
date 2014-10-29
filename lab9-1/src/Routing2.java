@@ -39,15 +39,29 @@ public class Routing2 {
         Graph graph = new Graph(input);
         System.out.println("The links for this graph are:");
         System.out.println(graph.toString() + "\n");
+
+        //
+        // Ask the user for the type of search
+        //
+        while (true) {
+            System.out.print("What type of search of search do you want? 'B'"
+                    + " for BFS, 'D' for DFS, or other to quit: ");
+            input = scanner.nextLine();
+            if (input.equalsIgnoreCase("b") || input.equalsIgnoreCase("d")) {
+                break;
+            } else {
+                return;
+            }
+        }
         //
         // Process the user's input for a start and end node.
         //
         String startName = null;
         String finishName = null;
         while (true) {
-            System.out.println("Please enter a start node: ");
+            System.out.print("Please enter a start node: ");
             startName = scanner.nextLine();
-            System.out.println("Please enter a end node: ");
+            System.out.print("Please enter a end node: ");
             finishName = scanner.nextLine();
             if (!graph.isInGraph(startName)) {
                 System.out.println(startName + " is not in the Graph.");
@@ -58,20 +72,25 @@ public class Routing2 {
             }
         }
         //
-        // Ask the user for the type of search
+        // Run the search based on input.
         //
-        while (true) {
-            System.out.print("What type of search of search do you want? 'B'"
-                    + " for BFS, 'D' for DFS: ");
-            input = scanner.nextLine();
-            if (input.equalsIgnoreCase("b")) {
+        if (input.equalsIgnoreCase("b")) {
+            if (graph.canReachBFS(startName, finishName)) {
+                System.out.println("It is possible to get from " + startName
+                        + " to " + finishName + ":");
                 graph.printPathBFS(startName, finishName);
-                break;
-            } else if (input.equalsIgnoreCase("d")) {
-                graph.printPathDFS(startName, finishName);
-                break;
             } else {
-                System.out.println("Invalid entry.");
+                System.out.println("There is no connection between " + startName
+                        + " and " + finishName + ".");
+            }
+        } else {
+            if (graph.canReachDFS(startName, finishName)) {
+                System.out.println("It is possible to get from " + startName
+                        + " to " + finishName + ":");
+                graph.printPathDFS(startName, finishName);
+            } else {
+                System.out.println("There is no connection between " + startName
+                        + " and " + finishName + ".");
             }
         }
     }
