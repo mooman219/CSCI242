@@ -313,9 +313,8 @@ public class Graph {
     @Override
     public String toString() {
         StringBuilder ret = new StringBuilder();
-        ret.append("Graph:  \n");
         for (GraphNode node : nodes) {
-            ret.append("\t").append(node.toString()).append("\n");
+            ret.append(node.toString()).append("\n");
         }
         return ret.toString();
     }

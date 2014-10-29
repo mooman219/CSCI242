@@ -17,7 +17,7 @@ public class Routing2 {
         //
         String input = null;
         while (true) {
-            System.out.print("Please enter a filename: ");
+            System.out.print("Enter graph data filename: ");
             input = scanner.nextLine();
             if (input.length() == 0) {
                 System.out.println("Invalid file name.");
@@ -25,7 +25,6 @@ public class Routing2 {
                 break;
             }
         }
-        System.out.println("");
         //
         // Check if the file exists
         //
@@ -37,61 +36,61 @@ public class Routing2 {
         // Create the Graph
         //
         Graph graph = new Graph(input);
-        System.out.println("The links for this graph are:");
-        System.out.println(graph.toString() + "\n");
-
+        System.out.println(graph.toString());
         //
         // Ask the user for the type of search
         //
         while (true) {
-            System.out.print("What type of search of search do you want? 'B'"
-                    + " for BFS, 'D' for DFS, or other to quit: ");
+            System.out.print("Enter 'D' for DFS, 'B' for BFS, or other to quit: ");
             input = scanner.nextLine();
             if (input.equalsIgnoreCase("b") || input.equalsIgnoreCase("d")) {
-                break;
+                //
+                // Process the user's input for a start and end node.
+                //
+                String startName = null;
+                String finishName = null;
+                while (true) {
+                    System.out.print("Enter starting node name: ");
+                    startName = scanner.nextLine();
+                    System.out.print("Enter finishing node name: ");
+                    finishName = scanner.nextLine();
+                    if (!graph.isInGraph(startName)) {
+                        System.out.println(startName + " is not in the Graph.");
+                    } else if (!graph.isInGraph(finishName)) {
+                        System.out.println(finishName + " is not in the Graph.");
+                    } else {;
+                        break;
+                    }
+                }
+                //
+                // Run the search based on input.
+                //
+                System.out.println("Checking for path existence...");
+                if (input.equalsIgnoreCase("b")) {
+                    if (graph.canReachBFS(startName, finishName)) {
+                        System.out.println("It is possible to get from " + startName
+                                + " to " + finishName + ":");
+                        graph.printPathBFS(startName, finishName);
+                        System.out.println("Done!");
+                    } else {
+                        System.out.println("There is no connection between " + startName
+                                + " and " + finishName + ".");
+                    }
+                } else {
+                    if (graph.canReachDFS(startName, finishName)) {
+                        System.out.println("It is possible to get from " + startName
+                                + " to " + finishName + ":");
+                        graph.printPathDFS(startName, finishName);
+                        System.out.println("Done!");
+                    } else {
+                        System.out.println("There is no connection between " + startName
+                                + " and " + finishName + ".");
+                    }
+                }
             } else {
                 return;
             }
-        }
-        //
-        // Process the user's input for a start and end node.
-        //
-        String startName = null;
-        String finishName = null;
-        while (true) {
-            System.out.print("Please enter a start node: ");
-            startName = scanner.nextLine();
-            System.out.print("Please enter a end node: ");
-            finishName = scanner.nextLine();
-            if (!graph.isInGraph(startName)) {
-                System.out.println(startName + " is not in the Graph.");
-            } else if (!graph.isInGraph(finishName)) {
-                System.out.println(finishName + " is not in the Graph.");
-            } else {
-                break;
-            }
-        }
-        //
-        // Run the search based on input.
-        //
-        if (input.equalsIgnoreCase("b")) {
-            if (graph.canReachBFS(startName, finishName)) {
-                System.out.println("It is possible to get from " + startName
-                        + " to " + finishName + ":");
-                graph.printPathBFS(startName, finishName);
-            } else {
-                System.out.println("There is no connection between " + startName
-                        + " and " + finishName + ".");
-            }
-        } else {
-            if (graph.canReachDFS(startName, finishName)) {
-                System.out.println("It is possible to get from " + startName
-                        + " to " + finishName + ":");
-                graph.printPathDFS(startName, finishName);
-            } else {
-                System.out.println("There is no connection between " + startName
-                        + " and " + finishName + ".");
-            }
+            System.out.println("");
         }
     }
 }
