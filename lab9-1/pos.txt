@@ -1,0 +1,128 @@
+Proof of submission:
+jwc6999@glados:~/labs/242/lab9-1$ try grd-242 lab9-1 *.java *.txt
+Copying files...done
+
+ON-TIME submission of lab9-1
+Compiling your program...
+
+===== Test 1
+/usr/local/jdk/bin/java -classpath .:/home/grader/grd-242/classes:/usr/local/jdk/lib/classes.zip:../../submit_java_tested/labBFS/ Routing2 < input-1.1 > OUT.1
+
+Your output did not match the correct output.
+Your output:
+Enter graph data filename: SanFrancisco:  LosAngeles, Chicago
+StLouis:  Chicago, Detroit
+Vancouver:  SanFrancisco
+Detroit:  Toronto
+Chicago:  WhitePlains, SanFrancisco
+WhitePlains:  NewYork, Philadelphia, Montreal
+Atlanta:  Bethesda, Tampa
+Phoenix:  Dallas
+Columbus:  Detroit, NewYork, Bethesda
+NewYork:  Philadelphia
+LosAngeles:  Schaumburg, Phoenix
+Schaumburg:  Columbus
+Dallas:  Chicago, Atlanta
+Bethesda:  NewYork, WhitePlains
+Tampa:  NewYork
+Montreal:  Toronto
+Toronto:
+Philadelphia:
+
+Enter 'D' for DFS, 'B' for BFS, or other to quit: Enter starting node name: Enter finishing node name: Checking for path existence...
+It is possible to get from SanFrancisco to Philadelphia:
+Path from finish to start: (Finish) Philadelphia < WhitePlains < Chicago < SanFrancisco (Start)
+Done!
+
+Enter 'D' for DFS, 'B' for BFS, or other to quit: Enter starting node name: Enter finishing node name: Checking for path existence...
+It is possible to get from SanFrancisco to Philadelphia:
+Path from finish to start: (Finish) Philadelphia < NewYork < Columbus < Schaumburg < LosAngeles < SanFrancisco (Start)
+Done!
+
+Enter 'D' for DFS, 'B' for BFS, or other to quit: Enter starting node name: Enter finishing node name: Checking for path existence...
+There is no connection between Philadelphia and SanFrancisco.
+
+Enter 'D' for DFS, 'B' for BFS, or other to quit: ----------
+Correct output:
+Enter graph data filename: SanFrancisco:  LosAngeles, Chicago
+StLouis:  Chicago, Detroit
+Vancouver:  SanFrancisco
+Detroit:  Toronto
+Chicago:  WhitePlains, SanFrancisco
+WhitePlains:  NewYork, Philadelphia, Montreal
+Atlanta:  Bethesda, Tampa
+Phoenix:  Dallas
+Columbus:  Detroit, NewYork, Bethesda
+NewYork:  Philadelphia
+LosAngeles:  Schaumburg, Phoenix
+Schaumburg:  Columbus
+Dallas:  Chicago, Atlanta
+Bethesda:  NewYork, WhitePlains
+Tampa:  NewYork
+Montreal:  Toronto
+Toronto:
+Philadelphia:
+Enter 'D' for DFS, 'B' for BFS, or other to quit: Enter starting node name: Enter finishing node name: Checking for path existence...
+It is possible to get from SanFrancisco to Philadelphia:
+SanFrancisco to Chicago
+Chicago to WhitePlains
+WhitePlains to Philadelphia
+Done!
+
+Enter 'D' for DFS, 'B' for BFS, or other to quit: Enter starting node name: Enter finishing node name: Checking for path existence...
+It is possible to get from SanFrancisco to Philadelphia:
+SanFrancisco to Chicago
+Chicago to WhitePlains
+WhitePlains to Philadelphia
+Done!
+
+Enter 'D' for DFS, 'B' for BFS, or other to quit: Enter starting node name: Enter finishing node name: Checking for path existence...
+There is no connection between Philadelphia and SanFrancisco.
+
+Enter 'D' for DFS, 'B' for BFS, or other to quit: ----------
+Differences (OUT.1 is yours; answer-1.1 is correct):
+*** OUT.1       Tue Oct 28 20:49:11 2014
+--- answer-1.1  Mon Oct 27 19:15:47 2014
+***************
+*** 16,30 ****
+  Montreal:  Toronto
+  Toronto:
+  Philadelphia:
+-
+  Enter 'D' for DFS, 'B' for BFS, or other to quit: Enter starting node name: Enter finishing node name: Checking for path existence...
+  It is possible to get from SanFrancisco to Philadelphia:
+! Path from finish to start: (Finish) Philadelphia < WhitePlains < Chicago < SanFrancisco (Start)
+  Done!
+
+  Enter 'D' for DFS, 'B' for BFS, or other to quit: Enter starting node name: Enter finishing node name: Checking for path existence...
+  It is possible to get from SanFrancisco to Philadelphia:
+! Path from finish to start: (Finish) Philadelphia < NewYork < Columbus < Schaumburg < LosAngeles < SanFrancisco (Start)
+  Done!
+
+  Enter 'D' for DFS, 'B' for BFS, or other to quit: Enter starting node name: Enter finishing node name: Checking for path existence...
+--- 16,33 ----
+  Montreal:  Toronto
+  Toronto:
+  Philadelphia:
+  Enter 'D' for DFS, 'B' for BFS, or other to quit: Enter starting node name: Enter finishing node name: Checking for path existence...
+  It is possible to get from SanFrancisco to Philadelphia:
+! SanFrancisco to Chicago
+! Chicago to WhitePlains
+! WhitePlains to Philadelphia
+  Done!
+
+  Enter 'D' for DFS, 'B' for BFS, or other to quit: Enter starting node name: Enter finishing node name: Checking for path existence...
+  It is possible to get from SanFrancisco to Philadelphia:
+! SanFrancisco to Chicago
+! Chicago to WhitePlains
+! WhitePlains to Philadelphia
+  Done!
+
+  Enter 'D' for DFS, 'B' for BFS, or other to quit: Enter starting node name: Enter finishing node name: Checking for path existence...
+
+
+Files being saved:
+Graph.java GraphNode.java Routing2.java test.txt versions.txt
+
+lab9-1 has been submitted WITH ERRORS.
+jwc6999@glados:~/labs/242/lab9-1$

@@ -58,7 +58,7 @@ public class Routing2 {
                         System.out.println(startName + " is not in the Graph.");
                     } else if (!graph.isInGraph(finishName)) {
                         System.out.println(finishName + " is not in the Graph.");
-                    } else {;
+                    } else {
                         break;
                     }
                 }
