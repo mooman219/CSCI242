@@ -3,12 +3,31 @@ Name:
 Question 1:
   What is the imbalance measurement value for the "simple" string
   hash function}?
+  
+Answer 1:
+  The simple hash function gave me an imbalance of 11;
 
 Question 2: 
   What is the imbalance value for your custom hash function?
-
+ 
+Answer 2:
+  My hash function gave me an imbalance of 0.
 
 Question 3: 
 How do different hashing functions affect the number of
 times that the hash table must resize?
 
+Answer 3:
+  Since the rehash function was based on the total elements in the 
+  table and not the total number of empty chains (As mentioned in 
+  the second bullet of 5.2 Resizing a HashTable), there should be 
+  no correlation between hashing function and number of times 
+  resized.
+  
+  If the load function was determined by the number of empty chains
+  remaining, then the hash function with less collisions would result
+  in more resizes.
+  
+  If the load function was determined by the imbalance function, then
+  the hash function with less collisions would result in fewer
+  resizes.
