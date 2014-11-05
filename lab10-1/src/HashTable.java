@@ -10,7 +10,7 @@ public class HashTable implements Hash {
 
     private final Hash.Htype hashType;
     private final double LOAD_FACTOR = 0.75;
-    private ArrayList<ArrayList<WorldHolder>> table;
+    private ArrayList<ArrayList<WordHolder>> table;
     private int size = 0;
     private int elements = 0;
 
@@ -33,6 +33,7 @@ public class HashTable implements Hash {
      *
      * @param key the word to add.
      */
+    @Override
     public void put(String key) {
         put(key, 1);
     }
@@ -44,17 +45,22 @@ public class HashTable implements Hash {
      * @param key the word to add.
      * @param count the count to set.
      */
+    @Override
     public void put(String key, int count) {
         int hash = hash(key);
-        ArrayList<WorldHolder> chain = table.get(hash % size);
-        for (WorldHolder value : chain) {
+        ArrayList<WordHolder> chain = table.get(hash % size);
+        // First we check if the key is already in the table, if it is, then
+        // increment its count by the given count.
+        for (WordHolder value : chain) {
             if (value.word.equals(key)) {
                 value.occurrences += count;
                 return;
             }
         }
+        // If the for loop terminates before returning, we know the key wasn't
+        // in the table and we can proceed to add it.
         elements++;
-        chain.add(new WorldHolder(key, 1));
+        chain.add(new WordHolder(key, 1));
         rehash();
     }
 
@@ -64,11 +70,12 @@ public class HashTable implements Hash {
      * @param key the key that will be tested against the HashTable.
      * @return the occurrences for the given key.
      */
+    @Override
     public int get(String key) {
         int hash = hash(key);
-        ArrayList<WorldHolder> base = table.get(hash % size);
+        ArrayList<WordHolder> base = table.get(hash % size);
         if (!base.isEmpty()) {
-            for (WorldHolder value : base) {
+            for (WordHolder value : base) {
                 if (value.word.equals(key)) {
                     return value.occurrences;
                 }
@@ -78,37 +85,55 @@ public class HashTable implements Hash {
     }
 
     /**
+     * Finds the total elements in the hash-table.
+     *
+     * @return the number of elements in the hash table
+     */
+    public int size() {
+        return elements;
+    }
+
+    /**
+     * Finds the current capacity of the hash-table.
+     *
+     * @return the capacity of the hash-table.
+     */
+    public int capacity() {
+        return size;
+    }
+
+    /**
      * Calculates the imbalance in the table by dividing the total elements by
      * the total non-empty chains then subtracting 1.
      *
      * @return (Total Elements) / (Total non-empty chains) - 1.
      */
+    @Override
     public int imbalance() {
         int nonEmpty = 0;
-        for (ArrayList<WorldHolder> chain : table) {
+        for (ArrayList<WordHolder> chain : table) {
             if (!chain.isEmpty()) {
                 nonEmpty++;
             }
         }
-        System.out.println(elements + " " + nonEmpty);
         return (elements / nonEmpty) - 1;
     }
 
-    // Creates a new table of 2*size + 1 elements and
-    // rehashes the current table entries to the new
-    // table. Makes the new table the hash table.'
     /**
-     * Doubles the size of the has table and rehashes all the elements.
+     * Doubles the size of the has table and rehashes all the elements. This
+     * happens if and only if the current number of elements is greater than or
+     * equal to the capacity multiplied by the LOAD_FACTOR.
      */
+    @Override
     public void rehash() {
         if (elements >= size * LOAD_FACTOR) {
             elements = 0;
             size = (size * 2) + 1;
-            ArrayList<ArrayList<WorldHolder>> oldTable = table;
+            ArrayList<ArrayList<WordHolder>> oldTable = table;
             populate(size);
-            for (ArrayList<WorldHolder> chain : oldTable) {
+            for (ArrayList<WordHolder> chain : oldTable) {
                 if (!chain.isEmpty()) {
-                    for (WorldHolder value : chain) {
+                    for (WordHolder value : chain) {
                         put(value.word, value.occurrences);
                     }
                 }
@@ -122,9 +147,9 @@ public class HashTable implements Hash {
      * @param size the size of the new hash table.
      */
     private void populate(int size) {
-        table = new ArrayList<ArrayList<WorldHolder>>(size);
+        table = new ArrayList<ArrayList<WordHolder>>(size);
         for (int i = 0; i < size; i++) {
-            table.add(new ArrayList<WorldHolder>());
+            table.add(new ArrayList<WordHolder>());
         }
     }
 
@@ -135,7 +160,7 @@ public class HashTable implements Hash {
      * @return the hash-value for the key.
      */
     public int hash(String key) {
-        int hash = 0;
+        int hash;
         switch (hashType) {
             case CUSTOM:
                 hash = customHash(key);
@@ -178,7 +203,7 @@ public class HashTable implements Hash {
     /**
      * Holder bean for the word and its occurrences.
      */
-    private class WorldHolder {
+    private class WordHolder {
 
         private String word;
         private int occurrences;
@@ -189,7 +214,7 @@ public class HashTable implements Hash {
          * @param word
          * @param occurrences
          */
-        public WorldHolder(String word, int occurrences) {
+        public WordHolder(String word, int occurrences) {
             this.word = word;
             this.occurrences = occurrences;
         }
