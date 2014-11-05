@@ -8,6 +8,7 @@ public class HashTable implements Hash {
     private final Hash.Htype hashType;
     private final double LOAD_FACTOR = 0.75;
     private ArrayList<ArrayList<SackOfShit>> table;
+    private int size = 0;
     private int elements = 0;
     // Constructor is not part of the interface, but is given here
     // as guidance. 'size' is the initial size, 'type' is either
@@ -21,23 +22,8 @@ public class HashTable implements Hash {
 
     public HashTable(Hash.Htype hashType, int size) {
         this.hashType = hashType;
-        this.table = new ArrayList<ArrayList<SackOfShit>>(size);
-    }
-
-    private int simpleHash(String string) {
-        int hash = 0;
-        for (char character : string.toCharArray()) {
-            hash += character;
-        }
-        return hash;
-    }
-
-    private int customHash(String string) {
-        int hash = 7;
-        for (char character : string.toCharArray()) {
-            hash += 13 * hash + (character - '0');
-        }
-        return hash;
+        populate(size);
+        this.size = size;
     }
 
     // Method to put values into the table. It will
@@ -52,10 +38,7 @@ public class HashTable implements Hash {
     // the value associated with a key
     public void put(String key, int count) {
         int hash = hash(key);
-        ArrayList<SackOfShit> chain = table.get(hash % table.size());
-        if (chain == null) {
-            chain = new ArrayList<SackOfShit>();
-        }
+        ArrayList<SackOfShit> chain = table.get(hash % size);
         for (SackOfShit value : chain) {
             if (value.word.equals(key)) {
                 value.occurances += count;
@@ -63,15 +46,15 @@ public class HashTable implements Hash {
             }
         }
         elements++;
-        rehash();
         chain.add(new SackOfShit(key, 1));
+        rehash();
     }
 
     // Returns the value associated with 'key' from the table
     public int get(String key) {
         int hash = hash(key);
-        ArrayList<SackOfShit> base = table.get(hash % table.size());
-        if (base != null) {
+        ArrayList<SackOfShit> base = table.get(hash % size);
+        if (!base.isEmpty()) {
             for (SackOfShit value : base) {
                 if (value.word.equals(key)) {
                     return value.occurances;
@@ -85,7 +68,7 @@ public class HashTable implements Hash {
     public int imbalance() {
         int nonEmpty = 0;
         for (ArrayList<SackOfShit> chain : table) {
-            if (chain != null) {
+            if (!chain.isEmpty()) {
                 nonEmpty++;
             }
         }
@@ -98,15 +81,23 @@ public class HashTable implements Hash {
     public void rehash() {
         if (elements >= table.size() * LOAD_FACTOR) {
             elements = 0;
+            size = (size * 2) + 1;
             ArrayList<ArrayList<SackOfShit>> oldTable = table;
-            table = new ArrayList<ArrayList<SackOfShit>>(table.size() * 2 + 1);
+            populate(size);
             for (ArrayList<SackOfShit> chain : oldTable) {
-                if (chain != null) {
+                if (!chain.isEmpty()) {
                     for (SackOfShit value : chain) {
                         put(value.word, value.occurances);
                     }
                 }
             }
+        }
+    }
+
+    private void populate(int size) {
+        table = new ArrayList<ArrayList<SackOfShit>>(size);
+        for (int i = 0; i < size; i++) {
+            table.add(new ArrayList<SackOfShit>());
         }
     }
 
@@ -119,6 +110,22 @@ public class HashTable implements Hash {
             default:
                 hash = simpleHash(key);
                 break;
+        }
+        return hash & Integer.MAX_VALUE; // Hack for no negative values
+    }
+
+    private int simpleHash(String string) {
+        int hash = 0;
+        for (char character : string.toCharArray()) {
+            hash += character;
+        }
+        return hash;
+    }
+
+    private int customHash(String string) {
+        int hash = 7;
+        for (char character : string.toCharArray()) {
+            hash += 13 * hash + (character - '0');
         }
         return hash;
     }
