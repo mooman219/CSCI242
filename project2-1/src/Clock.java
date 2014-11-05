@@ -2,7 +2,7 @@
  *
  * @author Joseph Cumbo (mooman219)
  */
-public class Clock {
+public class Clock implements Puzzle {
 
     /**
      * @param args the command line arguments
