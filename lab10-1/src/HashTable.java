@@ -1,106 +1,139 @@
 import java.util.ArrayList;
 
 /**
+ * Simple hash-table implementation that uses Strings as keys and their
+ * occurrences as the value.
+ *
  * @author Joseph Cumbo (mooman219)
  */
 public class HashTable implements Hash {
 
     private final Hash.Htype hashType;
     private final double LOAD_FACTOR = 0.75;
-    private ArrayList<ArrayList<SackOfShit>> table;
+    private ArrayList<ArrayList<WorldHolder>> table;
     private int size = 0;
     private int elements = 0;
-    // Constructor is not part of the interface, but is given here
-    // as guidance. 'size' is the initial size, 'type' is either
-    // 'SIMPLE' or CUSTOM', which will determine which hashing
-    // function the hash table will use.
-    // public HashTable( int size, Htype type ) ;
-    // Method to put values into the table. It will
-    // create the key if it doesn't already exist and set its
-    // value to 1. If the key already exists, it will increment
-    // the value.
 
+    /**
+     * Initializes a new HashTable that hashes based on the given hashType and
+     * has initial size.
+     *
+     * @param hashType which hash function this table will use.
+     * @param size the initial size of this table.
+     */
     public HashTable(Hash.Htype hashType, int size) {
         this.hashType = hashType;
         populate(size);
         this.size = size;
     }
 
-    // Method to put values into the table. It will
-    // create the key if it doesn't already exist and set its
-    // value to 1. If the key already exists, it will increment
-    // the value.
+    /**
+     * Adds the given word to the table with a count of 1. If the word is
+     * already in the table, increment its count by 1.
+     *
+     * @param key the word to add.
+     */
     public void put(String key) {
         put(key, 1);
     }
 
-    // Additional put method, allows you to set
-    // the value associated with a key
+    /**
+     * Adds a given word to the table with a given count. If the word is already
+     * in the table, increment its count by the given count.
+     *
+     * @param key the word to add.
+     * @param count the count to set.
+     */
     public void put(String key, int count) {
         int hash = hash(key);
-        ArrayList<SackOfShit> chain = table.get(hash % size);
-        for (SackOfShit value : chain) {
+        ArrayList<WorldHolder> chain = table.get(hash % size);
+        for (WorldHolder value : chain) {
             if (value.word.equals(key)) {
-                value.occurances += count;
+                value.occurrences += count;
                 return;
             }
         }
         elements++;
-        chain.add(new SackOfShit(key, 1));
+        chain.add(new WorldHolder(key, 1));
         rehash();
     }
 
-    // Returns the value associated with 'key' from the table
+    /**
+     * Gets the count for the given key.
+     *
+     * @param key the key that will be tested against the HashTable.
+     * @return the occurrences for the given key.
+     */
     public int get(String key) {
         int hash = hash(key);
-        ArrayList<SackOfShit> base = table.get(hash % size);
+        ArrayList<WorldHolder> base = table.get(hash % size);
         if (!base.isEmpty()) {
-            for (SackOfShit value : base) {
+            for (WorldHolder value : base) {
                 if (value.word.equals(key)) {
-                    return value.occurances;
+                    return value.occurrences;
                 }
             }
         }
         return 0;
     }
 
-    // Returns the imbalance of the current table
+    /**
+     * Calculates the imbalance in the table by dividing the total elements by
+     * the total non-empty chains then subtracting 1.
+     *
+     * @return (Total Elements) / (Total non-empty chains) - 1.
+     */
     public int imbalance() {
         int nonEmpty = 0;
-        for (ArrayList<SackOfShit> chain : table) {
+        for (ArrayList<WorldHolder> chain : table) {
             if (!chain.isEmpty()) {
                 nonEmpty++;
             }
         }
+        System.out.println(elements + " " + nonEmpty);
         return (elements / nonEmpty) - 1;
     }
 
     // Creates a new table of 2*size + 1 elements and
     // rehashes the current table entries to the new
-    // table. Makes the new table the hash table.
+    // table. Makes the new table the hash table.'
+    /**
+     * Doubles the size of the has table and rehashes all the elements.
+     */
     public void rehash() {
-        if (elements >= table.size() * LOAD_FACTOR) {
+        if (elements >= size * LOAD_FACTOR) {
             elements = 0;
             size = (size * 2) + 1;
-            ArrayList<ArrayList<SackOfShit>> oldTable = table;
+            ArrayList<ArrayList<WorldHolder>> oldTable = table;
             populate(size);
-            for (ArrayList<SackOfShit> chain : oldTable) {
+            for (ArrayList<WorldHolder> chain : oldTable) {
                 if (!chain.isEmpty()) {
-                    for (SackOfShit value : chain) {
-                        put(value.word, value.occurances);
+                    for (WorldHolder value : chain) {
+                        put(value.word, value.occurrences);
                     }
                 }
             }
         }
     }
 
+    /**
+     * Sets the current hash table to a new hash table with the given size.
+     *
+     * @param size the size of the new hash table.
+     */
     private void populate(int size) {
-        table = new ArrayList<ArrayList<SackOfShit>>(size);
+        table = new ArrayList<ArrayList<WorldHolder>>(size);
         for (int i = 0; i < size; i++) {
-            table.add(new ArrayList<SackOfShit>());
+            table.add(new ArrayList<WorldHolder>());
         }
     }
 
+    /**
+     * Hashes the key based on the hash-type assigned in the constructor.
+     *
+     * @param key the key to hash.
+     * @return the hash-value for the key.
+     */
     public int hash(String key) {
         int hash = 0;
         switch (hashType) {
@@ -114,6 +147,12 @@ public class HashTable implements Hash {
         return hash & Integer.MAX_VALUE; // Hack for no negative values
     }
 
+    /**
+     * Hashes the string based on the simple hash implementation.
+     *
+     * @param string the string to hash.
+     * @return the hash value of the string.
+     */
     private int simpleHash(String string) {
         int hash = 0;
         for (char character : string.toCharArray()) {
@@ -122,22 +161,37 @@ public class HashTable implements Hash {
         return hash;
     }
 
+    /**
+     * Hashes the string based on the simple custom implementation.
+     *
+     * @param string the string to hash.
+     * @return the hash value of the string.
+     */
     private int customHash(String string) {
         int hash = 7;
         for (char character : string.toCharArray()) {
-            hash += 13 * hash + (character - '0');
+            hash += 17 * hash + (character - '0');
         }
         return hash;
     }
 
-    private class SackOfShit {
+    /**
+     * Holder bean for the word and its occurrences.
+     */
+    private class WorldHolder {
 
         private String word;
-        private int occurances;
+        private int occurrences;
 
-        public SackOfShit(String word, int occurances) {
+        /**
+         * Initializes a new WordHolder object with given word and occurrences.
+         *
+         * @param word
+         * @param occurrences
+         */
+        public WorldHolder(String word, int occurrences) {
             this.word = word;
-            this.occurances = occurances;
+            this.occurrences = occurrences;
         }
     }
 }
