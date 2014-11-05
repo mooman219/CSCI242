@@ -1,0 +1,11 @@
+jwc6999@glados:~/labs/242/lab10-1$ try grd-242 lab10-1 *.java *.txt
+Copying files...done
+
+ON-TIME submission of lab10-1
+Compiling your program...
+
+Files being saved:
+HashDriver.java HashTable.java answers.txt atotc.txt words.txt
+
+lab10-1 has been submitted.
+jwc6999@glados:~/labs/242/lab10-1$
