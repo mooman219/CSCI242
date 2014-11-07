@@ -10,7 +10,29 @@ public class Clock implements Puzzle {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
+        if (args.length < 3) {
+            System.out.println("Usage: java Clock hours start goal");
+            return;
+        }
+        int hours, start, goal;
+        try {
+            hours = Integer.parseInt(args[0]);
+            start = Integer.parseInt(args[1]);
+            goal = Integer.parseInt(args[2]);
+        } catch (NumberFormatException e) {
+            System.out.println("Usage: java Clock hours start goal");
+            return;
+        }
+        Solver solver = new Solver();
+        Clock puzzle = new Clock(hours, start, goal);
+        ArrayList<Integer> solution = solver.solve(puzzle);
+        if (solution.isEmpty()) {
+            System.out.println("No solution");
+        } else {
+            for (int i = 0; i < solution.size(); i++) {
+                System.out.printf("Step %d: %d\n", i, solution.get(i));
+            }
+        }
     }
 
     private final int total;
