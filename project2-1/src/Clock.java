@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 
 /**
+ * This class is a puzzle where it is given a total amount of hours and must
+ * find the shortest path from a starting number to a goal number.
  *
  * @author Joseph Cumbo (mooman219)
  */
@@ -26,7 +28,7 @@ public class Clock implements Puzzle {
         Solver solver = new Solver();
         Clock puzzle = new Clock(hours, start, goal);
         ArrayList<Integer> solution = solver.solve(puzzle);
-        if (solution.isEmpty()) {
+        if (solution == null) {
             System.out.println("No solution");
         } else {
             for (int i = 0; i < solution.size(); i++) {
@@ -39,6 +41,13 @@ public class Clock implements Puzzle {
     private final int start;
     private final int goal;
 
+    /**
+     * Initializes a new clock object.
+     *
+     * @param total the total hours in the clock.
+     * @param start the starting hour on the clock.
+     * @param goal the goal hour to reach on the clock.
+     */
     public Clock(int total, int start, int goal) {
         this.total = total;
         this.start = start;
