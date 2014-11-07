@@ -1,0 +1,8 @@
+b675e5c Document Solver
+5b93e58 Document Clock
+a5f4b63 Implement main method for Clock
+c3dec46 Implement Solver
+5288823 Implement Clock
+b9279e8 Implement HashTable
+4da43f5 Implement Puzzle Interface
+55eca84 Start Project2-1 - Clock
