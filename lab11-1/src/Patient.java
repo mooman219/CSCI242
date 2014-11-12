@@ -1,3 +1,6 @@
+import java.util.Iterator;
+import java.util.LinkedList;
+
 /**
  * A class to simulate a patient in a doctor's office. Objects of this type know
  * the first and last name and age of the patient, and will contain a medication
@@ -11,6 +14,12 @@
  */
 public class Patient {
 
+    // List of medications
+    private LinkedList<Medication> medications = new LinkedList<Medication>();
+    private final String lastname;
+    private final String firstname;
+    private final int age;
+
     /**
      * Constructor for this object.
      *
@@ -19,6 +28,9 @@ public class Patient {
      * @age age - the age of this patient
      */
     public Patient(String myLast, String myFirst, int age) {
+        this.lastname = myLast;
+        this.firstname = myFirst;
+        this.age = age;
     }
 
     /**
@@ -29,7 +41,7 @@ public class Patient {
      * @return the patient's full name.
      */
     public String getName() {
-        return "";
+        return lastname + "," + firstname;
     }
 
     /**
@@ -38,7 +50,7 @@ public class Patient {
      * @return the patient's age
      */
     public int getAge() {
-        return 0;
+        return age;
     }
 
     /**
@@ -48,7 +60,7 @@ public class Patient {
      *
      */
     public int getNumberOfMeds() {
-        return 0;
+        return medications.size();
     }
 
     /**
@@ -59,6 +71,8 @@ public class Patient {
      *
      */
     public void recordNewMed(String name, boolean generic) {
+        Medication medication = new Medication(name, generic);
+        medications.add(medication);
     }
 
     /**
@@ -72,6 +86,13 @@ public class Patient {
      *
      */
     public boolean removeMed(String med) {
+        for (Iterator<Medication> iterator = medications.iterator(); iterator.hasNext();) {
+            Medication medication = iterator.next();
+            if (medication.getName().equals(med)) {
+                iterator.remove();
+                return true;
+            }
+        }
         return false;
     }
 
@@ -81,6 +102,14 @@ public class Patient {
      *
      */
     public void printMedicationHistory() {
+        StringBuilder builder = new StringBuilder();
+        if (medications.size() > 0) {
+            for (Medication medication : medications) {
+                builder.append(medication.toString()).append("\n");
+            }
+            builder.delete(builder.length() - 2, builder.length());
+        }
+        System.out.println(builder.toString());
     }
 
     /**
@@ -95,7 +124,15 @@ public class Patient {
      * @return a String version of this Patient.
      */
     public String toString() {
-        return "";
+        StringBuilder builder = new StringBuilder();
+        builder.append(getName()).append(" ").append(getAge()).append("\n");
+        if (medications.size() > 0) {
+            for (Medication medication : medications) {
+                builder.append(medication.toString()).append("\n");
+            }
+            builder.delete(builder.length() - 2, builder.length());
+        }
+        return builder.toString();
     }
 
 } // Patient

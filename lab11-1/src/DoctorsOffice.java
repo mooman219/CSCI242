@@ -54,7 +54,7 @@ public class DoctorsOffice {
      *
      */
     public void removePatient(int patientNo) throws NoSuchPatientException {
-
+        // DO NOT IMPLEMENT
     }
 
     /**
@@ -101,6 +101,7 @@ public class DoctorsOffice {
      *
      */
     public void listByName() {
+        // DO NOT IMPLEMENT
     }
 
     /**
@@ -112,6 +113,7 @@ public class DoctorsOffice {
      *
      */
     public void listByAge() {
+        // DO NOT IMPLEMENT
     }
 
     /**
@@ -125,6 +127,7 @@ public class DoctorsOffice {
      *
      */
     public void listInactive() {
+        // DO NOT IMPLEMENT
     }
 
 }
