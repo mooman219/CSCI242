@@ -12,18 +12,15 @@ public class PatientComparator implements Comparator {
      * @param args
      */
     public static void main(String[] args) {
+        DoctorsOffice office = new DoctorsOffice("test");
         ArrayList<Patient> listOfPatients = new ArrayList<Patient>();
-        listOfPatients.add(new Patient("doe", "john", 39));
-        listOfPatients.add(new Patient("cumbo", "joe", 39));
-        listOfPatients.add(new Patient("bear", "polar", 39));
-        listOfPatients.add(new Patient("foo", "bar", 39));
-        listOfPatients.add(new Patient("doe", "deer", 39));
-        listOfPatients.add(new Patient("deer", "john", 39));
-        listOfPatients.sort(new PatientComparator());
-
-        for (Patient patient : listOfPatients) {
-            System.out.println(patient.getName());
-        }
+        office.addPatient("doe", "john", 39);
+        office.addPatient("cumbo", "joe", 39);
+        office.addPatient("bear", "polar", 39);
+        office.addPatient("foo", "bar", 39);
+        office.addPatient("doe", "deer", 39);
+        office.addPatient("deer", "john", 39);
+        office.listByName();
     }
 
     /**
@@ -52,7 +49,7 @@ public class PatientComparator implements Comparator {
         }
         Patient a = (Patient) o1;
         Patient b = (Patient) o2;
-        return a.getName().compareTo(b.getName());
+        return a.getCombinedName().compareTo(b.getCombinedName());
     }
 
 }

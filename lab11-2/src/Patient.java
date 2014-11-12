@@ -45,6 +45,15 @@ public class Patient {
     }
 
     /**
+     * Combines the last and first names into one string.
+     *
+     * @return the last combined with the first name.
+     */
+    public String getCombinedName() {
+        return lastname + firstname;
+    }
+
+    /**
      * Return this patient's age.
      *
      * @return the patient's age
@@ -126,12 +135,10 @@ public class Patient {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append(getName()).append(" ").append(getAge()).append("\n");
-        if (medications.size() > 0) {
-            for (Medication medication : medications) {
-                builder.append(medication.toString()).append("\n");
-            }
-            builder.delete(builder.length() - 2, builder.length());
+        for (Medication medication : medications) {
+            builder.append(medication.toString()).append("\n");
         }
+        builder.delete(builder.length() - 1, builder.length());
         return builder.toString();
     }
 

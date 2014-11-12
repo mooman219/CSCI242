@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -120,11 +121,13 @@ public class DoctorsOffice {
      *
      * To print the Patient objects, simply call your toString() method in the
      * Patient class.
-     *
-     *
      */
     public void listByName() {
-        // DO NOT IMPLEMENT
+        ArrayList<Patient> listOfPatients = new ArrayList<Patient>(active.values());
+        listOfPatients.sort(new PatientComparator());
+        for (Patient patient : listOfPatients) {
+            System.out.println(patient.toString());
+        }
     }
 
     /**
