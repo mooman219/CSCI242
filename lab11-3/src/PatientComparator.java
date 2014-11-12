@@ -14,13 +14,13 @@ public class PatientComparator implements Comparator {
     public static void main(String[] args) {
         DoctorsOffice office = new DoctorsOffice("test");
         ArrayList<Patient> listOfPatients = new ArrayList<Patient>();
-        office.addPatient("doe", "john", 39);
-        office.addPatient("cumbo", "joe", 39);
-        office.addPatient("bear", "polar", 39);
-        office.addPatient("foo", "bar", 39);
-        office.addPatient("doe", "deer", 39);
-        office.addPatient("deer", "john", 39);
-        office.listByName();
+        office.addPatient("doe", "john", 3);
+        office.addPatient("cumbo", "joe", 23);
+        office.addPatient("bear", "polar", 5);
+        office.addPatient("foo", "bar", 52);
+        office.addPatient("doe", "deer", 2);
+        office.addPatient("deer", "john", 8);
+        office.listByAge();
     }
 
     /**

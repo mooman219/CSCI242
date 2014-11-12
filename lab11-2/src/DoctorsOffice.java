@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 
 /**
@@ -64,12 +63,7 @@ public class DoctorsOffice {
      *
      */
     public void removePatient(int patientNo) throws NoSuchPatientException {
-        Patient patient = active.remove(patientNo);
-        if (patient != null) {
-            inactive.put(patientNo, patient);
-        } else {
-            throw new NoSuchPatientException("addMedication()");
-        }
+        // DO NOT IMPLEMENT
     }
 
     /**
@@ -145,24 +139,7 @@ public class DoctorsOffice {
      *
      */
     public void listByAge() {
-        ArrayList<Patient> listOfPatients = new ArrayList<Patient>(active.values());
-        listOfPatients.sort(new Comparator() {
-            @Override
-            public int compare(Object o1, Object o2) {
-                if (o1 == null
-                        || o2 == null
-                        || !(o1 instanceof Patient)
-                        || !(o2 instanceof Patient)) {
-                    throw new ClassCastException();
-                }
-                Patient patientA = (Patient) o1;
-                Patient patientB = (Patient) o2;
-                return patientA.getAge() - patientB.getAge();
-            }
-        });
-        for (Patient patient : listOfPatients) {
-            System.out.println(patient.toString());
-        }
+        // DO NOT IMPLEMENT
     }
 
     /**
@@ -176,9 +153,7 @@ public class DoctorsOffice {
      *
      */
     public void listInactive() {
-        for (Patient patient : inactive.values()) {
-            System.out.println(patient.toString());
-        }
+        // DO NOT IMPLEMENT
     }
 
 }

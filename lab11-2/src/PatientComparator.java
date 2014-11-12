@@ -11,16 +11,16 @@ public class PatientComparator implements Comparator {
      *
      * @param args
      */
-    public static void main(String[] args) throws NoSuchPatientException {
+    public static void main(String[] args) {
         DoctorsOffice office = new DoctorsOffice("test");
         ArrayList<Patient> listOfPatients = new ArrayList<Patient>();
-        office.removePatient(office.addPatient("doe", "john", 3));
-        office.removePatient(office.addPatient("cumbo", "joe", 23));
-        office.removePatient(office.addPatient("bear", "polar", 5));
-        office.removePatient(office.addPatient("foo", "bar", 52));
-        office.removePatient(office.addPatient("doe", "deer", 2));
-        office.removePatient(office.addPatient("deer", "john", 8));
-        office.listInactive();
+        office.addPatient("doe", "john", 39);
+        office.addPatient("cumbo", "joe", 39);
+        office.addPatient("bear", "polar", 39);
+        office.addPatient("foo", "bar", 39);
+        office.addPatient("doe", "deer", 39);
+        office.addPatient("deer", "john", 39);
+        office.listByName();
     }
 
     /**

@@ -107,7 +107,7 @@ public class Patient {
             for (Medication medication : medications) {
                 builder.append(medication.toString()).append("\n");
             }
-            builder.delete(builder.length() - 2, builder.length());
+            builder.delete(builder.length() - 1, builder.length());
         }
         System.out.println(builder.toString());
     }

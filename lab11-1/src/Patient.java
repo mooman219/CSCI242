@@ -41,7 +41,7 @@ public class Patient {
      * @return the patient's full name.
      */
     public String getName() {
-        return lastname + ", " + firstname;
+        return lastname + "," + firstname;
     }
 
     /**
@@ -107,7 +107,7 @@ public class Patient {
             for (Medication medication : medications) {
                 builder.append(medication.toString()).append("\n");
             }
-            builder.delete(builder.length() - 2, builder.length());
+            builder.delete(builder.length() - 1, builder.length());
         }
         System.out.println(builder.toString());
     }
@@ -126,10 +126,12 @@ public class Patient {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append(getName()).append(" ").append(getAge()).append("\n");
-        for (Medication medication : medications) {
-            builder.append(medication.toString()).append("\n");
+        if (medications.size() > 0) {
+            for (Medication medication : medications) {
+                builder.append(medication.toString()).append("\n");
+            }
+            builder.delete(builder.length() - 1, builder.length());
         }
-        builder.delete(builder.length() - 1, builder.length());
         return builder.toString();
     }
 

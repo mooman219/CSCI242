@@ -1,0 +1,4 @@
+03d70f1 Update test
+3ed94cc implement listInactive
+04739b6 Implement removePatient
+37fa6be Move changes from part 3 to part 4
