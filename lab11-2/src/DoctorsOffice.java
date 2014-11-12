@@ -64,7 +64,12 @@ public class DoctorsOffice {
      *
      */
     public void removePatient(int patientNo) throws NoSuchPatientException {
-        // DO NOT IMPLEMENT
+        Patient patient = active.remove(patientNo);
+        if (patient != null) {
+            inactive.put(patientNo, patient);
+        } else {
+            throw new NoSuchPatientException("addMedication()");
+        }
     }
 
     /**
