@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 /**
@@ -139,7 +140,24 @@ public class DoctorsOffice {
      *
      */
     public void listByAge() {
-        // DO NOT IMPLEMENT
+        ArrayList<Patient> listOfPatients = new ArrayList<Patient>(active.values());
+        listOfPatients.sort(new Comparator() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                if (o1 == null
+                        || o2 == null
+                        || !(o1 instanceof Patient)
+                        || !(o2 instanceof Patient)) {
+                    throw new ClassCastException();
+                }
+                Patient patientA = (Patient) o1;
+                Patient patientB = (Patient) o2;
+                return patientA.getAge() - patientB.getAge();
+            }
+        });
+        for (Patient patient : listOfPatients) {
+            System.out.println(patient.toString());
+        }
     }
 
     /**
