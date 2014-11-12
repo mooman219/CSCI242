@@ -1,0 +1,12 @@
+jwc6999@glados:~/labs/242/lab11-2$ try grd-242 lab11-2 *.java *.txt
+Copying files...done
+
+ON-TIME submission of lab11-2
+Compiling your program...
+Note: DoctorsOffice.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+Files being saved:
+DoctorsOffice.java Patient.java PatientComparator.java versions.txt
+
+lab11-2 has been submitted.
