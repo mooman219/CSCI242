@@ -1,9 +1,30 @@
+import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
  * @author Joseph Cumbo (mooman219)
  */
 public class PatientComparator implements Comparator {
+
+    /**
+     * Driver for the test.
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        ArrayList<Patient> listOfPatients = new ArrayList<Patient>();
+        listOfPatients.add(new Patient("doe", "john", 39));
+        listOfPatients.add(new Patient("cumbo", "joe", 39));
+        listOfPatients.add(new Patient("bear", "polar", 39));
+        listOfPatients.add(new Patient("foo", "bar", 39));
+        listOfPatients.add(new Patient("doe", "deer", 39));
+        listOfPatients.add(new Patient("deer", "john", 39));
+        listOfPatients.sort(new PatientComparator());
+
+        for (Patient patient : listOfPatients) {
+            System.out.println(patient.getName());
+        }
+    }
 
     /**
      * Initializes a new PatientComparator object.

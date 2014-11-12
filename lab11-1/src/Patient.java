@@ -41,7 +41,7 @@ public class Patient {
      * @return the patient's full name.
      */
     public String getName() {
-        return lastname + "," + firstname;
+        return lastname + ", " + firstname;
     }
 
     /**
