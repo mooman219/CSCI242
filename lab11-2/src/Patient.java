@@ -45,15 +45,6 @@ public class Patient {
     }
 
     /**
-     * Combines the last and first names into one string.
-     *
-     * @return the last combined with the first name.
-     */
-    public String getCombinedName() {
-        return lastname + firstname;
-    }
-
-    /**
      * Return this patient's age.
      *
      * @return the patient's age

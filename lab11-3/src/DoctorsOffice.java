@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * A simple class to simulate the operation of a doctor's office for tracking
  * patients and medication.
@@ -14,14 +17,18 @@
  */
 public class DoctorsOffice {
 
+    private int nextPaitentNumber = 1000;
+    private final String name;
+    private final HashMap<Integer, Patient> active = new HashMap<Integer, Patient>();
+    private final HashMap<Integer, Patient> inactive = new HashMap<Integer, Patient>();
+
     /**
      * Constructor for a DoctorsOffice object.
      *
      * @param name Name of this Dr's Office
-     *
-     *
      */
     public DoctorsOffice(String name) {
+        this.name = name;
     }
 
     /**
@@ -37,8 +44,10 @@ public class DoctorsOffice {
      *
      */
     public int addPatient(String firstName, String lastName, int age) {
-
-        return 0;
+        Patient patient = new Patient(lastName, firstName, age);
+        int number = nextPaitentNumber++;
+        active.put(number, patient);
+        return number;
 
     }
 
@@ -54,7 +63,7 @@ public class DoctorsOffice {
      *
      */
     public void removePatient(int patientNo) throws NoSuchPatientException {
-
+        // DO NOT IMPLEMENT
     }
 
     /**
@@ -70,6 +79,12 @@ public class DoctorsOffice {
      *
      */
     public void addMedication(int patientNo, String medicationName, boolean isGeneric) throws NoSuchPatientException {
+        Patient patient = active.get(patientNo);
+        if (patient != null) {
+            patient.recordNewMed(medicationName, isGeneric);
+        } else {
+            throw new NoSuchPatientException("addMedication()");
+        }
     }
 
     /**
@@ -88,7 +103,16 @@ public class DoctorsOffice {
      *
      */
     public void printMedicationDetail(int patientNo) throws NoSuchPatientException {
-
+        Patient patient = active.get(patientNo);
+        if (patient != null) {
+            if (patient.getNumberOfMeds() > 0) {
+                System.out.println(patient.toString());
+            } else {
+                System.out.println("No Medications Prescribed");
+            }
+        } else {
+            throw new NoSuchPatientException("printMedicationDetail()");
+        }
     }
 
     /**
@@ -97,10 +121,13 @@ public class DoctorsOffice {
      *
      * To print the Patient objects, simply call your toString() method in the
      * Patient class.
-     *
-     *
      */
     public void listByName() {
+        ArrayList<Patient> listOfPatients = new ArrayList<Patient>(active.values());
+        listOfPatients.sort(new PatientComparator());
+        for (Patient patient : listOfPatients) {
+            System.out.println(patient.toString());
+        }
     }
 
     /**
@@ -112,6 +139,7 @@ public class DoctorsOffice {
      *
      */
     public void listByAge() {
+        // DO NOT IMPLEMENT
     }
 
     /**
@@ -125,6 +153,7 @@ public class DoctorsOffice {
      *
      */
     public void listInactive() {
+        // DO NOT IMPLEMENT
     }
 
 }
