@@ -176,7 +176,9 @@ public class DoctorsOffice {
      *
      */
     public void listInactive() {
-        // DO NOT IMPLEMENT
+        for (Patient patient : inactive.values()) {
+            System.out.println(patient.toString());
+        }
     }
 
 }
