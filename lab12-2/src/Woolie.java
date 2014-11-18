@@ -7,7 +7,11 @@
  *
  * @author Joseph Cumbo (mooman219)
  */
-public class Woolie implements Runnable {
+public class Woolie extends Thread {
+
+    private final String myName;
+    private final int myCrossingTime;
+    private final String myDestination;
 
     /**
      * Construct a new Woolie object that can be started in a separate thread.
@@ -19,7 +23,9 @@ public class Woolie implements Runnable {
      * @param myDestination the city the Woolie is heading to
      */
     public Woolie(String myName, int myCrossingTime, String myDestination) {
-
+        this.myName = myName;
+        this.myCrossingTime = myCrossingTime;
+        this.myDestination = myDestination;
     }
 
     /**
@@ -44,6 +50,15 @@ public class Woolie implements Runnable {
      */
     @Override
     public void run() {
-
+        System.out.println(myName + " has arrived at the bridge.");
+        System.out.println(myName + " is starting to cross.");
+        for (int i = 0; i < myCrossingTime; i++) {
+            try {
+                Thread.sleep(1000);
+                System.out.println("\t" + myName + " " + i + " seconds.");
+            } catch (InterruptedException ex) {
+                System.out.println("A wild jehovah's witness has interrupted " + myName + ".");
+            }
+        }
     }
 }
