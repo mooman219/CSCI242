@@ -22,6 +22,9 @@ public class ManyThreads extends Thread {
             System.out.println("ManyThreads:  Invalid number");
             return;
         }
+        if (totalThreads < 1) {
+            System.out.println("ManyThreads:  Invalid number");
+        }
         for (int i = 0; i < totalThreads; i++) {
             new ManyThreads("Hello I am thread " + i).start();
         }
