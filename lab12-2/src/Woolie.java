@@ -9,6 +9,18 @@
  */
 public class Woolie extends Thread {
 
+    /**
+     * The main method.
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        new Woolie("A", 5, "Narnia").start();
+        new Woolie("B", 8, "Hogwarts").start();
+        new Woolie("C", 2, "Around the corner").start();
+        new Woolie("D", 3, "Where he started").start();
+    }
+
     private final String myName;
     private final int myCrossingTime;
     private final String myDestination;
@@ -60,5 +72,6 @@ public class Woolie extends Thread {
                 System.out.println("A wild jehovah's witness has interrupted " + myName + ".");
             }
         }
+        System.out.println(myName + " leaves at " + myDestination + ".");
     }
 }
