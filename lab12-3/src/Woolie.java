@@ -9,21 +9,10 @@
  */
 public class Woolie extends Thread {
 
-    /**
-     * The main method.
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        new Woolie("A", 5, "Narnia").start();
-        new Woolie("B", 8, "Hogwarts").start();
-        new Woolie("C", 2, "Around the corner").start();
-        new Woolie("D", 3, "Where he started").start();
-    }
-
     private final String myName;
     private final int myCrossingTime;
     private final String myDestination;
+    private final Bridge bridge;
 
     /**
      * Construct a new Woolie object that can be started in a separate thread.
@@ -34,10 +23,11 @@ public class Woolie extends Thread {
      * the bridge
      * @param myDestination the city the Woolie is heading to
      */
-    public Woolie(String myName, int myCrossingTime, String myDestination) {
+    public Woolie(String myName, int myCrossingTime, String myDestination, Bridge bridge) {
         this.myName = myName;
         this.myCrossingTime = myCrossingTime;
         this.myDestination = myDestination;
+        this.bridge = bridge;
     }
 
     /**
@@ -63,6 +53,7 @@ public class Woolie extends Thread {
     @Override
     public void run() {
         System.out.println(myName + " has arrived at the bridge.");
+        bridge.enterBridge();
         System.out.println(myName + " is starting to cross.");
         for (int i = 0; i < myCrossingTime; i++) {
             try {
@@ -72,6 +63,7 @@ public class Woolie extends Thread {
                 System.out.println("A wild jehovah's witness has interrupted " + myName + ".");
             }
         }
+        bridge.leaveBridge();
         System.out.println(myName + " leaves at " + myDestination + ".");
     }
 }
