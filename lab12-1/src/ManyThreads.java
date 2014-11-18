@@ -5,6 +5,11 @@
  */
 public class ManyThreads extends Thread {
 
+    /**
+     * The main method.
+     *
+     * @param args the number of threads to be created
+     */
     public static void main(String[] args) {
         if (args.length < 1) {
             System.out.println("Usage:  java ManyThreads number-of-threads");
@@ -22,12 +27,21 @@ public class ManyThreads extends Thread {
         }
     }
 
+    // Message that the ManyThreads object will output.
     private final String message;
 
+    /**
+     * Initializes a new ManyThreads object.
+     *
+     * @param message the message that will be outputted when run() is called
+     */
     public ManyThreads(String message) {
         this.message = message;
     }
 
+    /**
+     * The default run method.
+     */
     @Override
     public void run() {
         System.out.println(message);
