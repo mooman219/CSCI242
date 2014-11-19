@@ -10,6 +10,19 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Bridge {
 
+    /**
+     * The main method.
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        Bridge bridge = new Bridge();
+        new Woolie("A", 5, "Narnia", bridge).start();
+        new Woolie("B", 8, "Hogwarts", bridge).start();
+        new Woolie("C", 2, "Around the corner", bridge).start();
+        new Woolie("D", 3, "Where he started", bridge).start();
+    }
+
     private final ReentrantLock lock = new ReentrantLock();
 
     /**
