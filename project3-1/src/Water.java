@@ -7,7 +7,7 @@ import java.util.ArrayList;
  *
  * @author Joseph Cumbo (mooman219)
  */
-public class Water implements Puzzle<Integer> {
+public class Water implements Puzzle<JugState> {
 
     /**
      * Main method.
@@ -29,7 +29,8 @@ public class Water implements Puzzle<Integer> {
      * @return the starting config.
      */
     @Override
-    public Integer getStart() {
+    public JugState getStart() {
+        return null;
     }
 
     /**
@@ -40,8 +41,8 @@ public class Water implements Puzzle<Integer> {
      * @return the collection of neighbor configs.
      */
     @Override
-    public ArrayList<Integer> getNeighbors(Integer config) {
-        ArrayList<Integer> neighbors = new ArrayList<Integer>();
+    public ArrayList<JugState> getNeighbors(JugState config) {
+        ArrayList<JugState> neighbors = new ArrayList<JugState>();
         return neighbors;
     }
 
@@ -51,7 +52,21 @@ public class Water implements Puzzle<Integer> {
      * @return the goal config.
      */
     @Override
-    public Integer getGoal() {
+    public JugState getGoal() {
+        return null;
+    }
+
+    public static class JugState {
+
+        private final int[] jugs;
+
+        public JugState(int... jugs) {
+            this.jugs = jugs;
+        }
+
+        public int[] getJugs() {
+            return jugs;
+        }
     }
 
 }
