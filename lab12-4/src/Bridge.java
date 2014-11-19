@@ -26,6 +26,14 @@ public class Bridge {
         new Woolie("G", 7, "Mars", bridge).start();
     }
 
+    /**
+     * A Semaphore is like a line, and in front of the line is a person handing
+     * out tickets. The first parameter is the number of tickets that the person
+     * can hand out. The second parameter is is a flag noting that you want to
+     * hand out tickets to people that were there first. When the person runs
+     * out of tickets to hand out, the line waits until someone returns a ticket
+     * and you go through the process again.
+     */
     private final Semaphore lock = new Semaphore(3, true);
 
     /**

@@ -58,10 +58,10 @@ public class Woolie extends Thread {
         for (int i = 0; i < myCrossingTime; i++) {
             try {
                 Thread.sleep(1000);
-                System.out.println("\t" + myName + " " + (i + 1) + " seconds.");
             } catch (InterruptedException ex) {
                 System.out.println("A wild jehovah's witness has interrupted " + myName + ".");
             }
+            System.out.println("\t" + myName + " " + (i + 1) + " seconds.");
         }
         bridge.leaveBridge();
         System.out.println(myName + " leaves at " + myDestination + ".");
