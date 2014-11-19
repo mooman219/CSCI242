@@ -59,5 +59,4 @@ public class Bridge {
     public void leaveBridge() {
         lock.release();
     }
-
 }
