@@ -6,14 +6,14 @@ import java.util.ArrayList;
  *
  * @author Joseph Cumbo (mooman219)
  */
-public interface Puzzle {
+public interface Puzzle<E> {
 
     /**
      * Get the starting config for this puzzle.
      *
      * @return the starting config.
      */
-    public int getStart();
+    public E getStart();
 
     /**
      * For an incoming config, generate and return all direct neighbors to this
@@ -22,12 +22,12 @@ public interface Puzzle {
      * @param config the incoming config.
      * @return the collection of neighbor configs.
      */
-    public ArrayList<Integer> getNeighbors(int config);
+    public ArrayList<E> getNeighbors(E config);
 
     /**
      * Get the goal config for this puzzle.
      *
      * @return the goal config.
      */
-    public int getGoal();
+    public E getGoal();
 }
