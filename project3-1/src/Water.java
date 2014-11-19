@@ -16,6 +16,16 @@ public class Water implements Puzzle<Water.JugState> {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        Water water = new Water(4, 5, 3);
+        Solver solver = new Solver();
+        ArrayList<JugState> result = solver.solve(water);
+        if (result != null) {
+            for (int i = 0; i < result.size(); i++) {
+                System.out.println("Step " + i + ": " + result.get(i));
+            }
+        } else {
+            System.out.println("No Solution");
+        }
     }
 
     private final int[] maxAmounts;
@@ -153,6 +163,18 @@ public class Water implements Puzzle<Water.JugState> {
                 return false;
             }
             return true;
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder ret = new StringBuilder();
+            if (jugs.length > 0) {
+                for (int jug : jugs) {
+                    ret.append(jug).append(' ');
+                }
+                ret.deleteCharAt(ret.length() - 1);
+            }
+            return ret.toString();
         }
 
         @Override
