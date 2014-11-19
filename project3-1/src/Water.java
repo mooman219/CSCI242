@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * This class is a puzzle which takes a desired amount and a number of jugs and
@@ -7,7 +8,7 @@ import java.util.ArrayList;
  *
  * @author Joseph Cumbo (mooman219)
  */
-public class Water implements Puzzle<JugState> {
+public class Water implements Puzzle<Water.JugState> {
 
     /**
      * Main method.
@@ -17,10 +18,17 @@ public class Water implements Puzzle<JugState> {
     public static void main(String[] args) {
     }
 
+    private final int[] maxAmounts;
+    private final JugState start;
+    private final JugState goal;
+
     /**
      * Initializes a new water object.
      */
-    public Water() {
+    public Water(int desiredAmount, int... maxAmounts) {
+        this.maxAmounts = maxAmounts;
+        this.start = new JugState(new int[maxAmounts.length]);
+        this.goal = new JugState(true, desiredAmount);
     }
 
     /**
@@ -30,7 +38,7 @@ public class Water implements Puzzle<JugState> {
      */
     @Override
     public JugState getStart() {
-        return null;
+        return start;
     }
 
     /**
@@ -53,19 +61,42 @@ public class Water implements Puzzle<JugState> {
      */
     @Override
     public JugState getGoal() {
-        return null;
+        return goal;
     }
 
     public static class JugState {
 
+        private final boolean isGoal;
         private final int[] jugs;
 
         public JugState(int... jugs) {
+            this(false, jugs);
+        }
+
+        private JugState(boolean isGoal, int... jugs) {
+            this.isGoal = isGoal;
             this.jugs = jugs;
         }
 
         public int[] getJugs() {
             return jugs;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final JugState other = (JugState) obj;
+            if (isGoal && this.jugs[0] == other.jugs[0]) {
+                return true;
+            } else if (!Arrays.equals(this.jugs, other.jugs)) {
+                return false;
+            }
+            return true;
         }
     }
 
