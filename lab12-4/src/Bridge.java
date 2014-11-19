@@ -21,6 +21,9 @@ public class Bridge {
         new Woolie("B", 8, "Hogwarts", bridge).start();
         new Woolie("C", 2, "Around the corner", bridge).start();
         new Woolie("D", 3, "Where he started", bridge).start();
+        new Woolie("E", 10, "CSCI242", bridge).start();
+        new Woolie("F", 6, "Rochester", bridge).start();
+        new Woolie("G", 7, "Mars", bridge).start();
     }
 
     private final Semaphore lock = new Semaphore(3, true);
