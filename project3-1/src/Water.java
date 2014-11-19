@@ -97,7 +97,7 @@ public class Water implements Puzzle<Water.JugState> {
                              */
                             int howMuchCanIPour = Math.min(maxAmounts[x] - config.jugs[x], config.jugs[i]);
                             localJugs[i] -= howMuchCanIPour;
-                            localJugs[i] += howMuchCanIPour;
+                            localJugs[x] += howMuchCanIPour;
                             // Finally add it as a neighbor
                             neighbors.add(new JugState(localJugs));
                         }
@@ -147,12 +147,20 @@ public class Water implements Puzzle<Water.JugState> {
                 return false;
             }
             final JugState other = (JugState) obj;
-            if (isGoal && this.jugs[0] == other.jugs[0]) {
+            if ((isGoal || other.isGoal) && this.jugs[0] == other.jugs[0]) {
                 return true;
             } else if (!Arrays.equals(this.jugs, other.jugs)) {
                 return false;
             }
             return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 5;
+            hash = 83 * hash + (this.isGoal ? 1 : 0);
+            hash = 83 * hash + Arrays.hashCode(this.jugs);
+            return hash;
         }
     }
 }
