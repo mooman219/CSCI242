@@ -1,4 +1,4 @@
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.Semaphore;
 
 /**
  * Simulation of the bridge troll controlling the passage of pedestrians on the
@@ -23,7 +23,7 @@ public class Bridge {
         new Woolie("D", 3, "Where he started", bridge).start();
     }
 
-    private final ReentrantLock lock = new ReentrantLock();
+    private final Semaphore lock = new Semaphore(3, true);
 
     /**
      * Constructor for the Bridge class.
@@ -35,14 +35,18 @@ public class Bridge {
      * Request permission to enter the bridge.
      */
     public void enterBridge() {
-        lock.lock();
+        try {
+            lock.acquire();
+        } catch (InterruptedException ex) {
+            System.out.println("Interrupted while waiting.");
+        }
     }
 
     /**
      * Notify the bridge troll that a Woolie is leaving the bridge.
      */
     public void leaveBridge() {
-        lock.unlock();
+        lock.release();
     }
 
 }
