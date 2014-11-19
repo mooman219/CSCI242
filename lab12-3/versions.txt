@@ -1,0 +1,5 @@
+8f2358c Create a test for the Bridge
+5251ec5 Ensure only one Woolie on the bridge at a time
+7e20500 Modify Woolie to use Bridge
+cf41125 Copy JavaDocs for Bridge
+bfc9e24 Start lab12-3 with Woolie from part 2
