@@ -1,0 +1,3 @@
+6a8251c Modify Woolie to properly display the time
+25cd2ca Use a Semaphore with 3 permits and ensure fairness
+344a96b Start lab12-4 with files from part 3
