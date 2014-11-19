@@ -1,0 +1,12 @@
+jwc6999@glados:~$ cd labs/242/
+jwc6999@glados:~/labs/242$ cd lab12-1/
+jwc6999@glados:~/labs/242/lab12-1$ try grd-242 lab12-1 *.java *.txt
+Copying files...done
+
+ON-TIME submission of lab12-1
+Compiling your program...
+
+Files being saved:
+ManyThreads.java versions.txt
+
+lab12-1 has been submitted.

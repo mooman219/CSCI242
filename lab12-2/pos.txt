@@ -1,0 +1,12 @@
+jwc6999@glados:~/labs/242/lab12-1$ cd ..
+jwc6999@glados:~/labs/242$ cd lab12-2/
+jwc6999@glados:~/labs/242/lab12-2$ try grd-242 lab12-2 *.java *.txt
+Copying files...done
+
+ON-TIME submission of lab12-2
+Compiling your program...
+
+Files being saved:
+Woolie.java versions.txt
+
+lab12-2 has been submitted.
