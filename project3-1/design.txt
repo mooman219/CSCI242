@@ -1,0 +1,28 @@
+CSX Puzzle Solver, Project Part 2:  Water & Clock
+
+Name: Joseph Cumbo
+
+
+1. Explain how your common solver is able to work with both puzzles.
+Puzzle uses a generic type for the datatype it is manipulating. Sovler
+then uses generics to return and input the proper types.
+
+
+2. What was the type of configuration you used for each puzzle?
+The Clock puzzle used an integer.
+The Water puzzle used a JugState object.
+
+
+3. Starting with the Puzzle interface from part 1, what were the major
+changes and additions you had to make?
+Puzzle now uses generics for the type of object it manipulates.
+
+
+
+4. What problems, if any, did you encounter when re-designing your 
+project from part 1?
+None. Puzzle just needed to include an element type and the puzzles needed
+to give a element type. Example, Clock implemented Puzzle<Integer> and
+Water implemented Puzzle<Water.JugState>.
+
+
