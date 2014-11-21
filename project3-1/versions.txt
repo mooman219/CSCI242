@@ -1,0 +1,12 @@
+0b5099c Write design.txt
+e1449e3 Implement command line input for Water
+253b6ee Document Water
+aa1b2ff Add a test to Water.java
+08347d1 Add a set of visited nodes to Solver to avoid loops
+8064eca Implement getNeighbros
+41d0368 Implement getStart and getGoal
+0dc3b3a Create JugState subclass
+ad58a45 Create outline for Water.java
+9bad782 Copy Clock from project2-1
+a99f1fb Use generics
+741993f Rename to project2-2 to 3-1
