@@ -16,7 +16,23 @@ public class Water implements Puzzle<Water.JugState> {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Water water = new Water(4, 5, 3);
+        if (args.length < 2) {
+            System.out.println("Usage: java Water amount jug1 jug2 ...");
+            return;
+        }
+        int desiredAmount;
+        int[] jugs = new int[args.length - 1];
+        try {
+            desiredAmount = Integer.parseInt(args[0]);
+            for (int i = 1; i < args.length; i++) {
+                jugs[i - 1] = Integer.parseInt(args[i]);
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Usage: java Water amount jug1 jug2 ...");
+            return;
+        }
+
+        Water water = new Water(desiredAmount, jugs);
         Solver solver = new Solver();
         ArrayList<JugState> result = solver.solve(water);
         if (result != null) {
