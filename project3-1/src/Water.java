@@ -34,6 +34,9 @@ public class Water implements Puzzle<Water.JugState> {
 
     /**
      * Initializes a new water object.
+     *
+     * @param desiredAmount the target amount of the first jug
+     * @param maxAmounts the number of jugs identified by their max capacity
      */
     public Water(int desiredAmount, int... maxAmounts) {
         this.maxAmounts = maxAmounts;
@@ -128,26 +131,53 @@ public class Water implements Puzzle<Water.JugState> {
         return goal;
     }
 
+    /**
+     * This class represents the state of a number of jugs.
+     */
     public static class JugState {
 
         private final boolean isGoal;
         private final int[] jugs;
 
+        /**
+         * Initializes a new jug state.
+         *
+         * @param jugs the current amounts for a number of jugs
+         */
         public JugState(int... jugs) {
             this(false, jugs);
         }
 
+        /**
+         * Initializes a new jug state.
+         *
+         * @param isGoal a flag to mark this jug state as a goal, meaning only
+         * the first jug's water level is compared when using equals()
+         * @param jugs the current amounts for a number of jugs
+         */
         private JugState(boolean isGoal, int... jugs) {
             this.isGoal = isGoal;
             this.jugs = jugs;
         }
 
+        /**
+         * Copies the current jug fill levels.
+         *
+         * @return a copy of the current jug fill levels
+         */
         public int[] copyJugs() {
             int[] jugsCopy = new int[this.jugs.length];
             System.arraycopy(this.jugs, 0, jugsCopy, 0, this.jugs.length);
             return jugsCopy;
         }
 
+        /**
+         * Compares this JugState to another JugState.
+         *
+         * @param obj
+         * @return true if both object are equivalent or, the isGoal flag is set
+         * and the first jug in both JugStates are equal.
+         */
         @Override
         public boolean equals(Object obj) {
             if (obj == null) {
@@ -165,6 +195,11 @@ public class Water implements Puzzle<Water.JugState> {
             return true;
         }
 
+        /**
+         * Generates a string of the current jug fill levels.
+         *
+         * @return a string of the current jug fill levels
+         */
         @Override
         public String toString() {
             StringBuilder ret = new StringBuilder();
@@ -177,6 +212,11 @@ public class Water implements Puzzle<Water.JugState> {
             return ret.toString();
         }
 
+        /**
+         * Generates a hash code.
+         *
+         * @return a hash code
+         */
         @Override
         public int hashCode() {
             int hash = 5;
