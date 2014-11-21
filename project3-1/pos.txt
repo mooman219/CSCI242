@@ -1,0 +1,10 @@
+jwc6999@glados:~/labs/242/project3-1$ try grd-242 project3-1 *.java *.txt
+Copying files...done
+
+ON-TIME submission of project3-1
+Compiling your program...
+
+Files being saved:
+Clock.java Puzzle.java Solver.java Water.java design.txt versions.java
+
+project3-1 has been submitted.
