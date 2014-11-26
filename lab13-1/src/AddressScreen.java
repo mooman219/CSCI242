@@ -1,5 +1,3 @@
-package AddressScreen;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -11,6 +9,8 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
 /**
+ * Prompts the user to import address information.
+ *
  * @author Joseph Cumbo (mooman219)
  */
 public class AddressScreen {
