@@ -32,12 +32,18 @@ public class ScramblePad {
      */
     public ScramblePad() {
         this.window = new JFrame("DCS Scramble Pad");
+        this.window.setPreferredSize(new Dimension(200, 300));
 
         JPanel area = new JPanel();
+        area.setBackground(Color.BLACK);
         area.setLayout(new BorderLayout());
 
-        area.add(new JLabel("LOCKED", SwingConstants.CENTER), BorderLayout.PAGE_START);
+        // "LOCKED" lable
+        JLabel label = new JLabel("LOCKED", SwingConstants.CENTER);
+        label.setForeground(Color.RED);
+        area.add(label, BorderLayout.PAGE_START);
 
+        // Number pad input
         JPanel input = new JPanel(new GridLayout(4, 3));
         input.add(createButton("1"));
         input.add(createButton("2"));
@@ -53,13 +59,14 @@ public class ScramblePad {
         input.add(createButton(""));
         area.add(input, BorderLayout.CENTER);
 
+        // Bottom Button
         JPanel buttons = new JPanel();
         buttons.add(new JButton("Start"));
         buttons.add(new JButton("Okay"));
+        buttons.setBackground(Color.BLACK);
         area.add(buttons, BorderLayout.PAGE_END);
 
         this.window.add(area);
-        this.window.setPreferredSize(new Dimension(200, 300));
         this.window.pack();
         this.window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
