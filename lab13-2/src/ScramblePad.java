@@ -39,18 +39,18 @@ public class ScramblePad {
         area.add(new JLabel("LOCKED", SwingConstants.CENTER), BorderLayout.PAGE_START);
 
         JPanel input = new JPanel(new GridLayout(4, 3));
-        input.add(new JButton("1"));
-        input.add(new JButton("2"));
-        input.add(new JButton("3"));
-        input.add(new JButton("4"));
-        input.add(new JButton("5"));
-        input.add(new JButton("6"));
-        input.add(new JButton("7"));
-        input.add(new JButton("8"));
-        input.add(new JButton("9"));
-        input.add(new JButton(""));
-        input.add(new JButton("0"));
-        input.add(new JButton(""));
+        input.add(createButton("1"));
+        input.add(createButton("2"));
+        input.add(createButton("3"));
+        input.add(createButton("4"));
+        input.add(createButton("5"));
+        input.add(createButton("6"));
+        input.add(createButton("7"));
+        input.add(createButton("8"));
+        input.add(createButton("9"));
+        input.add(createButton(""));
+        input.add(createButton("0"));
+        input.add(createButton(""));
         area.add(input, BorderLayout.CENTER);
 
         JPanel buttons = new JPanel();
@@ -64,10 +64,20 @@ public class ScramblePad {
         this.window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
+    /**
+     * Creates a button with yellow lettering and a black background. If the
+     * text is empty, then the button is disabled.
+     *
+     * @param text the button text
+     * @return a new button
+     */
     private JButton createButton(String text) {
-        JButton button = new JButton("1");
+        JButton button = new JButton(text);
         button.setForeground(Color.YELLOW);
         button.setBackground(Color.BLACK);
+        if (text.length() == 0) {
+            button.setEnabled(false);
+        }
         return button;
     }
 
