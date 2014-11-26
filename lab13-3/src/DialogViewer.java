@@ -46,6 +46,7 @@ public class DialogViewer {
                 }
                 break;
             case "m":
+                JOptionPane.showMessageDialog(null, "Joseph Cumbo");
                 break;
             default:
                 System.out.println("Usage: 'f', 'c', or 'm'.");
