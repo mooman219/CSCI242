@@ -1,0 +1,10 @@
+jwc6999@glados:~/labs/242/lab13-2$ try grd-242 lab13-2 *.java *.txt
+Copying files...done
+
+ON-TIME submission of lab13-2
+Compiling your program...
+
+Files being saved:
+ScramblePad.java versions.txt
+
+lab13-2 has been submitted.
