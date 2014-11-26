@@ -1,0 +1,5 @@
+8f5408b Implement the message option
+0fa11c7 Implement the chooser option
+e88d564 Implement the file option
+9890cd3 Create outline
+bedee86 Start lab13-3
