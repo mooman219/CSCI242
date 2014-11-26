@@ -1,3 +1,5 @@
+import javax.swing.JFileChooser;
+
 /**
  * Prompts the user for some type of input based on the command line arguments.
  *
@@ -15,16 +17,24 @@ public class DialogViewer {
             System.out.println("Insufficient arguments.");
             return;
         }
+        int result;
         switch (args[0]) {
             case "f":
+                JFileChooser chooser = new JFileChooser();
+                result = chooser.showOpenDialog(null);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    System.out.println("File: " + chooser.getSelectedFile().getName());
+                } else {
+                    System.out.println("No file chosen.");
+                }
                 break;
             case "c":
-                break;
             case "m":
                 break;
             default:
                 System.out.println("Usage: 'f', 'c', or 'm'.");
                 return;
         }
+        System.exit(0);
     }
 }
