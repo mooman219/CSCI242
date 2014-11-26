@@ -1,4 +1,5 @@
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  * Prompts the user for some type of input based on the command line arguments.
@@ -29,6 +30,21 @@ public class DialogViewer {
                 }
                 break;
             case "c":
+                result = JOptionPane.showConfirmDialog(null, "Are you sure?");
+                switch (result) {
+                    case JOptionPane.CANCEL_OPTION:
+                        System.out.println("Cancel was pressed.");
+                        break;
+                    case JOptionPane.YES_OPTION:
+                        System.out.println("Yes was pressed.");
+                        break;
+                    case JOptionPane.NO_OPTION:
+                        System.out.println("No was pressed.");
+                        break;
+                    default:
+                        System.out.println("The window was closed without input.");
+                }
+                break;
             case "m":
                 break;
             default:
