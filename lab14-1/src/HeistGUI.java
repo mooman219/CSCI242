@@ -17,12 +17,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 import javax.swing.WindowConstants;
 
 /**
  * GUI for the Heist Game.
  *
- * @author Joseph Cumbo (mooman219)
+ * @author Joseph Cumbo (jwc6999)
  */
 public class HeistGUI {
 
@@ -39,10 +40,13 @@ public class HeistGUI {
             System.out.println("The file '" + args[0] + " was not found.");
             return;
         }
-        new HeistGUI(model).show();
+        HeistGUI gui = new HeistGUI(model);
+        gui.show();
     }
 
     private final JFrame window;
+    private final HeistModel model;
+    private Timer timer;
 
     /**
      * Initializes a new HeistGUI object. Does not display anything to the user.
@@ -50,6 +54,7 @@ public class HeistGUI {
     public HeistGUI(HeistModel model) {
         window = new JFrame("Heist Game");
         window.setPreferredSize(new Dimension(450, 400));
+        this.model = model;
 
         JPanel area = new JPanel();
         area.setLayout(new BorderLayout());
@@ -77,9 +82,10 @@ public class HeistGUI {
         area.add(buttons, BorderLayout.PAGE_END);
 
         /**
-         * Now that everything has been generated and linked up, notify the
-         * observers to update their state.
+         * Now that everything has been generated and linked up, start the game
+         * loop timer.
          */
+        startTimer();
         window.add(area);
         window.pack();
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -97,6 +103,39 @@ public class HeistGUI {
      */
     public void hide() {
         window.setVisible(false);
+    }
+
+    /**
+     * Starts the game's clock cycle if it isn't running. If the timer is
+     * running, the time is reset.
+     */
+    public void startTimer() {
+        if (timer != null) {
+            if (timer.isRunning()) {
+                timer.restart();
+            } else {
+                timer.start();
+            }
+        } else {
+            timer = new Timer(model.getRefreshRate(), new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    model.updateAlarmPattern();
+                }
+            });
+            timer.start();
+        }
+    }
+
+    /**
+     * Starts the game's clock cycle if it is running.
+     */
+    public void stopTimer() {
+        if (timer != null) {
+            if (timer.isRunning()) {
+                timer.stop();
+            }
+        }
     }
 
     /**
@@ -160,6 +199,7 @@ public class HeistGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.reset();
+                startTimer();
             }
         });
         return reset_button;
