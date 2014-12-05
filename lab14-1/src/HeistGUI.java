@@ -17,7 +17,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.Timer;
 import javax.swing.WindowConstants;
 
 /**
@@ -49,8 +48,7 @@ public class HeistGUI {
     }
 
     private final JFrame window;
-    private final HeistModel model;
-    private Timer timer;
+    private final Timer timer;
 
     /**
      * Initializes a new HeistGUI object. Does not display anything to the user.
@@ -58,7 +56,12 @@ public class HeistGUI {
     public HeistGUI(HeistModel model) {
         window = new JFrame("Heist Game");
         window.setPreferredSize(new Dimension(450, 400));
-        this.model = model;
+        timer = new Timer(model.getRefreshRate(), new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.updateAlarmPattern();
+            }
+        });
 
         JPanel area = new JPanel();
         area.setLayout(new BorderLayout());
@@ -121,12 +124,6 @@ public class HeistGUI {
                 timer.start();
             }
         } else {
-            timer = new Timer(model.getRefreshRate(), new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    model.updateAlarmPattern();
-                }
-            });
             timer.start();
         }
     }
@@ -242,7 +239,8 @@ public class HeistGUI {
                         cell_button.setIcon(null);
                     }
                     if (model.getAlarms().get(cellNumber)) {
-                        cell_button.setBackground(Color.BLUE);
+                        cell_button.setBackground(model.getThiefLocation() == cellNumber
+                                ? Color.RED : Color.BLUE);
                     } else {
                         cell_button.setBackground(Color.WHITE);
                     }
