@@ -33,9 +33,13 @@ public class HeistGUI {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("Usage: java Heist <config-file>");
+            return;
+        }
         HeistModel model;
         try {
-            model = new HeistModel("heist1.txt");
+            model = new HeistModel(args[0]);
         } catch (FileNotFoundException e) {
             System.out.println("The file '" + args[0] + " was not found.");
             return;
