@@ -232,7 +232,7 @@ public class HeistGUI {
                     if (model.getThiefLocation() == cellNumber) {
                         cell_button.setIcon(model.getAreJewelsStolen()
                                 ? escape : thief);
-                    } else if (model.getJewelsLocation() == cellNumber) {
+                    } else if (!model.getAreJewelsStolen() && model.getJewelsLocation() == cellNumber) {
                         cell_button.setIcon(jewels);
                     } else if (cell_button.getIcon() != null) {
                         cell_button.setIcon(null);
