@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 import javax.swing.WindowConstants;
 
 /**
@@ -66,6 +67,7 @@ public class HeistGUI {
         JPanel area = new JPanel();
         area.setLayout(new BorderLayout());
 
+        // Status bar
         area.add(generateStatusBar(model), BorderLayout.PAGE_START);
 
         // Cells

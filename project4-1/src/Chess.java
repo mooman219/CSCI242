@@ -1,6 +1,7 @@
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -23,7 +24,7 @@ public class Chess implements Puzzle<Chess.BoardState> {
 
     }
 
-    // Double brace initialization for moveStrategies
+    // Initialization for moveStrategies
     public static final Map<Character, MoveCalculator> moveStrategies = new HashMap<Character, MoveCalculator>() {
         {
             // Movements for an empty spot
@@ -84,11 +85,9 @@ public class Chess implements Puzzle<Chess.BoardState> {
                 @Override
                 public List<Point> calculate(int curX, int curY, int lengthX, int lengthY) {
                     ArrayList<Point> moves = new ArrayList<Point>();
-                    for (int x = -1; x < 2; x++) {
-                        for (int y = -1; y < 2; y++) {
-                            if (!(x == 0 || y == 0)) {
-                                moves.add(new Point(curX + x, curY + y));
-                            }
+                    for (int x = -1; x <= 1; x += 2) {
+                        for (int y = -1; y <= 1; y += 2) {
+                            moves.add(new Point(curX + x, curY + y));
                         }
                     }
                     Chess.removeInvalidMoves(moves, lengthX, lengthY);
@@ -191,7 +190,57 @@ public class Chess implements Puzzle<Chess.BoardState> {
      */
     public static class BoardState {
 
+        private final boolean isGoal;
+        private final int piecesRemaining;
         private final char[][] boardState;
+
+        public BoardState(char[][] boardState) {
+            this(false, boardState);
+        }
+
+        public BoardState(boolean isGoal, char[][] boardState) {
+            int pieces = 0;
+            for (int x = 0; x < boardState.length; x++) {
+                for (int y = 0; y < boardState[x].length; y++) {
+                    if (boardState[x][y] != '.') {
+                        pieces++;
+                    }
+                }
+            }
+            this.isGoal = isGoal;
+            this.piecesRemaining = pieces;
+            this.boardState = boardState;
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 7;
+            hash = 29 * hash + this.piecesRemaining;
+            hash = 29 * hash + Arrays.deepHashCode(this.boardState);
+            return hash;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final BoardState other = (BoardState) obj;
+            if ((isGoal || other.isGoal) && (piecesRemaining == 1 || other.piecesRemaining == 1)) {
+
+            }
+            if (this.piecesRemaining != other.piecesRemaining) {
+                return false;
+            }
+            if (!Arrays.deepEquals(this.boardState, other.boardState)) {
+                return false;
+            }
+            return true;
+        }
+
     }
 
     /**
