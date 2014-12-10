@@ -1,10 +1,11 @@
+
 import java.util.ArrayList;
 
 /**
  * This class is a puzzle where it is given a total amount of hours and must
  * find the shortest path from a starting number to a goal number.
  *
- * @author Joseph Cumbo (mooman219)
+ * @author Joseph Cumbo (jwc6999)
  */
 public class Clock implements Puzzle<Integer> {
 

@@ -1,10 +1,11 @@
+
 import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
  * This class is designed to solve any puzzle implementing the puzzle interface.
  *
- * @author Joseph Cumbo (mooman219)
+ * @author Joseph Cumbo (jwc6999)
  */
 public class Solver {
 

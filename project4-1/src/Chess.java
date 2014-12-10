@@ -11,7 +11,7 @@ import java.util.Map;
  * This class is a puzzle which takes an input file representing a solitaire
  * chess board and produces an optimal solution for solving it.
  *
- * @author Joseph Cumbo (mooman219)
+ * @author Joseph Cumbo (jwc6999)
  */
 public class Chess implements Puzzle<Chess.BoardState> {
 
@@ -31,8 +31,7 @@ public class Chess implements Puzzle<Chess.BoardState> {
         Chess puzzle = new Chess(test);
         ArrayList<BoardState> states = solver.solve(puzzle);
         for (int i = 0; i < states.size(); i++) {
-            System.out.println("Step " + i + ":");
-            System.out.print(states.get(i).toString());
+            System.out.println("Step " + i + ":\n" + states.get(i).toString());
         }
     }
 

@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -6,7 +7,7 @@ import java.util.Arrays;
  * returns the shortest number of steps it takes to get from the initial state
  * (all jugs empty) to the first jug containing the desired amount.
  *
- * @author Joseph Cumbo (mooman219)
+ * @author Joseph Cumbo (jwc6999)
  */
 public class Water implements Puzzle<Water.JugState> {
 

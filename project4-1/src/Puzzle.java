@@ -1,10 +1,11 @@
+
 import java.util.ArrayList;
 
 /**
  * An interface to a Puzzle. It contains the routines necessary for accessing
  * the start and goal configs, as well as generating new neighboring configs.
  *
- * @author Joseph Cumbo (mooman219)
+ * @author Joseph Cumbo (jwc6999)
  */
 public interface Puzzle<E> {
 
