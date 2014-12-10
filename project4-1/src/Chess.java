@@ -45,11 +45,11 @@ public class Chess implements Puzzle {
         /**
          * Read the file
          */
-        int vertical = in.nextInt();
-        int horizontal = in.nextInt();
-        char[][] board = new char[vertical][horizontal];
-        for (int y = 0; y < vertical; y++) {
-            for (int x = 0; x < horizontal; x++) {
+        int lengthY = in.nextInt();
+        int lengthX = in.nextInt();
+        char[][] board = new char[lengthY][lengthX];
+        for (int y = 0; y < lengthY; y++) {
+            for (int x = 0; x < lengthX; x++) {
                 board[y][x] = in.next().charAt(0);
             }
         }
@@ -70,27 +70,27 @@ public class Chess implements Puzzle {
      * character that represents the piece and is then given a function to get
      * the possible moves for that piece.
      */
-    public static final Map<Character, MoveCalculator> moveStrategies = new HashMap<Character, MoveCalculator>() {
+    private static final Map<Character, MoveCalculator> moveCalculators = new HashMap<Character, MoveCalculator>() {
         {
             // Movements for bishup
             put('B', new MoveCalculator() {
                 @Override
-                public List<Point> calculate(int curX, int curY, int hor, int ver) {
+                public List<Point> calculate(int curX, int curY, int lengthX, int lengthY) {
                     ArrayList<Point> moves = new ArrayList<Point>();
-                    for (int i = 1; i < Math.max(hor, ver); i++) {
+                    for (int i = 1; i < Math.max(lengthX, lengthY); i++) {
                         moves.add(new Point(curX - i, curY - i));
                         moves.add(new Point(curX + i, curY + i));
                         moves.add(new Point(curX - i, curY + i));
                         moves.add(new Point(curX + i, curY - i));
                     }
-                    Chess.removeInvalidMoves(moves, hor, ver);
+                    Chess.removeInvalidMoves(moves, lengthX, lengthY);
                     return moves;
                 }
             });
             // Movements for king
             put('K', new MoveCalculator() {
                 @Override
-                public List<Point> calculate(int curX, int curY, int hor, int ver) {
+                public List<Point> calculate(int curX, int curY, int lengthX, int lengthY) {
                     ArrayList<Point> moves = new ArrayList<Point>();
                     for (int x = -1; x <= 1; x++) {
                         for (int y = -1; y <= 1; y++) {
@@ -99,14 +99,14 @@ public class Chess implements Puzzle {
                             }
                         }
                     }
-                    Chess.removeInvalidMoves(moves, hor, ver);
+                    Chess.removeInvalidMoves(moves, lengthX, lengthY);
                     return moves;
                 }
             });
             // Movements for knight
             put('N', new MoveCalculator() {
                 @Override
-                public List<Point> calculate(int curX, int curY, int hor, int ver) {
+                public List<Point> calculate(int curX, int curY, int lengthX, int lengthY) {
                     ArrayList<Point> moves = new ArrayList<Point>();
                     moves.add(new Point(curX - 2, curY - 1));
                     moves.add(new Point(curX - 2, curY + 1));
@@ -116,29 +116,29 @@ public class Chess implements Puzzle {
                     moves.add(new Point(curX + 2, curY + 1));
                     moves.add(new Point(curX + 1, curY - 2));
                     moves.add(new Point(curX + 1, curY + 2));
-                    Chess.removeInvalidMoves(moves, hor, ver);
+                    Chess.removeInvalidMoves(moves, lengthX, lengthY);
                     return moves;
                 }
             });
             // Movements for pawn
             put('P', new MoveCalculator() {
                 @Override
-                public List<Point> calculate(int curX, int curY, int hor, int ver) {
+                public List<Point> calculate(int curX, int curY, int lengthX, int lengthY) {
                     ArrayList<Point> moves = new ArrayList<Point>();
                     moves.add(new Point(curX - 1, curY - 1));
                     moves.add(new Point(curX + 1, curY + 1));
                     moves.add(new Point(curX - 1, curY + 1));
                     moves.add(new Point(curX + 1, curY - 1));
-                    Chess.removeInvalidMoves(moves, hor, ver);
+                    Chess.removeInvalidMoves(moves, lengthX, lengthY);
                     return moves;
                 }
             });
             // Movements for rook
             put('R', new MoveCalculator() {
                 @Override
-                public List<Point> calculate(int curX, int curY, int hor, int ver) {
+                public List<Point> calculate(int curX, int curY, int lengthX, int lengthY) {
                     ArrayList<Point> moves = new ArrayList<Point>();
-                    for (int i = 0; i < Math.max(hor, ver); i++) {
+                    for (int i = 0; i < Math.max(lengthX, lengthY); i++) {
                         if (i != curX) {
                             moves.add(new Point(i, curY));
                         }
@@ -146,16 +146,16 @@ public class Chess implements Puzzle {
                             moves.add(new Point(curX, i));
                         }
                     }
-                    Chess.removeInvalidMoves(moves, hor, ver);
+                    Chess.removeInvalidMoves(moves, lengthX, lengthY);
                     return moves;
                 }
             });
             // Movements for Queen
             put('Q', new MoveCalculator() {
                 @Override
-                public List<Point> calculate(int curX, int curY, int hor, int ver) {
+                public List<Point> calculate(int curX, int curY, int lengthX, int lengthY) {
                     ArrayList<Point> moves = new ArrayList<Point>();
-                    for (int i = 0; i < Math.max(hor, ver); i++) {
+                    for (int i = 0; i < Math.max(lengthX, lengthY); i++) {
                         if (i != curX) {
                             moves.add(new Point(i, curY));
                         }
@@ -169,7 +169,7 @@ public class Chess implements Puzzle {
                             moves.add(new Point(curX + i, curY - i));
                         }
                     }
-                    Chess.removeInvalidMoves(moves, hor, ver);
+                    Chess.removeInvalidMoves(moves, lengthX, lengthY);
                     return moves;
                 }
             });
@@ -184,13 +184,43 @@ public class Chess implements Puzzle {
      * @param lengthX the horizontal length of the board
      * @param lengthY the vertical length of the board
      */
-    public static void removeInvalidMoves(List<Point> moves, int lengthX, int lengthY) {
+    private static void removeInvalidMoves(List<Point> moves, int lengthX, int lengthY) {
         for (Iterator<Point> iterator = moves.iterator(); iterator.hasNext();) {
             Point point = iterator.next();
             if (point.x < 0 || point.y < 0 || point.x >= lengthX || point.y >= lengthY) {
                 iterator.remove();
             }
         }
+    }
+
+    /**
+     * Checks if the given piece is valid and movable.
+     *
+     * @param c the given piece
+     * @return true if the piece is valid and movable, false otherwise
+     */
+    public static boolean isPieceValid(char c) {
+        return moveCalculators.containsKey(c);
+    }
+
+    /**
+     * Generates a list of valid moves that can be made from the given position.
+     *
+     * @param c the character at the given point
+     * @param curX the current x position
+     * @param curY the current y position
+     * @param lengthX the horizontal length of the board
+     * @param lengthY the vertical length of the board
+     * @return a list of points that can be reached from the given (curX, curY)
+     * position.
+     */
+    public static List<Point> getMoves(char c, int curX, int curY, int lengthX, int lengthY) {
+        List<Point> moves = new ArrayList<Point>();
+        MoveCalculator calculator = moveCalculators.get(c);
+        if (calculator != null) {
+            moves = calculator.calculate(curX, curY, lengthX, lengthY);
+        }
+        return moves;
     }
 
     private final char[][] board;
@@ -217,11 +247,11 @@ public class Chess implements Puzzle {
                 /**
                  * If the piece is a valid chess piece.
                  */
-                if (board[y][x] != '.' && moveStrategies.containsKey(board[y][x])) {
+                if (board[y][x] != '.' && moveCalculators.containsKey(board[y][x])) {
                     /**
                      * Calculate all the points the can be reached by the piece.
                      */
-                    MoveCalculator moveCalculator = moveStrategies.get(board[y][x]);
+                    MoveCalculator moveCalculator = moveCalculators.get(board[y][x]);
                     List<Point> moves = moveCalculator.calculate(x, y, board[y].length, board.length);
                     /**
                      * If there's another piece in one of the reachable points,
@@ -255,7 +285,7 @@ public class Chess implements Puzzle {
      *
      * @return the number of pieces on the board
      */
-    public int getPieces() {
+    public int getPiecesRemining() {
         int pieces = 0;
         for (int x = 0; x < board.length; x++) {
             for (int y = 0; y < board[x].length; y++) {
@@ -274,7 +304,7 @@ public class Chess implements Puzzle {
      */
     @Override
     public boolean isGoal() {
-        return getPieces() == 1;
+        return getPiecesRemining() == 1;
     }
 
     /**
@@ -351,9 +381,9 @@ public class Chess implements Puzzle {
          * @param curY the current y position
          * @param hor the horizontal length of the board
          * @param ver the vertical length of the board
-         * @return a list of points that can be reached from the given (x, y)
-         * position.
+         * @return a list of points that can be reached from the given (curX,
+         * curY) position.
          */
-        public List<Point> calculate(int curX, int curY, int hor, int ver);
+        public List<Point> calculate(int curX, int curY, int lengthX, int lengthY);
     }
 }
