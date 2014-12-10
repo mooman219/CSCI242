@@ -17,10 +17,13 @@ public class Solver {
      * is found.
      */
     public <T extends Puzzle> ArrayList<T> solve(T puzzle) {
-        HashSet<T> visited = new HashSet<T>();
-        ArrayList<ArrayList<T>> queue = new ArrayList<ArrayList<T>>();
         ArrayList<T> current = new ArrayList<T>();
         current.add(puzzle);
+        if (puzzle.isGoal()) {
+            return current;
+        }
+        HashSet<T> visited = new HashSet<T>();
+        ArrayList<ArrayList<T>> queue = new ArrayList<ArrayList<T>>();
         queue.add(current);
         while (!queue.isEmpty()) {
             current = queue.remove(0);

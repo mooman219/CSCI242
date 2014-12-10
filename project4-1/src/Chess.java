@@ -304,7 +304,7 @@ public class Chess implements Puzzle {
      */
     @Override
     public boolean isGoal() {
-        return getPiecesRemining() == 1;
+        return getPiecesRemining() <= 1;
     }
 
     /**

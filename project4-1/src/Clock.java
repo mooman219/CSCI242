@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Clock implements Puzzle {
 
-    public static final String[] testingArgs = "15 2 14".split(" ");
+    public static final String[] testingArgs = "15 2 2".split(" ");
 
     /**
      * @param args the command line arguments
