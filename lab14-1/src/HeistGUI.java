@@ -54,7 +54,7 @@ public class HeistGUI {
     /**
      * Initializes a new HeistGUI object. Does not display anything to the user.
      */
-    public HeistGUI(HeistModel model) {
+    public HeistGUI(final HeistModel model) {
         window = new JFrame("Heist Game");
         window.setPreferredSize(new Dimension(450, 400));
         timer = new Timer(model.getRefreshRate(), new ActionListener() {
@@ -148,7 +148,7 @@ public class HeistGUI {
      * @return the generated status bar
      */
     private JLabel generateStatusBar(HeistModel model) {
-        JLabel statusBar_label = new JLabel("Moves: 0");
+        final JLabel statusBar_label = new JLabel("Moves: 0");
         statusBar_label.setBackground(Color.white);
         statusBar_label.setOpaque(true);
         model.addObserver(new Observer() {
@@ -179,7 +179,7 @@ public class HeistGUI {
      * @param model the HeistModel that the label will be attached to.
      * @return the generated EMP button
      */
-    private JButton generateEMPButton(HeistModel model) {
+    private JButton generateEMPButton(final HeistModel model) {
         JButton EMP_button = new JButton("EMP");
         EMP_button.addActionListener(new ActionListener() {
             @Override
@@ -196,7 +196,7 @@ public class HeistGUI {
      * @param model the HeistModel that the label will be attached to.
      * @return the generated reset button
      */
-    private JButton generateResetButton(HeistModel model) {
+    private JButton generateResetButton(final HeistModel model) {
         JButton reset_button = new JButton("Reset");
         reset_button.addActionListener(new ActionListener() {
             @Override
@@ -214,14 +214,14 @@ public class HeistGUI {
      * @param model the HeistModel that the label will be attached to.
      * @return the generated list of cells
      */
-    private List<JButton> generateCells(HeistModel model) {
+    private List<JButton> generateCells(final HeistModel model) {
         ArrayList<JButton> cells = new ArrayList<JButton>();
         final Icon thief = new ImageIcon("Thief.JPG");
         final Icon jewels = new ImageIcon("Jewels.JPG");
         final Icon escape = new ImageIcon("Escape.JPG");
         for (int i = 0; i < (model.getDim() * model.getDim()); i++) {
             final int cellNumber = i;
-            JButton cell_button = new JButton();
+            final JButton cell_button = new JButton();
             cell_button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
