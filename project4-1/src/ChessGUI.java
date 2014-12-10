@@ -72,7 +72,7 @@ public class ChessGUI {
      * @param model the model that this ChessGUI will be linked to
      */
     public ChessGUI(ChessModel model) {
-        window = new JFrame("Chess Game");
+        window = new JFrame("Chess Game by Joseph Cumbo (jwc6999)");
         window.setPreferredSize(new Dimension(100 * model.getLengthX(), 125 * model.getLengthY()));
 
         JPanel area = new JPanel();
