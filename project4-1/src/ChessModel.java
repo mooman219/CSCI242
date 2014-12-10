@@ -131,9 +131,11 @@ public class ChessModel extends Observable {
         }
         List<Chess> states = solver.solve(puzzle);
         if (states != null) {
-            for (int y = 0; y < lengthY; y++) {
-                for (int x = 0; x < lengthX; x++) {
-                    board[y][x] = states.get(1).getBoard()[y][x];
+            if (states.size() > 1) {
+                for (int y = 0; y < lengthY; y++) {
+                    for (int x = 0; x < lengthX; x++) {
+                        board[y][x] = states.get(1).getBoard()[y][x];
+                    }
                 }
             }
             selectedPoint = null;
