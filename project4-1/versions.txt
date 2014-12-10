@@ -1,0 +1,14 @@
+533103f Create a ChessGUI class
+13d3a2c Create a ChessModel class
+cf92bc2 Create chess piece images
+c29a5bf Add some helper functions to Chess
+718a8d3 Allow chess to take command line input
+80fd76d Rewrite the puzzles to be states themselves
+3b2f6d1 Change name to account name
+0d868b2 Test and optimize
+08f5b80 Implement getNeighbors
+eab252b Implement BoardState
+f056187 Add extra comment
+e7acbf7 Add MoveCalculator for each piece
+0f6e3d3 Create an outline for the Chess class
+ba629ee Start project4-1 using files from project3-1
