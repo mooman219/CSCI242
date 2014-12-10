@@ -1,0 +1,10 @@
+f056187 Add extra comment
+096de54 Move timer around
+104c066 Implement command line usage
+c9190f8 Remove the jewels after being stolen
+6f2e4c4 Add the timer functionality
+b3371dd Fully link GUI to HeistModel
+e89ee22 Link GUI to HeistModel (partially)
+db9c6e0 Design GUI based on picture
+d25bb90 Create base HeistGUI class
+1e65470 Start lab14-1 using given files
