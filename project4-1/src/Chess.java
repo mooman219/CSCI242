@@ -24,26 +24,23 @@ public class Chess implements Puzzle<Chess.BoardState> {
 
     }
 
-    // Initialization for moveStrategies
+    /**
+     * This is a map of characters to move calculators. The user enters a
+     * character that represents the piece and is then given a function to get
+     * the possible moves for that piece.
+     */
     public static final Map<Character, MoveCalculator> moveStrategies = new HashMap<Character, MoveCalculator>() {
         {
-            // Movements for an empty spot
-            put('.', new MoveCalculator() {
-                @Override
-                public List<Point> calculate(int curX, int curY, int lengthX, int lengthY) {
-                    return new ArrayList<Point>();
-                }
-            });
             // Movements for bishup
             put('B', new MoveCalculator() {
                 @Override
-                public List<Point> calculate(int curX, int curY, int lengthX, int lengthY) {
+                public List<Point> calculate(Point current, int lengthX, int lengthY) {
                     ArrayList<Point> moves = new ArrayList<Point>();
                     for (int i = 1; i < Math.max(lengthX, lengthY); i++) {
-                        moves.add(new Point(curX - i, curY - i));
-                        moves.add(new Point(curX + i, curY + i));
-                        moves.add(new Point(curX - i, curY + i));
-                        moves.add(new Point(curX + i, curY - i));
+                        moves.add(new Point(current.x - i, current.y - i));
+                        moves.add(new Point(current.x + i, current.y + i));
+                        moves.add(new Point(current.x - i, current.y + i));
+                        moves.add(new Point(current.x + i, current.y - i));
                     }
                     Chess.removeInvalidMoves(moves, lengthX, lengthY);
                     return moves;
@@ -52,12 +49,12 @@ public class Chess implements Puzzle<Chess.BoardState> {
             // Movements for king
             put('K', new MoveCalculator() {
                 @Override
-                public List<Point> calculate(int curX, int curY, int lengthX, int lengthY) {
+                public List<Point> calculate(Point current, int lengthX, int lengthY) {
                     ArrayList<Point> moves = new ArrayList<Point>();
                     for (int x = -1; x <= 1; x++) {
                         for (int y = -1; y <= 1; y++) {
                             if (!(x == 0 && y == 0)) {
-                                moves.add(new Point(curX + x, curY + y));
+                                moves.add(new Point(current.x + x, current.y + y));
                             }
                         }
                     }
@@ -68,12 +65,12 @@ public class Chess implements Puzzle<Chess.BoardState> {
             // Movements for knight
             put('N', new MoveCalculator() {
                 @Override
-                public List<Point> calculate(int curX, int curY, int lengthX, int lengthY) {
+                public List<Point> calculate(Point current, int lengthX, int lengthY) {
                     ArrayList<Point> moves = new ArrayList<Point>();
                     for (int x = -1; x <= 1; x += 2) {
                         for (int y = -1; y < 1; y += 2) {
-                            moves.add(new Point(curX + x, curY + y * 2));
-                            moves.add(new Point(curX + x * 2, curY + y));
+                            moves.add(new Point(current.x + x, current.y + y * 2));
+                            moves.add(new Point(current.x + x * 2, current.y + y));
                         }
                     }
                     Chess.removeInvalidMoves(moves, lengthX, lengthY);
@@ -83,11 +80,11 @@ public class Chess implements Puzzle<Chess.BoardState> {
             // Movements for pawn
             put('P', new MoveCalculator() {
                 @Override
-                public List<Point> calculate(int curX, int curY, int lengthX, int lengthY) {
+                public List<Point> calculate(Point current, int lengthX, int lengthY) {
                     ArrayList<Point> moves = new ArrayList<Point>();
                     for (int x = -1; x <= 1; x += 2) {
                         for (int y = -1; y <= 1; y += 2) {
-                            moves.add(new Point(curX + x, curY + y));
+                            moves.add(new Point(current.x + x, current.y + y));
                         }
                     }
                     Chess.removeInvalidMoves(moves, lengthX, lengthY);
@@ -97,11 +94,11 @@ public class Chess implements Puzzle<Chess.BoardState> {
             // Movements for rook
             put('R', new MoveCalculator() {
                 @Override
-                public List<Point> calculate(int curX, int curY, int lengthX, int lengthY) {
+                public List<Point> calculate(Point current, int lengthX, int lengthY) {
                     ArrayList<Point> moves = new ArrayList<Point>();
                     for (int i = 0; i < Math.max(lengthX, lengthY); i++) {
-                        moves.add(new Point(i, curY));
-                        moves.add(new Point(curX, i));
+                        moves.add(new Point(i, current.y));
+                        moves.add(new Point(current.x, i));
                     }
                     Chess.removeInvalidMoves(moves, lengthX, lengthY);
                     return moves;
@@ -110,16 +107,16 @@ public class Chess implements Puzzle<Chess.BoardState> {
             // Movements for Queen
             put('Q', new MoveCalculator() {
                 @Override
-                public List<Point> calculate(int curX, int curY, int lengthX, int lengthY) {
+                public List<Point> calculate(Point current, int lengthX, int lengthY) {
                     ArrayList<Point> moves = new ArrayList<Point>();
                     for (int i = 0; i < Math.max(lengthX, lengthY); i++) {
-                        moves.add(new Point(i, curY));
-                        moves.add(new Point(curX, i));
+                        moves.add(new Point(i, current.y));
+                        moves.add(new Point(current.x, i));
                         if (i > 1) {
-                            moves.add(new Point(curX - i, curY - i));
-                            moves.add(new Point(curX + i, curY + i));
-                            moves.add(new Point(curX - i, curY + i));
-                            moves.add(new Point(curX + i, curY - i));
+                            moves.add(new Point(current.x - i, current.y - i));
+                            moves.add(new Point(current.x + i, current.y + i));
+                            moves.add(new Point(current.x - i, current.y + i));
+                            moves.add(new Point(current.x + i, current.y - i));
                         }
                     }
                     Chess.removeInvalidMoves(moves, lengthX, lengthY);
@@ -130,7 +127,8 @@ public class Chess implements Puzzle<Chess.BoardState> {
     };
 
     /**
-     * Removes invalid moves from the given list.
+     * Removes invalid moves from the given list. And invalid move is one that
+     * goes outside the bounds of the board.
      *
      * @param moves the list of moves
      * @param lengthX the horizontal length of the board
@@ -191,35 +189,93 @@ public class Chess implements Puzzle<Chess.BoardState> {
     public static class BoardState {
 
         private final boolean isGoal;
-        private final int piecesRemaining;
-        private final char[][] boardState;
+        private final int pieces;
+        private final char[][] board;
 
-        public BoardState(char[][] boardState) {
-            this(false, boardState);
-        }
-
-        public BoardState(boolean isGoal, char[][] boardState) {
+        /**
+         * Initializes a new BoardState based off of the given board.
+         *
+         * @param board the board to back this board state
+         */
+        public BoardState(char[][] board) {
+            /**
+             * Calculate the pieces on the board.
+             */
             int pieces = 0;
-            for (int x = 0; x < boardState.length; x++) {
-                for (int y = 0; y < boardState[x].length; y++) {
-                    if (boardState[x][y] != '.') {
+            for (int x = 0; x < board.length; x++) {
+                for (int y = 0; y < board[x].length; y++) {
+                    if (board[x][y] != '.') {
                         pieces++;
                     }
                 }
             }
-            this.isGoal = isGoal;
-            this.piecesRemaining = pieces;
-            this.boardState = boardState;
+
+            this.isGoal = false;
+            this.board = board;
+            this.pieces = pieces;
         }
 
+        /**
+         * Initializes a new BoardState to be used as a goal state. This
+         * BoardState only checks that the number of pieces remaining are equal
+         * in the equals method.
+         *
+         * @param pieces the number of pieces required for another board to
+         * match this board
+         */
+        private BoardState(int pieces) {
+            this.isGoal = true;
+            this.board = null;
+            this.pieces = pieces;
+        }
+
+        /**
+         * Copies the current board.
+         *
+         * @return a copy of the current board
+         */
+        public char[][] copyBoard() {
+            char[][] boardCopy = new char[board.length][board[0].length];
+            for (int i = 0; i < board.length; i++) {
+                System.arraycopy(board[i], 0, boardCopy[i], 0, board[i].length);
+            }
+            return boardCopy;
+        }
+
+        /**
+         * Generates a string representation of the current board.
+         *
+         * @return a string representation of the current board.
+         */
+        @Override
+        public String toString() {
+            StringBuilder builder = new StringBuilder();
+            for (int x = 0; x < board.length; x++) {
+                builder.append(board[x]).append("\n");
+            }
+            return builder.toString();
+        }
+
+        /**
+         * Generates a hash code.
+         *
+         * @return a hash code
+         */
         @Override
         public int hashCode() {
             int hash = 7;
-            hash = 29 * hash + this.piecesRemaining;
-            hash = 29 * hash + Arrays.deepHashCode(this.boardState);
+            hash = 29 * hash + pieces;
+            hash = 29 * hash + Arrays.deepHashCode(board);
             return hash;
         }
 
+        /**
+         * Compares this BoardState to another BoardState.
+         *
+         * @param obj the other BoardState
+         * @return true if both object are equivalent or, the isGoal flag is set
+         * and the pieces remaining for each board are equal.
+         */
         @Override
         public boolean equals(Object obj) {
             if (obj == null) {
@@ -229,13 +285,13 @@ public class Chess implements Puzzle<Chess.BoardState> {
                 return false;
             }
             final BoardState other = (BoardState) obj;
-            if ((isGoal || other.isGoal) && (piecesRemaining == 1 || other.piecesRemaining == 1)) {
-
+            if ((isGoal || other.isGoal) && pieces == other.pieces) {
+                return true;
             }
-            if (this.piecesRemaining != other.piecesRemaining) {
+            if (pieces != other.pieces) {
                 return false;
             }
-            if (!Arrays.deepEquals(this.boardState, other.boardState)) {
+            if (!Arrays.deepEquals(board, other.board)) {
                 return false;
             }
             return true;
@@ -252,9 +308,11 @@ public class Chess implements Puzzle<Chess.BoardState> {
          * Generates a list of valid moves that can be made from the given
          * position.
          *
-         * @param position the current position of the piece
-         * @return a list of valid moves that can be made
+         * @param current the current position of the piece
+         * @param lengthX the horizontal length of the board
+         * @param lengthY the vertical length of the board
+         * @return a list of valid moves
          */
-        public List<Point> calculate(int curX, int curY, int lengthX, int lengthY);
+        public List<Point> calculate(Point current, int lengthX, int lengthY);
     }
 }
