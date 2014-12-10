@@ -11,12 +11,15 @@ import java.util.Arrays;
  */
 public class Water implements Puzzle {
 
+    public static final String[] testingArgs = "17 20 11 4".split(" ");
+
     /**
      * Main method.
      *
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        //args = Water.testingArgs;
         if (args.length < 2) {
             System.out.println("Usage: java Water amount jug1 jug2 ...");
             return;

@@ -9,10 +9,13 @@ import java.util.ArrayList;
  */
 public class Clock implements Puzzle {
 
+    public static final String[] testingArgs = "15 2 14".split(" ");
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        //args = Clock.testingArgs;
         if (args.length < 3) {
             System.out.println("Usage: java Clock hours start goal");
             return;

@@ -1,11 +1,14 @@
 
 import java.awt.Point;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 /**
  * This class is a puzzle which takes an input file representing a solitaire
@@ -15,11 +18,7 @@ import java.util.Map;
  */
 public class Chess implements Puzzle {
 
-    public static char[][] test = {
-        {'N', '.', '.', '.', '.'},
-        {'.', 'B', '.', 'R', '.'},
-        {'P', '.', '.', '.', '.'},
-        {'.', '.', '.', '.', '.'}};
+    public static String[] testingArgs = "test.txt".split(" ");
 
     /**
      * Main method.
@@ -27,11 +26,42 @@ public class Chess implements Puzzle {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        //args = Chess.testingArgs;
+        /**
+         * Validate the input
+         */
+        if (args.length < 1) {
+            System.out.println("usage: java Chess input-file");
+            return;
+        }
+        File configFile = new File(args[0]);
+        Scanner in;
+        try {
+            in = new Scanner(configFile);
+        } catch (FileNotFoundException ex) {
+            System.out.println(args[0] + " not found.");
+            return;
+        }
+        /**
+         * Read the file
+         */
+        int vertical = in.nextInt();
+        int horizontal = in.nextInt();
+        char[][] board = new char[vertical][horizontal];
+        for (int y = 0; y < vertical; y++) {
+            for (int x = 0; x < horizontal; x++) {
+                board[y][x] = in.next().charAt(0);
+            }
+        }
+        in.close();
+        /**
+         * Solve the board
+         */
         Solver solver = new Solver();
-        Chess puzzle = new Chess(test);
+        Chess puzzle = new Chess(board);
         ArrayList<Chess> states = solver.solve(puzzle);
         for (int i = 0; i < states.size(); i++) {
-            System.out.println("Step " + i + ":\n" + states.get(i).toString());
+            System.out.println("Step " + i + ":\n" + states.get(i).toString() + "\n");
         }
     }
 
@@ -78,14 +108,14 @@ public class Chess implements Puzzle {
                 @Override
                 public List<Point> calculate(int curX, int curY, int hor, int ver) {
                     ArrayList<Point> moves = new ArrayList<Point>();
-                    moves.add(new Point(curX - 2, curY + 1));
                     moves.add(new Point(curX - 2, curY - 1));
-                    moves.add(new Point(curX + 2, curY + 1));
-                    moves.add(new Point(curX + 2, curY - 1));
-                    moves.add(new Point(curX + 1, curY - 2));
+                    moves.add(new Point(curX - 2, curY + 1));
                     moves.add(new Point(curX - 1, curY - 2));
-                    moves.add(new Point(curX + 1, curY + 2));
                     moves.add(new Point(curX - 1, curY + 2));
+                    moves.add(new Point(curX + 2, curY - 1));
+                    moves.add(new Point(curX + 2, curY + 1));
+                    moves.add(new Point(curX + 1, curY - 2));
+                    moves.add(new Point(curX + 1, curY + 2));
                     Chess.removeInvalidMoves(moves, hor, ver);
                     return moves;
                 }
@@ -109,8 +139,12 @@ public class Chess implements Puzzle {
                 public List<Point> calculate(int curX, int curY, int hor, int ver) {
                     ArrayList<Point> moves = new ArrayList<Point>();
                     for (int i = 0; i < Math.max(hor, ver); i++) {
-                        moves.add(new Point(i, curY));
-                        moves.add(new Point(curX, i));
+                        if (i != curX) {
+                            moves.add(new Point(i, curY));
+                        }
+                        if (i != curY) {
+                            moves.add(new Point(curX, i));
+                        }
                     }
                     Chess.removeInvalidMoves(moves, hor, ver);
                     return moves;
@@ -122,8 +156,12 @@ public class Chess implements Puzzle {
                 public List<Point> calculate(int curX, int curY, int hor, int ver) {
                     ArrayList<Point> moves = new ArrayList<Point>();
                     for (int i = 0; i < Math.max(hor, ver); i++) {
-                        moves.add(new Point(i, curY));
-                        moves.add(new Point(curX, i));
+                        if (i != curX) {
+                            moves.add(new Point(i, curY));
+                        }
+                        if (i != curY) {
+                            moves.add(new Point(curX, i));
+                        }
                         if (i > 1) {
                             moves.add(new Point(curX - i, curY - i));
                             moves.add(new Point(curX + i, curY + i));
@@ -263,6 +301,7 @@ public class Chess implements Puzzle {
         for (int x = 0; x < board.length; x++) {
             builder.append(board[x]).append("\n");
         }
+        builder.deleteCharAt(builder.length() - 1);
         return builder.toString();
     }
 
