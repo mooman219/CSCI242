@@ -96,6 +96,7 @@ public class ChessGUI {
         JPanel bottom = new JPanel();
         bottom.add(generateMoveButton(model), BorderLayout.PAGE_END);
         bottom.add(generateResetButton(model), BorderLayout.PAGE_END);
+        bottom.add(generateQuitButton(), BorderLayout.PAGE_END);
         area.add(bottom, BorderLayout.PAGE_END);
 
         window.add(area);
@@ -196,6 +197,20 @@ public class ChessGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.reset();
+            }
+        });
+        return reset_button;
+    }
+
+    /**
+     * Generates a new quit button.
+     */
+    private JButton generateQuitButton() {
+        JButton reset_button = new JButton("Quit");
+        reset_button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
             }
         });
         return reset_button;
