@@ -15,13 +15,25 @@ import java.util.Map;
  */
 public class Chess implements Puzzle<Chess.BoardState> {
 
+    public static char[][] test = {
+        {'N', '.', '.', '.', '.'},
+        {'.', 'B', '.', 'R', '.'},
+        {'P', '.', '.', '.', '.'},
+        {'.', '.', '.', '.', '.'}};
+
     /**
      * Main method.
      *
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
+        Solver solver = new Solver();
+        Chess puzzle = new Chess(test);
+        ArrayList<BoardState> states = solver.solve(puzzle);
+        for (int i = 0; i < states.size(); i++) {
+            System.out.println("Step " + i + ":");
+            System.out.print(states.get(i).toString());
+        }
     }
 
     /**
@@ -67,12 +79,14 @@ public class Chess implements Puzzle<Chess.BoardState> {
                 @Override
                 public List<Point> calculate(int curX, int curY, int hor, int ver) {
                     ArrayList<Point> moves = new ArrayList<Point>();
-                    for (int x = -1; x <= 1; x += 2) {
-                        for (int y = -1; y < 1; y += 2) {
-                            moves.add(new Point(curX + x, curY + y * 2));
-                            moves.add(new Point(curX + x * 2, curY + y));
-                        }
-                    }
+                    moves.add(new Point(curX - 2, curY + 1));
+                    moves.add(new Point(curX - 2, curY - 1));
+                    moves.add(new Point(curX + 2, curY + 1));
+                    moves.add(new Point(curX + 2, curY - 1));
+                    moves.add(new Point(curX + 1, curY - 2));
+                    moves.add(new Point(curX - 1, curY - 2));
+                    moves.add(new Point(curX + 1, curY + 2));
+                    moves.add(new Point(curX - 1, curY + 2));
                     Chess.removeInvalidMoves(moves, hor, ver);
                     return moves;
                 }
@@ -82,11 +96,10 @@ public class Chess implements Puzzle<Chess.BoardState> {
                 @Override
                 public List<Point> calculate(int curX, int curY, int hor, int ver) {
                     ArrayList<Point> moves = new ArrayList<Point>();
-                    for (int x = -1; x <= 1; x += 2) {
-                        for (int y = -1; y <= 1; y += 2) {
-                            moves.add(new Point(curX + x, curY + y));
-                        }
-                    }
+                    moves.add(new Point(curX - 1, curY - 1));
+                    moves.add(new Point(curX + 1, curY + 1));
+                    moves.add(new Point(curX - 1, curY + 1));
+                    moves.add(new Point(curX + 1, curY - 1));
                     Chess.removeInvalidMoves(moves, hor, ver);
                     return moves;
                 }
@@ -137,7 +150,7 @@ public class Chess implements Puzzle<Chess.BoardState> {
     public static void removeInvalidMoves(List<Point> moves, int lengthX, int lengthY) {
         for (Iterator<Point> iterator = moves.iterator(); iterator.hasNext();) {
             Point point = iterator.next();
-            if (point.x >= 0 && point.y >= 0 && point.x < lengthX && point.y < lengthY) {
+            if (point.x < 0 || point.y < 0 || point.x >= lengthX || point.y >= lengthY) {
                 iterator.remove();
             }
         }
@@ -176,26 +189,26 @@ public class Chess implements Puzzle<Chess.BoardState> {
     public ArrayList<BoardState> getNeighbors(BoardState config) {
         ArrayList<BoardState> neighbors = new ArrayList<BoardState>();
         char[][] board = config.board;
-        for (int x = 0; x < board.length; x++) {
-            for (int y = 0; y < board[x].length; y++) {
+        for (int y = 0; y < board.length; y++) {
+            for (int x = 0; x < board[y].length; x++) {
                 /**
                  * If the piece is a valid chess piece.
                  */
-                if (board[x][y] != '.' && moveStrategies.containsKey(board[x][y])) {
+                if (board[y][x] != '.' && moveStrategies.containsKey(board[y][x])) {
                     /**
                      * Calculate all the points the can be reached by the piece.
                      */
-                    MoveCalculator moveCalculator = moveStrategies.get(board[x][y]);
-                    List<Point> moves = moveCalculator.calculate(x, y, board[x].length, board.length);
+                    MoveCalculator moveCalculator = moveStrategies.get(board[y][x]);
+                    List<Point> moves = moveCalculator.calculate(x, y, board[y].length, board.length);
                     /**
                      * If there's another piece in one of the reachable points,
                      * take it.
                      */
                     for (Point point : moves) {
-                        if (board[point.x][point.y] != '.') {
+                        if (board[point.y][point.x] != '.') {
                             char[][] localBoard = config.copyBoard();
-                            localBoard[point.x][point.y] = board[x][y];
-                            localBoard[x][y] = '.';
+                            localBoard[point.y][point.x] = board[y][x];
+                            localBoard[y][x] = '.';
                             neighbors.add(new BoardState(localBoard));
                         }
                     }
