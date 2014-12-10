@@ -7,28 +7,19 @@ import java.util.ArrayList;
  *
  * @author Joseph Cumbo (jwc6999)
  */
-public interface Puzzle<E> {
+public interface Puzzle {
 
     /**
-     * Get the starting config for this puzzle.
+     * Gets the neighbors of this puzzle.
      *
-     * @return the starting config.
+     * @return the neighbors of this puzzle.
      */
-    public E getStart();
+    public ArrayList<? extends Puzzle> getNeighbors();
 
     /**
-     * For an incoming config, generate and return all direct neighbors to this
-     * config.
+     * Checks if this puzzle is the goal puzzle.
      *
-     * @param config the incoming config.
-     * @return the collection of neighbor configs.
+     * @return true if this puzzle is the goal puzzle, false otherwise
      */
-    public ArrayList<E> getNeighbors(E config);
-
-    /**
-     * Get the goal config for this puzzle.
-     *
-     * @return the goal config.
-     */
-    public E getGoal();
+    public boolean isGoal();
 }

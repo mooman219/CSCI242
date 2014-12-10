@@ -7,7 +7,7 @@ import java.util.ArrayList;
  *
  * @author Joseph Cumbo (jwc6999)
  */
-public class Clock implements Puzzle<Integer> {
+public class Clock implements Puzzle {
 
     /**
      * @param args the command line arguments
@@ -28,69 +28,116 @@ public class Clock implements Puzzle<Integer> {
         }
         Solver solver = new Solver();
         Clock puzzle = new Clock(hours, start, goal);
-        ArrayList<Integer> solution = solver.solve(puzzle);
+        ArrayList<Clock> solution = solver.solve(puzzle);
         if (solution == null) {
-            System.out.println("No solution");
+            System.out.println("No solution.");
         } else {
             for (int i = 0; i < solution.size(); i++) {
-                System.out.printf("Step %d: %d\n", i, solution.get(i));
+                System.out.println("Step " + i + ": " + solution.get(i));
             }
         }
     }
 
     private final int total;
-    private final int start;
+    private final int current;
     private final int goal;
 
     /**
      * Initializes a new clock object.
      *
      * @param total the total hours in the clock.
-     * @param start the starting hour on the clock.
+     * @param current the current hour on the clock.
      * @param goal the goal hour to reach on the clock.
      */
-    public Clock(int total, int start, int goal) {
+    public Clock(int total, int current, int goal) {
         this.total = total;
-        this.start = start;
+        this.current = current;
         this.goal = goal;
     }
 
     /**
-     * Get the starting config for this puzzle.
+     * Initializes a new clock object based on a given clock.
      *
-     * @return the starting config.
+     * @param puzzle the clock to copy the goal and total from
+     * @param current the current time
      */
-    @Override
-    public Integer getStart() {
-        return start;
+    public Clock(Clock puzzle, int current) {
+        this.total = puzzle.total;
+        this.current = current;
+        this.goal = puzzle.goal;
     }
 
     /**
-     * For an incoming config, generate and return all direct neighbors to this
-     * config.
+     * Gets the neighbors of this puzzle.
      *
-     * @param config the incoming config.
-     * @return the collection of neighbor configs.
+     * @return the neighbors of this puzzle.
      */
     @Override
-    public ArrayList<Integer> getNeighbors(Integer config) {
-        ArrayList<Integer> neighbors = new ArrayList<Integer>(2);
-        if (config < 1 || config > total) {
+    public ArrayList<Clock> getNeighbors() {
+        ArrayList<Clock> neighbors = new ArrayList<Clock>();
+        if (current < 1 || current > total) {
             return neighbors;
         }
-        neighbors.add(config == total ? 1 : config + 1);
-        neighbors.add(config == 1 ? total : config - 1);
+        neighbors.add(new Clock(this, current == total ? 1 : current + 1));
+        neighbors.add(new Clock(this, current == 1 ? total : current - 1));
         return neighbors;
     }
 
     /**
-     * Get the goal config for this puzzle.
+     * Checks if this puzzle is the goal puzzle.
      *
-     * @return the goal config.
+     * @return true if this puzzle is the goal puzzle, false otherwise
      */
     @Override
-    public Integer getGoal() {
-        return goal;
+    public boolean isGoal() {
+        return current == goal;
     }
 
+    /**
+     * Generates a string of the current time.
+     *
+     * @return a string of the current time
+     */
+    @Override
+    public String toString() {
+        return current + "";
+    }
+
+    /**
+     * Generates a hash code.
+     *
+     * @return a hash code
+     */
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 17 * hash + this.total;
+        hash = 17 * hash + this.current;
+        hash = 17 * hash + this.goal;
+        return hash;
+    }
+
+    /**
+     * Check is this and the given object are equal.
+     *
+     * @param obj the given object
+     * @return true if this and the given object are equal, false otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Clock other = (Clock) obj;
+        if (this.total != other.total) {
+            return false;
+        }
+        if (this.goal != other.goal) {
+            return false;
+        }
+        return true;
+    }
 }

@@ -13,7 +13,7 @@ import java.util.Map;
  *
  * @author Joseph Cumbo (jwc6999)
  */
-public class Chess implements Puzzle<Chess.BoardState> {
+public class Chess implements Puzzle {
 
     public static char[][] test = {
         {'N', '.', '.', '.', '.'},
@@ -29,7 +29,7 @@ public class Chess implements Puzzle<Chess.BoardState> {
     public static void main(String[] args) {
         Solver solver = new Solver();
         Chess puzzle = new Chess(test);
-        ArrayList<BoardState> states = solver.solve(puzzle);
+        ArrayList<Chess> states = solver.solve(puzzle);
         for (int i = 0; i < states.size(); i++) {
             System.out.println("Step " + i + ":\n" + states.get(i).toString());
         }
@@ -155,39 +155,25 @@ public class Chess implements Puzzle<Chess.BoardState> {
         }
     }
 
-    private final BoardState start;
-    private final BoardState goal;
+    private final char[][] board;
 
     /**
-     * Initializes a chess object.
+     * Initializes a chess object with a given board.
      *
+     * @param board the given board
      */
-    public Chess(char[][] initialBoard) {
-        start = new BoardState(initialBoard);
-        goal = new BoardState(1);
+    public Chess(char[][] board) {
+        this.board = board;
     }
 
     /**
-     * Get the starting config for this puzzle.
+     * Gets the neighbors of this puzzle.
      *
-     * @return the starting config.
+     * @return the neighbors of this puzzle.
      */
     @Override
-    public BoardState getStart() {
-        return start;
-    }
-
-    /**
-     * For an incoming config, generate and return all direct neighbors to this
-     * config.
-     *
-     * @param config the incoming config.
-     * @return the collection of neighbor configs.
-     */
-    @Override
-    public ArrayList<BoardState> getNeighbors(BoardState config) {
-        ArrayList<BoardState> neighbors = new ArrayList<BoardState>();
-        char[][] board = config.board;
+    public ArrayList<Chess> getNeighbors() {
+        ArrayList<Chess> neighbors = new ArrayList<Chess>();
         for (int y = 0; y < board.length; y++) {
             for (int x = 0; x < board[y].length; x++) {
                 /**
@@ -205,10 +191,10 @@ public class Chess implements Puzzle<Chess.BoardState> {
                      */
                     for (Point point : moves) {
                         if (board[point.y][point.x] != '.') {
-                            char[][] localBoard = config.copyBoard();
+                            char[][] localBoard = copyBoard();
                             localBoard[point.y][point.x] = board[y][x];
                             localBoard[y][x] = '.';
-                            neighbors.add(new BoardState(localBoard));
+                            neighbors.add(new Chess(localBoard));
                         }
                     }
                 }
@@ -218,129 +204,99 @@ public class Chess implements Puzzle<Chess.BoardState> {
     }
 
     /**
-     * Get the goal config for this puzzle.
+     * Gets the board.
      *
-     * @return the goal config.
+     * @return the board
      */
-    @Override
-    public BoardState getGoal() {
-        return goal;
+    public char[][] getBoard() {
+        return board;
     }
 
     /**
-     * The state of the board.
+     * Gets the number of pieces on the board.
+     *
+     * @return the number of pieces on the board
      */
-    public static class BoardState {
-
-        private final boolean isGoal;
-        private final int pieces;
-        private final char[][] board;
-
-        /**
-         * Initializes a new BoardState based off of the given board.
-         *
-         * @param board the board to back this board state
-         */
-        public BoardState(char[][] board) {
-            /**
-             * Calculate the pieces on the board.
-             */
-            int pieces = 0;
-            for (int x = 0; x < board.length; x++) {
-                for (int y = 0; y < board[x].length; y++) {
-                    if (board[x][y] != '.') {
-                        pieces++;
-                    }
+    public int getPieces() {
+        int pieces = 0;
+        for (int x = 0; x < board.length; x++) {
+            for (int y = 0; y < board[x].length; y++) {
+                if (board[x][y] != '.') {
+                    pieces++;
                 }
             }
-
-            this.isGoal = false;
-            this.board = board;
-            this.pieces = pieces;
         }
+        return pieces;
+    }
 
-        /**
-         * Initializes a new BoardState to be used as a goal state. This
-         * BoardState only checks that the number of pieces remaining are equal
-         * in the equals method.
-         *
-         * @param pieces the number of pieces required for another board to
-         * match this board
-         */
-        private BoardState(int pieces) {
-            this.isGoal = true;
-            this.board = null;
-            this.pieces = pieces;
+    /**
+     * Checks if this puzzle is the goal puzzle.
+     *
+     * @return true if this puzzle is the goal puzzle, false otherwise
+     */
+    @Override
+    public boolean isGoal() {
+        return getPieces() == 1;
+    }
+
+    /**
+     * Copies the current board.
+     *
+     * @return a copy of the current board
+     */
+    public char[][] copyBoard() {
+        char[][] boardCopy = new char[board.length][board[0].length];
+        for (int i = 0; i < board.length; i++) {
+            System.arraycopy(board[i], 0, boardCopy[i], 0, board[i].length);
         }
+        return boardCopy;
+    }
 
-        /**
-         * Copies the current board.
-         *
-         * @return a copy of the current board
-         */
-        public char[][] copyBoard() {
-            char[][] boardCopy = new char[board.length][board[0].length];
-            for (int i = 0; i < board.length; i++) {
-                System.arraycopy(board[i], 0, boardCopy[i], 0, board[i].length);
-            }
-            return boardCopy;
+    /**
+     * Generates a string representation of the current board.
+     *
+     * @return a string representation of the current board.
+     */
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        for (int x = 0; x < board.length; x++) {
+            builder.append(board[x]).append("\n");
         }
+        return builder.toString();
+    }
 
-        /**
-         * Generates a string representation of the current board.
-         *
-         * @return a string representation of the current board.
-         */
-        @Override
-        public String toString() {
-            StringBuilder builder = new StringBuilder();
-            for (int x = 0; x < board.length; x++) {
-                builder.append(board[x]).append("\n");
-            }
-            return builder.toString();
+    /**
+     * Generates a hash code.
+     *
+     * @return a hash code
+     */
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 59 * hash + Arrays.deepHashCode(this.board);
+        return hash;
+    }
+
+    /**
+     * Check is this and the given object are equal.
+     *
+     * @param obj the given object
+     * @return true if this and the given object are equal, false otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
         }
-
-        /**
-         * Generates a hash code.
-         *
-         * @return a hash code
-         */
-        @Override
-        public int hashCode() {
-            int hash = 7;
-            hash = 29 * hash + pieces;
-            hash = 29 * hash + Arrays.deepHashCode(board);
-            return hash;
+        if (getClass() != obj.getClass()) {
+            return false;
         }
-
-        /**
-         * Compares this BoardState to another BoardState.
-         *
-         * @param obj the other BoardState
-         * @return true if both object are equivalent or, the isGoal flag is set
-         * and the pieces remaining for each board are equal.
-         */
-        @Override
-        public boolean equals(Object obj) {
-            if (obj == null) {
-                return false;
-            }
-            if (getClass() != obj.getClass()) {
-                return false;
-            }
-            final BoardState other = (BoardState) obj;
-            if ((isGoal || other.isGoal) && pieces == other.pieces) {
-                return true;
-            }
-            if (pieces != other.pieces) {
-                return false;
-            }
-            if (!Arrays.deepEquals(board, other.board)) {
-                return false;
-            }
-            return true;
+        final Chess other = (Chess) obj;
+        if (!Arrays.deepEquals(this.board, other.board)) {
+            return false;
         }
-
+        return true;
     }
 
     /**

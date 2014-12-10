@@ -9,7 +9,7 @@ import java.util.Arrays;
  *
  * @author Joseph Cumbo (jwc6999)
  */
-public class Water implements Puzzle<Water.JugState> {
+public class Water implements Puzzle {
 
     /**
      * Main method.
@@ -35,19 +35,19 @@ public class Water implements Puzzle<Water.JugState> {
 
         Water water = new Water(desiredAmount, jugs);
         Solver solver = new Solver();
-        ArrayList<JugState> result = solver.solve(water);
+        ArrayList<Water> result = solver.solve(water);
         if (result != null) {
             for (int i = 0; i < result.size(); i++) {
                 System.out.println("Step " + i + ": " + result.get(i));
             }
         } else {
-            System.out.println("No Solution");
+            System.out.println("No solution.");
         }
     }
 
     private final int[] maxAmounts;
-    private final JugState start;
-    private final JugState goal;
+    private final int[] jugs;
+    private int goal;
 
     /**
      * Initializes a new water object.
@@ -57,61 +57,62 @@ public class Water implements Puzzle<Water.JugState> {
      */
     public Water(int desiredAmount, int... maxAmounts) {
         this.maxAmounts = maxAmounts;
-        this.start = new JugState(new int[maxAmounts.length]);
-        this.goal = new JugState(true, desiredAmount);
+        this.jugs = new int[maxAmounts.length];
+        this.goal = desiredAmount;
     }
 
     /**
-     * Get the starting config for this puzzle.
+     * Initializes a new water object based on the constants of a given water
+     * object.
      *
-     * @return the starting config.
+     * @param puzzle the water puzzle to take the constants from
+     * @param jugs the new jug fill levels to be used
      */
-    @Override
-    public JugState getStart() {
-        return start;
+    public Water(Water puzzle, int[] jugs) {
+        this.maxAmounts = puzzle.maxAmounts;
+        this.jugs = jugs;
+        this.goal = puzzle.goal;
     }
 
     /**
-     * For an incoming config, generate and return all direct neighbors to this
-     * config.
+     * Gets the neighbors of this puzzle.
      *
-     * @param config the incoming config.
-     * @return the collection of neighbor configs.
+     * @return the neighbors of this puzzle.
      */
     @Override
-    public ArrayList<JugState> getNeighbors(JugState config) {
-        ArrayList<JugState> neighbors = new ArrayList<JugState>();
+    public ArrayList<Water> getNeighbors() {
+        ArrayList<Water> neighbors = new ArrayList<Water>();
         // Local copy of the jugs
         int[] localJugs;
-        for (int i = 0; i < config.jugs.length; i++) {
+        for (int i = 0; i < jugs.length; i++) {
             // Note: Jugs referenced using 'i' will be called the "current jug"
 
             // If the current jug isn't full
-            if (config.jugs[i] != maxAmounts[i]) {
+            if (jugs[i] != maxAmounts[i]) {
                 // Get a copy of the jugs in config
-                localJugs = config.copyJugs();
+                localJugs = copyJugs();
                 // Then fill the current jug
                 localJugs[i] = maxAmounts[i];
                 // Finally add it as a neighbor
-                neighbors.add(new JugState(localJugs));
+                neighbors.add(new Water(this, localJugs));
             }
 
             // If the current jug isn't empty
-            if (config.jugs[i] != 0) {
+            if (jugs[i] != 0) {
                 // Get a copy of the jugs in config
-                localJugs = config.copyJugs();
+                localJugs = copyJugs();
                 // Then empty the current jug
                 localJugs[i] = 0;
                 // Finally add it as a neighbor
-                neighbors.add(new JugState(localJugs));
+                neighbors.add(new Water(this, localJugs));
 
-                for (int x = 0; x < config.jugs.length; x++) {
+                for (int x = 0; x < jugs.length; x++) {
                     // Note: Jugs referenced using 'x' will be called the "other jug"
 
                     // If the current jug isn't the other jug
                     if (i != x) {
                         // If the other jug isn't full
-                        if (config.jugs[x] != maxAmounts[x]) {
+                        if (jugs[x] != maxAmounts[x]) {
                             /**
                              * At this point, we know the current jug isn't
                              * empty, we're working with two different jugs, and
@@ -120,16 +121,16 @@ public class Water implements Puzzle<Water.JugState> {
                              */
 
                             // Get a copy of the jugs in config
-                            localJugs = config.copyJugs();
+                            localJugs = copyJugs();
                             /**
                              * Since you can't over fill a jug, or pour more
                              * that you have, get the minimum of the two values
                              */
-                            int howMuchCanIPour = Math.min(maxAmounts[x] - config.jugs[x], config.jugs[i]);
+                            int howMuchCanIPour = Math.min(maxAmounts[x] - jugs[x], jugs[i]);
                             localJugs[i] -= howMuchCanIPour;
                             localJugs[x] += howMuchCanIPour;
                             // Finally add it as a neighbor
-                            neighbors.add(new JugState(localJugs));
+                            neighbors.add(new Water(this, localJugs));
                         }
                     }
                 }
@@ -139,107 +140,82 @@ public class Water implements Puzzle<Water.JugState> {
     }
 
     /**
-     * Get the goal config for this puzzle.
+     * Checks if this puzzle is the goal puzzle.
      *
-     * @return the goal config.
+     * @return true if this puzzle is the goal puzzle, false otherwise
      */
     @Override
-    public JugState getGoal() {
-        return goal;
+    public boolean isGoal() {
+        return jugs[0] == goal;
     }
 
     /**
-     * This class represents the state of a number of jugs.
+     * Copies the current jug fill levels.
+     *
+     * @return a copy of the current jug fill levels
      */
-    public static class JugState {
-
-        private final boolean isGoal;
-        private final int[] jugs;
-
-        /**
-         * Initializes a new jug state.
-         *
-         * @param jugs the current amounts for a number of jugs
-         */
-        public JugState(int... jugs) {
-            this(false, jugs);
-        }
-
-        /**
-         * Initializes a new jug state.
-         *
-         * @param isGoal a flag to mark this jug state as a goal, meaning only
-         * the first jug's water level is compared when using equals()
-         * @param jugs the current amounts for a number of jugs
-         */
-        private JugState(boolean isGoal, int... jugs) {
-            this.isGoal = isGoal;
-            this.jugs = jugs;
-        }
-
-        /**
-         * Copies the current jug fill levels.
-         *
-         * @return a copy of the current jug fill levels
-         */
-        public int[] copyJugs() {
-            int[] jugsCopy = new int[this.jugs.length];
-            System.arraycopy(this.jugs, 0, jugsCopy, 0, this.jugs.length);
-            return jugsCopy;
-        }
-
-        /**
-         * Compares this JugState to another JugState.
-         *
-         * @param obj
-         * @return true if both object are equivalent or, the isGoal flag is set
-         * and the first jug in both JugStates are equal.
-         */
-        @Override
-        public boolean equals(Object obj) {
-            if (obj == null) {
-                return false;
-            }
-            if (getClass() != obj.getClass()) {
-                return false;
-            }
-            final JugState other = (JugState) obj;
-            if ((isGoal || other.isGoal) && this.jugs[0] == other.jugs[0]) {
-                return true;
-            } else if (!Arrays.equals(this.jugs, other.jugs)) {
-                return false;
-            }
-            return true;
-        }
-
-        /**
-         * Generates a string of the current jug fill levels.
-         *
-         * @return a string of the current jug fill levels
-         */
-        @Override
-        public String toString() {
-            StringBuilder ret = new StringBuilder();
-            if (jugs.length > 0) {
-                for (int jug : jugs) {
-                    ret.append(jug).append(' ');
-                }
-                ret.deleteCharAt(ret.length() - 1);
-            }
-            return ret.toString();
-        }
-
-        /**
-         * Generates a hash code.
-         *
-         * @return a hash code
-         */
-        @Override
-        public int hashCode() {
-            int hash = 5;
-            hash = 83 * hash + (this.isGoal ? 1 : 0);
-            hash = 83 * hash + Arrays.hashCode(this.jugs);
-            return hash;
-        }
+    public int[] copyJugs() {
+        int[] jugsCopy = new int[this.jugs.length];
+        System.arraycopy(this.jugs, 0, jugsCopy, 0, this.jugs.length);
+        return jugsCopy;
     }
+
+    /**
+     * Generates a string of the current jug fill levels.
+     *
+     * @return a string of the current jug fill levels
+     */
+    @Override
+    public String toString() {
+        StringBuilder ret = new StringBuilder();
+        if (jugs.length > 0) {
+            for (int jug : jugs) {
+                ret.append(jug).append(' ');
+            }
+            ret.deleteCharAt(ret.length() - 1);
+        }
+        return ret.toString();
+    }
+
+    /**
+     * Generates a hash code.
+     *
+     * @return a hash code
+     */
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 89 * hash + Arrays.hashCode(this.maxAmounts);
+        hash = 89 * hash + Arrays.hashCode(this.jugs);
+        hash = 89 * hash + this.goal;
+        return hash;
+    }
+
+    /**
+     * Check is this and the given object are equal.
+     *
+     * @param obj the given object
+     * @return true if this and the given object are equal, false otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Water other = (Water) obj;
+        if (!Arrays.equals(this.maxAmounts, other.maxAmounts)) {
+            return false;
+        }
+        if (!Arrays.equals(this.jugs, other.jugs)) {
+            return false;
+        }
+        if (this.goal != other.goal) {
+            return false;
+        }
+        return true;
+    }
+
 }

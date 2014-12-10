@@ -16,11 +16,11 @@ public class Solver {
      * @return a list of steps taken to reach the solution. Null if no solution
      * is found.
      */
-    public <T> ArrayList<T> solve(Puzzle<T> puzzle) {
+    public <T extends Puzzle> ArrayList<T> solve(T puzzle) {
         HashSet<T> visited = new HashSet<T>();
         ArrayList<ArrayList<T>> queue = new ArrayList<ArrayList<T>>();
         ArrayList<T> current = new ArrayList<T>();
-        current.add(puzzle.getStart());
+        current.add(puzzle);
         queue.add(current);
         while (!queue.isEmpty()) {
             current = queue.remove(0);
@@ -34,10 +34,10 @@ public class Solver {
             } else {
                 visited.add(target);
             }
-            for (T neighbor : puzzle.getNeighbors(target)) {
+            for (T neighbor : (ArrayList<T>) target.getNeighbors()) {
                 ArrayList<T> next = new ArrayList<T>(current);
                 next.add(neighbor);
-                if (neighbor.equals(puzzle.getGoal())) {
+                if (neighbor.isGoal()) {
                     return next;
                 } else {
                     queue.add(next);
