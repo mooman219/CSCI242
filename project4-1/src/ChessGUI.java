@@ -53,7 +53,7 @@ public class ChessGUI {
     /**
      * Map of characters to their appropriate icon.
      */
-    private static HashMap<Character, ImageIcon> icons = new HashMap<Character, ImageIcon>() {
+    private static final HashMap<Character, ImageIcon> icons = new HashMap<Character, ImageIcon>() {
         {
             put('B', new ImageIcon("bishop.png"));
             put('K', new ImageIcon("king.png"));
